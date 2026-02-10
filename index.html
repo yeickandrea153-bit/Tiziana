@@ -3,286 +3,147 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>¡Para Tiziana, Mi Amor!</title>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>Para Tiziana ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&family=Caveat:wght@700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary-pink: #ff6b8f;
-            --light-pink: #ffe0e6;
-            --dark-pink: #d81b60;
-            --text-color: #6a052e;
-            --card-bg: rgba(255, 255, 255, 0.95);
-        }
-
+        * { box-sizing: border-box; }
         body {
-            background: linear-gradient(135deg, var(--light-pink) 0%, #fff0f5 100%);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
+            margin: 0; padding: 0;
+            background: #fff0f5;
             font-family: 'Poppins', sans-serif;
-            overflow: hidden; /* Para que los corazones de fondo no generen scroll */
-            position: relative; /* Necesario para los corazones de fondo */
-        }
-        
-        /* CORAZONES FLOTANDO DE FONDO */
-        .background-heart {
-            position: absolute;
-            color: rgba(255, 182, 193, 0.5); /* Rosa suave, semi-transparente */
-            font-size: 30px;
-            pointer-events: none;
-            animation: floatBackgroundHeart linear infinite;
-            opacity: 0;
-            text-shadow: 0 0 5px rgba(255, 182, 193, 0.7);
+            overflow: hidden; height: 100vh; width: 100vw;
+            display: flex; justify-content: center; align-items: center;
         }
 
-        @keyframes floatBackgroundHeart {
-            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
-            20% { opacity: 0.8; }
-            100% { transform: translateY(-20vh) rotate(360deg); opacity: 0; }
+        /* FONDO DE CORAZONES */
+        .floating-heart {
+            position: absolute; color: #ffb6c1; opacity: 0.5;
+            pointer-events: none; animation: float 8s linear infinite; z-index: 1;
+        }
+        @keyframes float {
+            0% { transform: translateY(110vh) rotate(0deg); }
+            100% { transform: translateY(-10vh) rotate(360deg); }
         }
 
-        .container {
-            text-align: center;
+        /* CONTENEDOR COLLAGE (Se oculta al inicio) */
+        .collage-container {
+            position: relative;
+            width: 100%; height: 100%;
+            display: none; /* Se activa al abrir */
             z-index: 10;
-            position: relative;
+            padding: 20px;
         }
 
-        .card {
-            background: var(--card-bg);
-            backdrop-filter: blur(10px);
-            border-radius: 25px;
-            padding: 40px;
-            box-shadow: 0 15px 40px rgba(255, 192, 203, 0.6);
-            border: 3px solid var(--primary-pink);
-            
-            position: fixed; 
-            top: 50%;
-            left: 50%;
-            width: 90vw; 
-            max-width: 450px;
-            
-            opacity: 0;
-            transform: translate(-50%, -50%) scale(0.8);
-            display: none; 
-            z-index: 100;
-        }
-
-        h1 {
-            color: var(--dark-pink);
-            font-family: 'Dancing Script', cursive;
-            font-size: 3rem;
-            margin-bottom: 10px;
-        }
-        h2 {
-            color: var(--primary-pink);
-            font-size: 1.6rem;
-            margin-top: 0;
-            font-weight: 600;
-        }
-        p {
-            color: var(--text-color);
-            font-size: 1.15rem;
-            line-height: 1.6;
-            margin-bottom: 25px;
-        }
-        .message-text {
-            display: block; 
-            opacity: 0;
-            transform: translateY(20px);
-            animation: textFadeIn 0.8s forwards;
-            margin-bottom: 15px;
-        }
-
-        /* ESTILOS DEL REGALO */
-        .gift-container {
-            position: relative;
-            cursor: pointer;
+        /* ESTILO POLAROID */
+        .photo {
+            position: absolute;
+            background: white;
+            padding: 10px 10px 30px 10px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+            width: 140px;
+            border-radius: 2px;
             transition: transform 0.3s;
-            animation: fadeInScale 1s ease-out forwards; /* Animación de entrada para el regalo */
         }
-        .gift-container:hover { transform: scale(1.05); }
+        .photo img { width: 100%; height: 120px; object-fit: cover; }
+        .photo:hover { transform: scale(1.1) rotate(0deg) !important; z-index: 100; }
 
-        .gift-box {
-            width: 150px;
-            height: 150px;
-            background: linear-gradient(135deg, #ff91a4, #ff6b8f);
-            border-radius: 15px;
-            position: relative;
-            box-shadow: 0 10px 25px rgba(255, 107, 143, 0.4);
-            margin: 0 auto;
-        }
-        .gift-lid {
-            width: 170px;
-            height: 40px;
-            background: #d81b60;
-            border-radius: 10px;
+        /* ESTILO POST-IT */
+        .post-it {
             position: absolute;
-            top: -10px;
-            left: -10px;
-            z-index: 2;
-            box-shadow: 0 5px 10px rgba(0,0,0,0.1);
-        }
-        .gift-ribbon-v {
-            width: 25px;
-            height: 100%;
-            background: #f8bbd0;
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            top: 0;
-        }
-        .gift-ribbon-h {
-            width: 100%;
-            height: 25px;
-            background: #f8bbd0;
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            left: 0;
-        }
-        .gift-bow {
-            position: absolute;
-            top: -50px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 60px;
-            z-index: 5;
+            background: #fff3a0;
+            padding: 15px;
+            width: 130px;
+            box-shadow: 5px 5px 10px rgba(0,0,0,0.1);
+            font-family: 'Caveat', cursive;
+            font-size: 1.2rem;
+            color: #444;
+            transform: rotate(-5deg);
         }
 
-        /* CORAZONES EXPLOSIVOS */
-        .explosive-heart {
-            position: fixed; 
-            font-size: 20px;
-            pointer-events: none;
-            animation: flyExplosion 3s ease-out forwards;
+        /* TARJETA CENTRAL */
+        .main-card {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 255, 255, 0.95);
+            padding: 25px;
+            border-radius: 20px;
+            border: 2px solid #ff6b8f;
+            width: 85%; max-width: 320px;
+            text-align: center;
             z-index: 50;
+            box-shadow: 0 15px 40px rgba(255, 107, 143, 0.3);
         }
 
-        @keyframes flyExplosion {
-            0% { transform: translate(var(--start-x), var(--start-y)) scale(0.5); opacity: 1; }
-            100% { transform: translate(var(--end-x), var(--end-y)) scale(1.5); opacity: 0; }
-        }
+        /* REGALO */
+        #regalo { text-align: center; cursor: pointer; z-index: 100; transition: 0.3s; }
+        #regalo:hover { transform: scale(1.1); }
+        .gift-box { width: 100px; height: 100px; background: #ff6b8f; margin: 0 auto; border-radius: 10px; position: relative; }
+        .lid { width: 110px; height: 25px; background: #d81b60; position: absolute; top: -10px; left: -5px; border-radius: 5px; }
 
-        /* ANIMACIONES GENERALES */
-        @keyframes fadeInScale {
-            0% { opacity: 0; transform: scale(0.8); }
-            100% { opacity: 1; transform: scale(1); }
-        }
-        @keyframes textFadeIn {
-            to { opacity: 1; transform: translateY(0); }
-        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
 <body>
 
+    <audio id="musica" loop>
+        <source src="TU_LINK_DE_DRIVE_AQUI" type="audio/mpeg">
+    </audio>
 
-    <div class="container">
-        <div class="gift-container" id="giftContainer" onclick="abrirRegalo()">
-            <div class="gift-bow">🎀</div>
-            <div class="gift-box">
-                <div class="gift-ribbon-v"></div>
-                <div class="gift-ribbon-h"></div>
-                <div class="gift-lid"></div>
-            </div>
-            <p style="color: var(--dark-pink); margin-top: 20px; font-weight: bold; font-size: 1.2rem;">Tócame ✨</p>
-        </div>
+    <div id="regalo" onclick="abrir()">
+        <div class="gift-box"><div class="lid"></div></div>
+        <p style="color: #d81b60; font-weight: bold; margin-top: 10px;">Para Tiziana ✨</p>
     </div>
 
-    <div class="card" id="cardMessage">
-        <h1>¡Para Tiziana! ❤️</h1>
-        <p>Aunque la vida nos mantenga ocupados, mi cariño por ti siempre encuentra un momento para brillar.</p>
+    <div class="collage-container" id="collage">
         
-        <div id="mensaje-secreto">
-            <p class="message-text" style="animation-delay: 0.5s;">Eres la melodía de mis días.</p>
-            <p class="message-text" style="animation-delay: 1.5s;">Gracias por ser mi lugar seguro.</p>
-            <p class="message-text" style="animation-delay: 2.5s;">¡Feliz San Valentín! Te quiero. 🌹</p>
+        <div class="photo" style="top: 10%; left: 5%; transform: rotate(-10deg);">
+            <img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?q=80&w=200&auto=format" alt="corazon">
+            <p style="margin: 10px 0 0 0; font-family: 'Caveat'; font-size: 1rem; text-align:center;">Nosotros ✨</p>
+        </div>
+
+        <div class="photo" style="bottom: 15%; right: 5%; transform: rotate(8deg);">
+            <img src="https://images.unsplash.com/photo-1516589174184-c68526614fd5?q=80&w=200&auto=format" alt="flores">
+            <p style="margin: 10px 0 0 0; font-family: 'Caveat'; font-size: 1rem; text-align:center;">Para siempre ❤️</p>
+        </div>
+
+        <div class="post-it" style="top: 15%; right: 10%; background: #ffcfdf;">
+            Eres mi persona favorita en el mundo.
+        </div>
+
+        <div class="post-it" style="bottom: 20%; left: 10%; background: #e0f7fa; transform: rotate(5deg);">
+            ¡No olvides sonreír hoy! 😊
+        </div>
+
+        <div class="main-card">
+            <h1 style="font-family: 'Dancing Script'; color: #d81b60; margin: 0;">Tiziana</h1>
+            <p>Este pequeño espacio es para recordarte lo especial que eres para mí.</p>
+            <p style="font-size: 1.5rem;">💖✨🌹</p>
         </div>
     </div>
 
     <script>
-        // Corazones de fondo que aparecen constantemente
-        setInterval(createBackgroundHeart, 800); 
+        // Lluvia de corazones constante
+        setInterval(() => {
+            const h = document.createElement('div');
+            h.className = 'floating-heart';
+            h.innerHTML = '❤️';
+            h.style.left = Math.random() * 100 + 'vw';
+            h.style.fontSize = (Math.random() * 20 + 15) + 'px';
+            h.style.animationDuration = (Math.random() * 5 + 5) + 's';
+            document.body.appendChild(h);
+            setTimeout(() => h.remove(), 8000);
+        }, 600);
 
-        function createBackgroundHeart() {
-            const heart = document.createElement('div');
-            heart.classList.add('background-heart');
-            heart.innerHTML = '❤️';
+        function abrir() {
+            document.getElementById('regalo').style.display = 'none';
+            const collage = document.getElementById('collage');
+            collage.style.display = 'block';
+            collage.style.animation = 'fadeIn 1.5s forwards';
             
-            heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.fontSize = (Math.random() * 20 + 20) + 'px'; // Tamaños entre 20px y 40px
-            heart.style.animationDuration = (Math.random() * 10 + 10) + 's'; // Duración entre 10s y 20s
-            heart.style.animationDelay = (Math.random() * 5) + 's'; // Retraso para que aparezcan escalonados
-            
-            document.body.appendChild(heart);
-            setTimeout(() => heart.remove(), 20000); // Eliminar después de 20 segundos
-        }
-
-
-        function abrirRegalo() {
-            const gift = document.getElementById('giftContainer');
-            const card = document.getElementById('cardMessage');
             const audio = document.getElementById('musica');
-
-            // 1. Desaparecer regalo suavemente
-            gift.style.opacity = '0';
-            gift.style.transform = 'scale(0.8)';
-            setTimeout(() => gift.style.display = 'none', 500); // Ocultar después de la transición
-
-            // 2. Aparecer tarjeta con animación
-            setTimeout(() => {
-                card.style.display = 'block';
-                card.style.animation = 'fadeInScale 1s forwards'; // Animación de entrada de la tarjeta
-                
-                // 3. Reproducir la música
-                audio.play().catch(e => console.log("Audio requiere interacción"));
-            }, 500); // Esperar medio segundo para la transición del regalo
-
-            // 4. Explosión de corazones desde el centro del regalo
-            for (let i = 0; i < 60; i++) { // Más corazones en la explosión
-                createExplosiveHeart(gift.getBoundingClientRect());
-            }
+            audio.play().catch(e => console.log("Audio listo"));
         }
-
-        function createExplosiveHeart(giftRect) {
-            const heart = document.createElement('div');
-            heart.innerText = ['❤️', '💖', '✨', '🌹'][Math.floor(Math.random() * 4)];
-            heart.classList.add('explosive-heart');
-            
-            // Posición inicial cerca del centro del regalo
-            const startX = giftRect.left + giftRect.width / 2;
-            const startY = giftRect.top + giftRect.height / 2;
-            heart.style.left = startX + 'px';
-            heart.style.top = startY + 'px';
-            
-            // Posición final aleatoria (lejos del centro)
-            const endX = (Math.random() * window.innerWidth * 1.5) - (window.innerWidth * 0.25);
-            const endY = (Math.random() * window.innerHeight * 1.5) - (window.innerHeight * 0.25);
-            heart.style.setProperty('--start-x', `0px`);
-            heart.style.setProperty('--start-y', `0px`);
-            heart.style.setProperty('--end-x', `${endX - startX}px`);
-            heart.style.setProperty('--end-y', `${endY - startY}px`);
-            
-            heart.style.fontSize = (Math.random() * 20 + 15) + 'px'; // Tamaños variados
-            heart.style.animationDuration = (Math.random() * 1.5 + 2) + 's'; // Duración entre 2s y 3.5s
-            heart.style.animationDelay = (Math.random() * 0.5) + 's'; // Pequeño retraso para escalonar
-            
-            document.body.appendChild(heart);
-            setTimeout(() => heart.remove(), 4000); // Eliminar después de 4 segundos
-        }
-
-        // Animación de entrada inicial para el regalo
-        window.onload = () => {
-            const giftContainer = document.getElementById('giftContainer');
-            giftContainer.style.opacity = '0'; // Asegura que esté oculto al inicio
-            giftContainer.style.transform = 'scale(0.8)'; // Pequeña escala para el efecto de entrada
-            setTimeout(() => {
-                giftContainer.style.opacity = '1';
-                giftContainer.style.transform = 'scale(1)';
-                giftContainer.style.transition = 'opacity 0.8s ease-out, transform 0.8s ease-out';
-            }, 100); // Pequeño retraso para que la animación se dispare
-        };
     </script>
 </body>
 </html>
