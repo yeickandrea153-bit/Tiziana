@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Para Tiziana, ¡Mi Corazón!</title>
+    <title>¡Para Tiziana, Mi Amor!</title>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -22,16 +22,33 @@
             min-height: 100vh;
             margin: 0;
             font-family: 'Poppins', sans-serif;
-            overflow: hidden;
+            overflow: hidden; /* Para que los corazones de fondo no generen scroll */
+            position: relative; /* Necesario para los corazones de fondo */
         }
         
+        /* CORAZONES FLOTANDO DE FONDO */
+        .background-heart {
+            position: absolute;
+            color: rgba(255, 182, 193, 0.5); /* Rosa suave, semi-transparente */
+            font-size: 30px;
+            pointer-events: none;
+            animation: floatBackgroundHeart linear infinite;
+            opacity: 0;
+            text-shadow: 0 0 5px rgba(255, 182, 193, 0.7);
+        }
+
+        @keyframes floatBackgroundHeart {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            20% { opacity: 0.8; }
+            100% { transform: translateY(-20vh) rotate(360deg); opacity: 0; }
+        }
+
         .container {
             text-align: center;
             z-index: 10;
             position: relative;
         }
 
-        /* --- AQUÍ ESTABA EL ERROR, YA LO ARREGLÉ --- */
         .card {
             background: var(--card-bg);
             backdrop-filter: blur(10px);
@@ -40,11 +57,10 @@
             box-shadow: 0 15px 40px rgba(255, 192, 203, 0.6);
             border: 3px solid var(--primary-pink);
             
-            /* ESTO ASEGURA QUE NO SE APLASTE */
             position: fixed; 
             top: 50%;
             left: 50%;
-            width: 90vw; /* 90% del ancho de la PANTALLA, no del contenedor */
+            width: 90vw; 
             max-width: 450px;
             
             opacity: 0;
@@ -72,7 +88,7 @@
             margin-bottom: 25px;
         }
         .message-text {
-            display: block; /* Asegura que cada frase use su propia línea */
+            display: block; 
             opacity: 0;
             transform: translateY(20px);
             animation: textFadeIn 0.8s forwards;
@@ -84,6 +100,7 @@
             position: relative;
             cursor: pointer;
             transition: transform 0.3s;
+            animation: fadeInScale 1s ease-out forwards; /* Animación de entrada para el regalo */
         }
         .gift-container:hover { transform: scale(1.05); }
 
@@ -134,22 +151,24 @@
             z-index: 5;
         }
 
-        /* CORAZONES VOLADORES */
-        .flying-heart {
-            position: fixed; /* Fix para que vuelen bien en celular */
+        /* CORAZONES EXPLOSIVOS */
+        .explosive-heart {
+            position: fixed; 
             font-size: 20px;
             pointer-events: none;
-            animation: flyUp 3s ease-out forwards;
+            animation: flyExplosion 3s ease-out forwards;
             z-index: 50;
         }
 
-        @keyframes flyUp {
-            0% { transform: translate(0, 0) scale(1); opacity: 1; }
-            100% { transform: translate(var(--tx), -100vh) scale(1.5); opacity: 0; }
+        @keyframes flyExplosion {
+            0% { transform: translate(var(--start-x), var(--start-y)) scale(0.5); opacity: 1; }
+            100% { transform: translate(var(--end-x), var(--end-y)) scale(1.5); opacity: 0; }
         }
+
+        /* ANIMACIONES GENERALES */
         @keyframes fadeInScale {
-            0% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
-            100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+            0% { opacity: 0; transform: scale(0.8); }
+            100% { opacity: 1; transform: scale(1); }
         }
         @keyframes textFadeIn {
             to { opacity: 1; transform: translateY(0); }
@@ -158,9 +177,6 @@
 </head>
 <body>
 
-    <audio id="musica" loop>
-        <source src="https://drive.google.com/file/d/1X4JNNmkBSqMTGRDPPJxMLLjhR5BAjTvc/view?usp=drive_link" type="audio/mpeg">
-    </audio>
 
     <div class="container">
         <div class="gift-container" id="giftContainer" onclick="abrirRegalo()">
@@ -170,7 +186,7 @@
                 <div class="gift-ribbon-h"></div>
                 <div class="gift-lid"></div>
             </div>
-            <p style="color: #d81b60; margin-top: 20px; font-weight: bold; font-size: 1.2rem;">Tocame ✨</p>
+            <p style="color: var(--dark-pink); margin-top: 20px; font-weight: bold; font-size: 1.2rem;">Tócame ✨</p>
         </div>
     </div>
 
@@ -186,49 +202,87 @@
     </div>
 
     <script>
+        // Corazones de fondo que aparecen constantemente
+        setInterval(createBackgroundHeart, 800); 
+
+        function createBackgroundHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('background-heart');
+            heart.innerHTML = '❤️';
+            
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.fontSize = (Math.random() * 20 + 20) + 'px'; // Tamaños entre 20px y 40px
+            heart.style.animationDuration = (Math.random() * 10 + 10) + 's'; // Duración entre 10s y 20s
+            heart.style.animationDelay = (Math.random() * 5) + 's'; // Retraso para que aparezcan escalonados
+            
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 20000); // Eliminar después de 20 segundos
+        }
+
+
         function abrirRegalo() {
             const gift = document.getElementById('giftContainer');
             const card = document.getElementById('cardMessage');
             const audio = document.getElementById('musica');
 
-            // 1. Desaparecer regalo
+            // 1. Desaparecer regalo suavemente
             gift.style.opacity = '0';
-            setTimeout(() => gift.style.display = 'none', 300);
+            gift.style.transform = 'scale(0.8)';
+            setTimeout(() => gift.style.display = 'none', 500); // Ocultar después de la transición
 
-            // 2. Aparecer tarjeta
+            // 2. Aparecer tarjeta con animación
             setTimeout(() => {
                 card.style.display = 'block';
-                card.style.animation = 'fadeInScale 1s forwards';
+                card.style.animation = 'fadeInScale 1s forwards'; // Animación de entrada de la tarjeta
+                
+                // 3. Reproducir la música
                 audio.play().catch(e => console.log("Audio requiere interacción"));
-            }, 300);
+            }, 500); // Esperar medio segundo para la transición del regalo
 
-            // 3. Explosión de corazones
-            for (let i = 0; i < 40; i++) {
-                crearCorazon();
+            // 4. Explosión de corazones desde el centro del regalo
+            for (let i = 0; i < 60; i++) { // Más corazones en la explosión
+                createExplosiveHeart(gift.getBoundingClientRect());
             }
         }
 
-        function crearCorazon() {
+        function createExplosiveHeart(giftRect) {
             const heart = document.createElement('div');
             heart.innerText = ['❤️', '💖', '✨', '🌹'][Math.floor(Math.random() * 4)];
-            heart.classList.add('flying-heart');
+            heart.classList.add('explosive-heart');
             
-            // Posición aleatoria desde el centro
-            const x = window.innerWidth / 2;
-            const y = window.innerHeight / 2;
-            heart.style.left = x + 'px';
-            heart.style.top = y + 'px';
+            // Posición inicial cerca del centro del regalo
+            const startX = giftRect.left + giftRect.width / 2;
+            const startY = giftRect.top + giftRect.height / 2;
+            heart.style.left = startX + 'px';
+            heart.style.top = startY + 'px';
             
-            // Dirección aleatoria
-            const randomX = (Math.random() - 0.5) * 200; // Moverse a los lados
-            heart.style.setProperty('--tx', randomX + 'px');
+            // Posición final aleatoria (lejos del centro)
+            const endX = (Math.random() * window.innerWidth * 1.5) - (window.innerWidth * 0.25);
+            const endY = (Math.random() * window.innerHeight * 1.5) - (window.innerHeight * 0.25);
+            heart.style.setProperty('--start-x', `0px`);
+            heart.style.setProperty('--start-y', `0px`);
+            heart.style.setProperty('--end-x', `${endX - startX}px`);
+            heart.style.setProperty('--end-y', `${endY - startY}px`);
             
-            heart.style.animationDuration = (Math.random() * 2 + 2) + 's';
+            heart.style.fontSize = (Math.random() * 20 + 15) + 'px'; // Tamaños variados
+            heart.style.animationDuration = (Math.random() * 1.5 + 2) + 's'; // Duración entre 2s y 3.5s
+            heart.style.animationDelay = (Math.random() * 0.5) + 's'; // Pequeño retraso para escalonar
             
             document.body.appendChild(heart);
-            setTimeout(() => heart.remove(), 4000);
+            setTimeout(() => heart.remove(), 4000); // Eliminar después de 4 segundos
         }
+
+        // Animación de entrada inicial para el regalo
+        window.onload = () => {
+            const giftContainer = document.getElementById('giftContainer');
+            giftContainer.style.opacity = '0'; // Asegura que esté oculto al inicio
+            giftContainer.style.transform = 'scale(0.8)'; // Pequeña escala para el efecto de entrada
+            setTimeout(() => {
+                giftContainer.style.opacity = '1';
+                giftContainer.style.transform = 'scale(1)';
+                giftContainer.style.transition = 'opacity 0.8s ease-out, transform 0.8s ease-out';
+            }, 100); // Pequeño retraso para que la animación se dispare
+        };
     </script>
 </body>
-</html>
 </html>
