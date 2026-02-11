@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     
     <style>
-        /* --- [BLOQUE 1: PANTALLA DE INICIO (CUBIERTA)] --- */
+        /* --- [PANTALLA DE INICIO: LA CAJITA] --- */
         #pantalla-inicio {
             position: fixed;
             top: 0; left: 0;
@@ -18,16 +18,29 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            z-index: 100; /* Por encima de todo */
+            z-index: 100;
             transition: opacity 1s ease, visibility 1s;
         }
 
-        .corazon-principal {
+        .caja-regalo {
             font-size: 100px;
             cursor: pointer;
-            transition: transform 0.3s ease;
-            animation: latidoInicial 1.2s infinite;
+            display: inline-block;
+            transition: transform 0.2s ease;
             user-select: none;
+        }
+
+        /* Animación de sacudida (Shake) */
+        @keyframes shake {
+            0% { transform: rotate(0deg); }
+            25% { transform: rotate(10deg); }
+            50% { transform: rotate(-10deg); }
+            75% { transform: rotate(10deg); }
+            100% { transform: rotate(0deg); }
+        }
+
+        .sacudir {
+            animation: shake 0.4s ease-in-out;
         }
 
         .instruccion {
@@ -37,13 +50,7 @@
             font-family: 'Poppins', sans-serif;
         }
 
-        @keyframes latidoInicial {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
-        }
-
-        /* --- [BLOQUE 2: FONDO Y CENTRADO DE LA WEB PRINCIPAL] --- */
+        /* --- [DISEÑO DE LA WEB PRINCIPAL] --- */
         body {
             background: linear-gradient(135deg, #ffe0e6 0%, #fff0f5 100%);
             display: flex;
@@ -58,7 +65,6 @@
             position: relative;
         }
 
-        /* --- [BLOQUE 3: LA TARJETA (TU CÓDIGO ORIGINAL)] --- */
         .card {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
@@ -70,11 +76,10 @@
             max-width: 400px;
             width: 100%;
             border: 3px solid #ffb6c1;
-            display: none; /* Se oculta al principio */
+            display: none; /* Oculta hasta que se abra el regalo */
             margin: auto;
         }
 
-        /* --- [BLOQUE 4: TEXTOS Y BOTONES] --- */
         h1 { color: #e91e63; font-family: 'Dancing Script', cursive; font-size: 2.5rem; margin-bottom: 10px; }
         h2 { color: #d81b60; font-size: 1.3rem; margin-top: 0; }
         p { color: #6a052e; font-size: 1rem; line-height: 1.5; }
@@ -92,7 +97,7 @@
             border-top: 1px dashed #ffb6c1;
         }
 
-        /* --- [BLOQUE 5: CORAZONES FLOTANTES] --- */
+        /* --- [CORAZONES FLOTANTES] --- */
         .heart {
             position: absolute;
             background: #ffc0cb;
@@ -123,8 +128,8 @@
 <body>
 
     <div id="pantalla-inicio">
-        <div class="corazon-principal" onclick="abrirRegalo()">❤️</div>
-        <p class="instruccion">Toca el corazón para abrir tu regalo</p>
+        <div class="caja-regalo" onclick="abrirRegalo()">🎁</div>
+        <p class="instruccion">Haz clic en el regalo para abrirlo</p>
     </div>
 
     <div class="card" id="mi-tarjeta">
@@ -141,25 +146,33 @@
 
     <script>
         let clics = 0;
-        const corazon = document.querySelector('.corazon-principal');
+        const caja = document.querySelector('.caja-regalo');
 
         function abrirRegalo() {
             clics++;
             
-            // El corazón crece un poco más en cada clic
-            let escala = 1 + (clics * 0.2);
-            corazon.style.transform = `scale(${escala})`;
+            // Añadir clase de sacudida
+            caja.classList.remove('sacudir');
+            void caja.offsetWidth; // Truco para reiniciar la animación
+            caja.classList.add('sacudir');
+
+            // Crece un poco con cada clic
+            let escala = 1 + (clics * 0.3);
+            caja.style.transform = `scale(${escala})`;
 
             if (clics >= 3) {
-                // Desvanecer pantalla de inicio
-                const pantalla = document.getElementById('pantalla-inicio');
-                pantalla.style.opacity = '0';
-                pantalla.style.visibility = 'hidden';
+                // Cambiamos el emoji a una caja abierta antes de desaparecer
+                caja.innerText = "🎊";
+                
+                setTimeout(() => {
+                    const pantalla = document.getElementById('pantalla-inicio');
+                    pantalla.style.opacity = '0';
+                    pantalla.style.visibility = 'hidden';
 
-                // Mostrar la tarjeta con animación
-                const tarjeta = document.getElementById('mi-tarjeta');
-                tarjeta.style.display = 'block';
-                tarjeta.style.animation = 'aparecerCard 1s forwards';
+                    const tarjeta = document.getElementById('mi-tarjeta');
+                    tarjeta.style.display = 'block';
+                    tarjeta.style.animation = 'aparecerCard 1s forwards';
+                }, 500);
             }
         }
 
@@ -174,19 +187,16 @@
             const heart = document.createElement('div');
             heart.classList.add('heart');
             document.body.appendChild(heart);
-
             const size = Math.random() * 25 + 25; 
             heart.style.width = size + 'px';
             heart.style.height = size + 'px';
             heart.style.left = Math.random() * 100 + 'vw';
-            
             const duration = Math.random() * 4 + 6;
             heart.style.animation = `floatHeart ${duration}s ease-in-out infinite`;
-            
             setTimeout(() => { heart.remove(); }, duration * 1000);
         }
 
-        // 5 corazones automáticos cada 2 segundos
+        // Lluvia constante de 5 corazones cada 2 segundos
         setInterval(() => {
             for(let i = 0; i < 5; i++) {
                 setTimeout(crearCorazon, i * 300);
