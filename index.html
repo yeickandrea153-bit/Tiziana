@@ -61,15 +61,18 @@
             z-index: 10;
         }
 
+        /* DISEÑO DE CARTA MEJORADO */
         .card {
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(255, 255, 255, 0.98);
             backdrop-filter: blur(10px);
-            border-radius: 25px;
-            padding: 30px;
-            box-shadow: 0 15px 40px rgba(255, 192, 203, 0.6);
+            border-radius: 30px;
+            padding: 35px 25px;
+            box-shadow: 0 20px 50px rgba(255, 51, 102, 0.25);
             text-align: center;
-            border: 3px solid #ffb6c1;
-            animation: aparecer 0.8s ease-out forwards;
+            border: 2px solid #ffccd5;
+            animation: subirFade 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            max-width: 360px;
+            width: 85%;
             position: relative;
         }
 
@@ -77,70 +80,81 @@
         .foto-externa {
             background: white;
             padding: 12px 12px 45px 12px;
-            box-shadow: 0 10px 35px rgba(0,0,0,0.2);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
             transform: rotate(-3deg);
             width: 230px;
             position: relative;
             z-index: 20;
             animation: caerFoto 1s ease-out forwards;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
+            border: 1px solid #eee;
         }
         
         .foto-externa img {
             width: 100%;
             height: auto;
             display: block;
-            border: 1px solid #eee;
+            border: 1px solid #f9f9f9;
         }
 
         .nota {
             position: absolute;
-            width: 85px;
+            width: 90px;
             padding: 8px;
             font-family: 'Dancing Script', cursive;
             font-size: 1.1rem;
             color: #444;
-            box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+            box-shadow: 2px 5px 10px rgba(0,0,0,0.1);
             text-align: center;
             font-weight: bold;
         }
-        .nota-1 { top: -10px; left: -30px; transform: rotate(-12deg); background: #ffffff; border: 2px solid #ff3366; }
-        .nota-2 { bottom: 10px; right: -35px; transform: rotate(8deg); background: #ffed4a; border: 1px solid #fbc02d; }
+        .nota-1 { top: -15px; left: -25px; transform: rotate(-12deg); background: #ffffff; border: 2px solid #ff3366; }
+        .nota-2 { bottom: 10px; right: -30px; transform: rotate(8deg); background: #fff9c4; border: 1px solid #fbc02d; }
 
-        @keyframes subirFade { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes caerFoto { from { opacity: 0; transform: translateY(-50px) rotate(5deg); } to { opacity: 1; transform: translateY(0) rotate(-3deg); } }
+        @keyframes subirFade { from { opacity: 0; transform: translateY(40px) scale(0.9); } to { opacity: 1; transform: translateY(0) scale(1); } }
+        @keyframes caerFoto { from { opacity: 0; transform: translateY(-70px) rotate(5deg); } to { opacity: 1; transform: translateY(0) rotate(-3deg); } }
 
-        h1 { color: #d81b60; font-family: 'Dancing Script', cursive; font-size: 2.5rem; margin: 0; }
-        h2 { color: #ad1457; font-size: 1.4rem; margin-top: 0; }
-        p { color: #4a0016; font-size: 1rem; line-height: 1.6; font-weight: 500; }
+        /* ESTILOS DE TEXTO MEJORADOS */
+        h1 { color: #d81b60; font-family: 'Dancing Script', cursive; font-size: 2.8rem; margin: 0 0 10px 0; text-shadow: 1px 1px 2px rgba(0,0,0,0.05); }
+        h2 { color: #ad1457; font-size: 1.3rem; margin-top: 0; font-weight: 600; letter-spacing: 0.5px; }
+        p { color: #4a0016; font-size: 1.05rem; line-height: 1.6; font-weight: 500; margin-bottom: 20px; }
 
+        /* DISEÑO DE BOTÓN MEJORADO */
         button {
             background: linear-gradient(45deg, #ff3366, #ff6b8f);
-            color: white; border: none; padding: 12px 30px;
+            color: white; border: none; padding: 14px 35px;
             border-radius: 50px; font-size: 1rem; font-weight: 600;
-            cursor: pointer; box-shadow: 0 4px 15px rgba(255, 51, 102, 0.4);
+            cursor: pointer; box-shadow: 0 6px 20px rgba(255, 51, 102, 0.3);
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        button:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(255, 51, 102, 0.4); }
+        button:active { transform: translateY(1px); }
+
+        #mensaje-secreto {
+            display: none;
+            background: #fff0f3;
+            padding: 15px;
+            border-radius: 15px;
+            margin: 15px 0;
+            border-left: 4px solid #ff3366;
+            font-style: italic;
+            color: #c2185b;
+            font-weight: 600;
+            animation: subirFade 0.5s ease;
         }
 
-        /* --- [4. CORAZONES Y PÉTALOS (MEJORADOS)] --- */
-        .heart, .petal {
-            position: absolute; opacity: 0; pointer-events: none; z-index: 5;
-        }
-        
-        /* Corazón Rojo Vibrante */
+        /* --- [4. CORAZONES Y PÉTALOS] --- */
+        .heart, .petal { position: absolute; opacity: 0; pointer-events: none; z-index: 5; }
         .heart { background: #ff0040; box-shadow: 0 0 10px rgba(255, 0, 64, 0.3); }
         .heart:before, .heart:after { content: ''; position: absolute; width: 100%; height: 100%; border-radius: 50%; background: #ff0040; }
         .heart:before { top: -50%; left: 0; }
         .heart:after { left: 50%; top: 0; }
-
-        /* Pétalos Blancos Brillantes */
         .petal {
-            background: #ffffff;
-            border-radius: 150% 0 150% 0;
-            width: 18px; height: 18px;
-            box-shadow: 0 0 12px rgba(255,255,255,1);
-            border: 1px solid #ffccd5;
+            background: #ffffff; border-radius: 150% 0 150% 0; width: 18px; height: 18px;
+            box-shadow: 0 0 12px rgba(255,255,255,1); border: 1px solid #ffccd5;
         }
-
         @keyframes floatHigh {
             0% { transform: translateY(110vh) scale(0.6) rotate(0deg); opacity: 0; }
             20% { opacity: 1; }
@@ -156,7 +170,7 @@
             <div class="box-bow"></div>
             <div class="box-body"></div>
         </div>
-        <p style="color: #ff3366; margin-top: 20px; font-weight: 700; font-size: 1.2rem;">Para Tiziana...</p>
+        <p style="color: #ff3366; margin-top: 25px; font-weight: 700; font-size: 1.3rem; font-family: 'Dancing Script', cursive;">Para Tiziana...</p>
     </div>
 
     <div class="seccion-carta" id="paso1">
@@ -168,14 +182,14 @@
             <div id="mensaje-secreto">
                 "Eres la persona que ilumina mis días. ¡Feliz San Valentín!"
             </div>
-            <button class="btn-siguiente" style="display:none; background:white; color:#ff3366; border:2.3px solid #ff3366" id="btn-sig1" onclick="cambiarPaso(1, 2)">Siguiente ➡️</button>
+            <button class="btn-siguiente" style="display:none; background:white; color:#ff3366; border:2.3px solid #ff3366; margin-top: 10px;" id="btn-sig1" onclick="cambiarPaso(1, 2)">Siguiente ➡️</button>
         </div>
     </div>
 
     <div class="seccion-carta" id="paso2">
         <div class="foto-externa">
             <div class="nota nota-1">Luz y paz</div>
-            <img src="https://www.elicriso.it/es/como_cultivar/gardenia/" alt="Flor Blanca">
+            <img src="gardenia.jpg" alt="Gardenia Blanca">
             <div class="nota nota-2">Para Tiziana</div>
         </div>
         <div class="card">
@@ -201,15 +215,12 @@
             const el = document.createElement('div');
             el.className = clase;
             document.body.appendChild(el);
-            
-            const size = Math.random() * 20 + 25; // Más grandes
+            const size = Math.random() * 20 + 25;
             el.style.width = size + 'px';
             el.style.height = size + 'px';
             el.style.left = Math.random() * 100 + 'vw';
-            
-            const duration = Math.random() * 4 + 6; // Un poco más rápidos y vivos
+            const duration = Math.random() * 4 + 6;
             el.style.animation = `floatHigh ${duration}s ease-in-out infinite`;
-            
             setTimeout(() => el.remove(), duration * 1000);
         }
 
@@ -235,8 +246,6 @@
         function iniciarEfectos() {
             if(heartsActive) return;
             heartsActive = true;
-            
-            // Intervalo más frecuente (Cada 350ms sale algo nuevo)
             setInterval(() => {
                 crearElemento('heart');
                 setTimeout(() => crearElemento('petal'), 150);
@@ -247,7 +256,6 @@
             document.getElementById('mensaje-secreto').style.display = 'block';
             document.getElementById('btn-revelar').style.display = 'none';
             document.getElementById('btn-sig1').style.display = 'inline-block';
-            // Gran ráfaga al abrir mensaje
             for(let i=0; i<40; i++) setTimeout(() => crearElemento(Math.random() > 0.4 ? 'heart' : 'petal'), i*80);
         }
 
