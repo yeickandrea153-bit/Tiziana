@@ -8,64 +8,70 @@
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     
     <style>
-        /* --- [BLOQUE 1: FONDO] --- */
+        /* --- [BLOQUE 1: FONDO Y CENTRADO TOTAL] --- */
         body {
             background: linear-gradient(135deg, #ffe0e6 0%, #fff0f5 100%);
+            /* Estas 4 líneas aseguran el centrado perfecto en cualquier pantalla */
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             margin: 0;
+            padding: 20px; /* Margen de seguridad para móviles */
+            box-sizing: border-box;
             font-family: 'Poppins', sans-serif;
-            overflow: hidden;
+            overflow: hidden; /* Los corazones no activan scroll */
             position: relative;
         }
 
-        /* --- [BLOQUE 2: TARJETA] --- */
+        /* --- [BLOQUE 2: TARJETA AJUSTADA] --- */
         .card {
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
             border-radius: 25px;
-            padding: 40px;
+            padding: 30px;
             box-shadow: 0 15px 40px rgba(255, 192, 203, 0.6);
             text-align: center;
-            z-index: 10;
-            max-width: 450px;
-            width: 90%;
+            z-index: 10; /* Se mantiene por encima de los corazones */
+            max-width: 400px;
+            width: 100%;
             border: 3px solid #ffb6c1;
             animation: bounceIn 1s ease-out;
+            /* Evita que se pegue arriba en pantallas pequeñas */
+            margin: auto; 
         }
 
         /* --- [BLOQUE 3: TEXTOS] --- */
         h1 {
             color: #e91e63;
             font-family: 'Dancing Script', cursive;
-            font-size: 3rem;
-            margin-bottom: 15px;
+            font-size: 2.5rem; /* Un poco más pequeño para móviles */
+            margin-bottom: 10px;
         }
 
-        h2 { color: #d81b60; font-size: 1.5rem; margin-top: 0; }
-        p { color: #6a052e; font-size: 1.15rem; line-height: 1.6; }
+        h2 { color: #d81b60; font-size: 1.3rem; margin-top: 0; }
+        p { color: #6a052e; font-size: 1rem; line-height: 1.5; }
 
         /* --- [BLOQUE 4: BOTÓN] --- */
         button {
             background: linear-gradient(45deg, #ff6b8f, #ff91a4);
             color: white;
             border: none;
-            padding: 15px 35px;
+            padding: 12px 30px;
             border-radius: 50px;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
             box-shadow: 0 8px 20px rgba(255, 107, 143, 0.4);
+            margin-bottom: 10px;
         }
 
         /* --- [BLOQUE 5: MENSAJE OCULTO] --- */
         #mensaje-secreto {
             display: none;
-            margin-top: 30px;
-            font-size: 1.2rem;
+            margin-top: 20px;
+            font-size: 1.1rem;
             color: #b71c1c;
             font-weight: 600;
             animation: fadeIn 1.5s ease-out;
@@ -79,7 +85,7 @@
             background: #ffc0cb;
             opacity: 0;
             pointer-events: none;
-            /* El transform inicial se maneja en la animación para que no sea rígido */
+            z-index: 1; /* Pasan por detrás de la tarjeta */
         }
         .heart:before, .heart:after {
             content: '';
@@ -95,18 +101,15 @@
         /* --- [BLOQUE 7: ANIMACIÓN DE MOVIMIENTO VIVO] --- */
         @keyframes floatHeart {
             0% {
-                /* Empieza abajo, rotado y en su posición X original */
                 transform: translateY(110vh) rotate(-45deg) translateX(0);
                 opacity: 0;
             }
-            20% { opacity: 0.8; }
+            20% { opacity: 0.7; }
             50% {
-                /* A mitad de camino gira un poco y se mueve a un lado */
-                transform: translateY(45vh) rotate(-35deg) translateX(20px);
+                transform: translateY(45vh) rotate(-35deg) translateX(25px);
             }
             100% {
-                /* Termina bien arriba, rotado hacia el otro lado y desplazado */
-                transform: translateY(-20vh) rotate(-55deg) translateX(-20px);
+                transform: translateY(-20vh) rotate(-55deg) translateX(-25px);
                 opacity: 0;
             }
         }
@@ -114,6 +117,10 @@
         @keyframes bounceIn {
             0% { transform: scale(0.8); opacity: 0; }
             100% { transform: scale(1); opacity: 1; }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
     </style>
 </head>
@@ -132,10 +139,9 @@
     </div>
 
     <script>
-        // LÓGICA DE LOS CORAZONES
         function revelarMensaje() {
             document.getElementById('mensaje-secreto').style.display = 'block';
-            // LANZAMIENTO MASIVO: 40 corazones al hacer click
+            // Ráfaga al click: 40 corazones
             for (let i = 0; i < 40; i++) {
                 setTimeout(crearCorazon, i * 100); 
             }
@@ -146,30 +152,25 @@
             heart.classList.add('heart');
             document.body.appendChild(heart);
 
-            // TAMAÑO: Grandes (entre 25px y 50px)
             const size = Math.random() * 25 + 25; 
             heart.style.width = size + 'px';
             heart.style.height = size + 'px';
             
-            // POSICIÓN: Aleatoria en todo el ancho
             heart.style.left = Math.random() * 100 + 'vw';
             
-            // DURACIÓN: Entre 5 y 9 segundos para un movimiento suave
             const duration = Math.random() * 4 + 5;
             heart.style.animation = `floatHeart ${duration}s ease-in-out infinite`;
             
-            // Eliminar para limpiar el código
             setTimeout(() => { heart.remove(); }, duration * 1000);
         }
 
-        // CORAZONES CONSTANTES: Salen 4 corazones cada 2 segundos automáticamente
+        // 4 corazones automáticos cada 2 segundos
         setInterval(() => {
             for(let i = 0; i < 4; i++) {
                 setTimeout(crearCorazon, i * 300);
             }
         }, 2000);
 
-        // Lluvia inicial al cargar
         window.onload = function() {
             for (let i = 0; i < 15; i++) {
                 setTimeout(crearCorazon, i * 200);
