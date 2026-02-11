@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     
     <style>
-        /* --- [PANTALLA DE INICIO: LA CAJITA] --- */
+        /* --- [BLOQUE 1: PANTALLA DE INICIO Y CAJA CSS] --- */
         #pantalla-inicio {
             position: fixed;
             top: 0; left: 0;
@@ -22,35 +22,90 @@
             transition: opacity 1s ease, visibility 1s;
         }
 
-        .caja-regalo {
-            font-size: 100px;
+        /* Contenedor de la caja */
+        .box-container {
+            position: relative;
+            width: 100px;
+            height: 100px;
             cursor: pointer;
-            display: inline-block;
-            transition: transform 0.2s ease;
-            user-select: none;
+            transition: transform 0.3s ease;
         }
 
-        /* Animación de sacudida (Shake) */
-        @keyframes shake {
+        /* Cuerpo de la caja */
+        .box-body {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 80%;
+            background-color: #ff6b8f;
+            border-radius: 0 0 10px 10px;
+            box-shadow: inset 0 -5px rgba(0,0,0,0.1);
+        }
+
+        /* Tapa de la caja */
+        .box-lid {
+            position: absolute;
+            top: 0;
+            width: 110%;
+            height: 25%;
+            background-color: #ff4d6d;
+            left: -5%;
+            border-radius: 5px;
+            z-index: 2;
+            transition: transform 0.5s ease;
+        }
+
+        /* Lazo decorativo */
+        .box-bow {
+            position: absolute;
+            top: -20%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 20px;
+            background-color: #fff;
+            border-radius: 20px;
+            z-index: 3;
+        }
+
+        .box-bow::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 10px;
+            height: 120px;
+            background-color: #fff;
+        }
+
+        /* Animación Shake */
+        @keyframes shakeBox {
             0% { transform: rotate(0deg); }
-            25% { transform: rotate(10deg); }
-            50% { transform: rotate(-10deg); }
-            75% { transform: rotate(10deg); }
+            25% { transform: rotate(8deg); }
+            50% { transform: rotate(-8deg); }
+            75% { transform: rotate(8deg); }
             100% { transform: rotate(0deg); }
         }
 
         .sacudir {
-            animation: shake 0.4s ease-in-out;
+            animation: shakeBox 0.4s ease-in-out;
+        }
+
+        /* Cuando la caja se abre */
+        .box-open .box-lid {
+            transform: translateY(-80px) rotate(15deg);
+            opacity: 0;
         }
 
         .instruccion {
-            margin-top: 20px;
+            margin-top: 40px;
             color: #e91e63;
             font-weight: 600;
             font-family: 'Poppins', sans-serif;
+            text-align: center;
         }
 
-        /* --- [DISEÑO DE LA WEB PRINCIPAL] --- */
+        /* --- [BLOQUE 2: WEB PRINCIPAL] --- */
         body {
             background: linear-gradient(135deg, #ffe0e6 0%, #fff0f5 100%);
             display: flex;
@@ -76,7 +131,7 @@
             max-width: 400px;
             width: 100%;
             border: 3px solid #ffb6c1;
-            display: none; /* Oculta hasta que se abra el regalo */
+            display: none;
             margin: auto;
         }
 
@@ -97,7 +152,7 @@
             border-top: 1px dashed #ffb6c1;
         }
 
-        /* --- [CORAZONES FLOTANTES] --- */
+        /* --- [BLOQUE 3: CORAZONES] --- */
         .heart {
             position: absolute;
             background: #ffc0cb;
@@ -128,8 +183,12 @@
 <body>
 
     <div id="pantalla-inicio">
-        <div class="caja-regalo" onclick="abrirRegalo()">🎁</div>
-        <p class="instruccion">Haz clic en el regalo para abrirlo</p>
+        <div class="box-container" onclick="abrirRegalo()">
+            <div class="box-lid"></div>
+            <div class="box-bow"></div>
+            <div class="box-body"></div>
+        </div>
+        <p class="instruccion">Tiziana, tienes un regalo.<br>Haz clic para abrirlo.</p>
     </div>
 
     <div class="card" id="mi-tarjeta">
@@ -146,23 +205,22 @@
 
     <script>
         let clics = 0;
-        const caja = document.querySelector('.caja-regalo');
+        const boxContainer = document.querySelector('.box-container');
 
         function abrirRegalo() {
             clics++;
             
-            // Añadir clase de sacudida
-            caja.classList.remove('sacudir');
-            void caja.offsetWidth; // Truco para reiniciar la animación
-            caja.classList.add('sacudir');
+            // Sacudir la caja
+            boxContainer.classList.remove('sacudir');
+            void boxContainer.offsetWidth; 
+            boxContainer.classList.add('sacudir');
 
-            // Crece un poco con cada clic
-            let escala = 1 + (clics * 0.3);
-            caja.style.transform = `scale(${escala})`;
+            // Crece un poquito
+            let escala = 1 + (clics * 0.2);
+            boxContainer.style.transform = `scale(${escala})`;
 
             if (clics >= 3) {
-                // Cambiamos el emoji a una caja abierta antes de desaparecer
-                caja.innerText = "🎊";
+                boxContainer.classList.add('box-open');
                 
                 setTimeout(() => {
                     const pantalla = document.getElementById('pantalla-inicio');
@@ -172,7 +230,7 @@
                     const tarjeta = document.getElementById('mi-tarjeta');
                     tarjeta.style.display = 'block';
                     tarjeta.style.animation = 'aparecerCard 1s forwards';
-                }, 500);
+                }, 600);
             }
         }
 
@@ -196,7 +254,6 @@
             setTimeout(() => { heart.remove(); }, duration * 1000);
         }
 
-        // Lluvia constante de 5 corazones cada 2 segundos
         setInterval(() => {
             for(let i = 0; i < 5; i++) {
                 setTimeout(crearCorazon, i * 300);
