@@ -50,9 +50,9 @@
         .sacudir { animation: shakeBox 0.4s ease-in-out; }
         .box-open .box-lid { transform: translateY(-80px) rotate(15deg); opacity: 0; }
 
-        /* --- [BLOQUE 3: CARTAS] --- */
+        /* --- [BLOQUE 3: CARTAS (POR PASOS)] --- */
         .seccion-carta {
-            display: none; /* Ocultas por defecto */
+            display: none;
             position: absolute;
             width: 90%;
             max-width: 400px;
@@ -90,7 +90,7 @@
             background: #fff;
             color: #ff4d6d;
             border: 2px solid #ff4d6d;
-            display: none; /* Aparece después de leer */
+            display: none; 
         }
 
         #mensaje-secreto {
@@ -99,7 +99,7 @@
             border-top: 1px dashed #ffb6c1;
         }
 
-        /* --- [BLOQUE 4: CORAZONES] --- */
+        /* --- [BLOQUE 4: CORAZONES (TU CÓDIGO)] --- */
         .heart {
             position: absolute; background: #ffc0cb; opacity: 0; pointer-events: none; z-index: 5;
         }
@@ -111,9 +111,10 @@
         .heart:after { left: 50%; top: 0; }
 
         @keyframes floatHeart {
-            0% { transform: translateY(110vh) rotate(-45deg); opacity: 0; }
+            0% { transform: translateY(110vh) rotate(-45deg) translateX(0); opacity: 0; }
             15% { opacity: 0.8; }
-            100% { transform: translateY(-20vh) rotate(-55deg); opacity: 0; }
+            50% { transform: translateY(50vh) rotate(-35deg) translateX(25px); }
+            100% { transform: translateY(-20vh) rotate(-55deg) translateX(-25px); opacity: 0; }
         }
     </style>
 </head>
@@ -135,7 +136,7 @@
             <p>Aunque la vida nos mantenga ocupados, mi cariño por ti siempre encuentra un momento para brillar.</p>
             <button id="btn-revelar" onclick="revelarMensaje()">Descubre mi mensaje</button>
             <div id="mensaje-secreto">
-                "Eres una chispa única en mi vida. Gracias por tu luz y por ser simplemente tú."
+                "Eres una chispa única en mi vida. Gracias por tu luz y por ser simplemente tú. ¡Espero que tengas un hermoso San Valentín!"
             </div>
             <button class="btn-siguiente" id="btn-sig1" onclick="cambiarPaso(1, 2)">Continuar... ❤️</button>
         </div>
@@ -153,13 +154,28 @@
         <div class="card">
             <h2>Gracias por todo ❤️</h2>
             <p>Eres increíble y espero que este pequeño detalle te haga sentir lo especial que eres para mí.</p>
-            <p><b>¡Feliz San Valentín!</b></p>
-            <button onclick="lluviaFinal()">¡Muchos corazones!</button>
+            <p><b>¡Te quiero mucho!</b></p>
         </div>
     </div>
 
     <script>
         let clicsRegalo = 0;
+        let heartsActive = false;
+
+        // TU FUNCIÓN DE CORAZONES
+        function crearCorazon() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            document.body.appendChild(heart);
+            const size = Math.random() * 25 + 25; 
+            heart.style.width = size + 'px';
+            heart.style.height = size + 'px';
+            heart.style.left = Math.random() * 100 + 'vw';
+            const duration = Math.random() * 4 + 6;
+            // Animación según tu lógica
+            heart.style.animation = `floatHeart ${duration}s ease-in-out infinite`;
+            setTimeout(() => { heart.remove(); }, duration * 1000);
+        }
 
         function abrirRegalo() {
             const box = document.querySelector('.box-container');
@@ -176,46 +192,43 @@
                     setTimeout(() => {
                         document.getElementById('pantalla-inicio').style.display = 'none';
                         document.getElementById('paso1').style.display = 'block';
+                        
+                        // INICIAR CORAZONES AL ABRIR LA CAJA
+                        iniciarLluviaCorazones();
                     }, 1000);
                 }, 600);
             }
+        }
+
+        function iniciarLluviaCorazones() {
+            if(heartsActive) return;
+            heartsActive = true;
+
+            // Lluvia inicial (tus 15 corazones)
+            for (let i = 0; i < 15; i++) {
+                setTimeout(crearCorazon, i * 200);
+            }
+
+            // Intervalo constante (tus 5 corazones cada 2 seg)
+            setInterval(() => {
+                for(let i = 0; i < 5; i++) {
+                    setTimeout(crearCorazon, i * 300);
+                }
+            }, 2000);
         }
 
         function revelarMensaje() {
             document.getElementById('mensaje-secreto').style.display = 'block';
             document.getElementById('btn-revelar').style.display = 'none';
             document.getElementById('btn-sig1').style.display = 'inline-block';
-            lluviaFinal();
+            // Ráfaga extra al hacer clic
+            for(let i=0; i<30; i++) setTimeout(crearCorazon, i*100);
         }
 
         function cambiarPaso(actual, siguiente) {
             document.getElementById(`paso${actual}`).style.display = 'none';
             document.getElementById(`paso${siguiente}`).style.display = 'block';
         }
-
-        function crearCorazon() {
-            const heart = document.createElement('div');
-            heart.classList.add('heart');
-            document.body.appendChild(heart);
-            const size = Math.random() * 25 + 25; 
-            heart.style.width = size + 'px';
-            heart.style.height = size + 'px';
-            heart.style.left = Math.random() * 100 + 'vw';
-            const duration = Math.random() * 4 + 6;
-            heart.style.animation = `floatHeart ${duration}s ease-in-out forwards`;
-            setTimeout(() => heart.remove(), duration * 1000);
-        }
-
-        function lluviaFinal() {
-            for(let i=0; i<30; i++) setTimeout(crearCorazon, i*100);
-        }
-
-        // Corazones constantes suaves
-        setInterval(() => {
-            if(document.getElementById('pantalla-inicio').style.display === 'none') {
-                for(let i=0; i<3; i++) setTimeout(crearCorazon, i*500);
-            }
-        }, 3000);
     </script>
 </body>
 </html>
