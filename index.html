@@ -8,21 +8,20 @@
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     
     <style>
-        /* --- [BLOQUE 1: CONFIGURACIÓN DE SCROLL] --- */
-        html {
-            scroll-behavior: smooth; /* Para que al bajar se sienta suave */
-        }
+        /* --- [BLOQUE 1: AJUSTES DE SCROLL Y CUERPO] --- */
+        html { scroll-behavior: smooth; }
 
         body {
             background: linear-gradient(135deg, #ffe0e6 0%, #fff0f5 100%);
             margin: 0;
             padding: 0;
             font-family: 'Poppins', sans-serif;
-            overflow-x: hidden; /* Evita que los corazones ensanchen la web */
-            color: #590d22;
+            overflow-x: hidden;
+            overflow-y: hidden; /* Se habilita al abrir la caja */
+            position: relative;
         }
 
-        /* --- [BLOQUE 2: PANTALLA DE INICIO (Caja de regalo)] --- */
+        /* --- [BLOQUE 2: CAJA DE REGALO (PANTALLA INICIAL)] --- */
         #pantalla-inicio {
             position: fixed;
             top: 0; left: 0;
@@ -37,7 +36,7 @@
         }
 
         .box-container { position: relative; width: 100px; height: 100px; cursor: pointer; transition: transform 0.3s ease; }
-        .box-body { position: absolute; bottom: 0; width: 100%; height: 80%; background-color: #ff6b8f; border-radius: 0 0 10px 10px; }
+        .box-body { position: absolute; bottom: 0; width: 100%; height: 80%; background-color: #ff6b8f; border-radius: 0 0 10px 10px; box-shadow: inset 0 -5px rgba(0,0,0,0.1); }
         .box-lid { position: absolute; top: 0; width: 110%; height: 25%; background-color: #ff4d6d; left: -5%; border-radius: 5px; z-index: 2; transition: transform 0.5s ease; }
         .box-bow { position: absolute; top: -20%; left: 50%; transform: translateX(-50%); width: 40px; height: 20px; background-color: #fff; border-radius: 20px; z-index: 3; }
         .box-bow::before { content: ''; position: absolute; left: 50%; transform: translateX(-50%); width: 10px; height: 120px; background-color: #fff; }
@@ -51,45 +50,58 @@
         .sacudir { animation: shakeBox 0.4s ease-in-out; }
         .box-open .box-lid { transform: translateY(-80px) rotate(15deg); opacity: 0; }
 
-        /* --- [BLOQUE 3: SECCIONES (El contenido extenso)] --- */
+        /* --- [BLOQUE 3: SECCIONES Y CARTAS ORIGINALES] --- */
         .seccion {
-            min-height: 100vh; /* Cada sección ocupa toda la pantalla */
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             padding: 40px 20px;
             box-sizing: border-box;
             position: relative;
-            z-index: 10;
         }
 
+        /* Diseño original de tu carta */
         .card {
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
-            border-radius: 30px;
-            padding: 40px;
-            box-shadow: 0 15px 40px rgba(255, 192, 203, 0.4);
+            border-radius: 25px;
+            padding: 30px;
+            box-shadow: 0 15px 40px rgba(255, 192, 203, 0.6);
             text-align: center;
-            max-width: 500px;
+            z-index: 10;
+            max-width: 400px;
             width: 100%;
-            border: 2px solid #ffb6c1;
-            transform: translateY(50px);
+            border: 3px solid #ffb6c1;
             opacity: 0;
+            transform: translateY(30px);
             transition: all 1s ease-out;
         }
 
-        /* Clase para cuando la tarjeta aparece al hacer scroll */
-        .visible {
-            transform: translateY(0);
-            opacity: 1;
+        .visible { opacity: 1; transform: translateY(0); }
+
+        h1 { color: #e91e63; font-family: 'Dancing Script', cursive; font-size: 2.5rem; margin-bottom: 10px; }
+        h2 { color: #d81b60; font-size: 1.5rem; margin-top: 0; }
+        p { color: #6a052e; font-size: 1.1rem; line-height: 1.6; }
+
+        button {
+            background: linear-gradient(45deg, #ff6b8f, #ff91a4);
+            color: white; border: none; padding: 12px 30px;
+            border-radius: 50px; font-size: 1.1rem; font-weight: 600;
+            cursor: pointer; transition: 0.3s;
+            box-shadow: 0 8px 20px rgba(255, 107, 143, 0.4);
         }
 
-        h1 { color: #e91e63; font-family: 'Dancing Script', cursive; font-size: 3rem; }
-        .highlight { color: #ff4d6d; font-weight: 600; }
+        #mensaje-secreto {
+            display: none; margin-top: 20px; font-size: 1.1rem;
+            color: #b71c1c; font-weight: 600; padding: 15px;
+            border-top: 1px dashed #ffb6c1;
+            animation: fadeIn 1s ease-out;
+        }
 
-        /* --- [BLOQUE 4: CORAZONES (FONDO VIVO)] --- */
+        /* --- [BLOQUE 4: CORAZONES (CORREGIDOS)] --- */
         .heart {
-            position: fixed; /* Ahora son fijos para que sigan el scroll */
+            position: fixed; /* Se quedan fijos en la pantalla */
             background: #ffc0cb;
             opacity: 0;
             pointer-events: none;
@@ -104,23 +116,18 @@
 
         @keyframes floatHeart {
             0% { transform: translateY(110vh) rotate(-45deg) translateX(0); opacity: 0; }
-            10% { opacity: 0.6; }
-            100% { transform: translateY(-20vh) rotate(-55deg) translateX(-20px); opacity: 0; }
+            10% { opacity: 0.8; }
+            50% { transform: translateY(50vh) rotate(-35deg) translateX(25px); }
+            100% { transform: translateY(-20vh) rotate(-55deg) translateX(-25px); opacity: 0; }
         }
 
-        /* Indicador de "Sigue bajando" */
-        .scroll-down {
-            position: absolute;
-            bottom: 20px;
-            animation: bounce 2s infinite;
-            font-size: 2rem;
-            color: #ff4d6d;
+        /* Indicador de scroll */
+        .scroll-hint {
+            position: absolute; bottom: 20px; color: #ff4d6d;
+            font-size: 1.5rem; animation: bounce 2s infinite;
         }
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
-            40% {transform: translateY(-10px);}
-            60% {transform: translateY(-5px);}
-        }
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
 <body>
@@ -131,38 +138,34 @@
             <div class="box-bow"></div>
             <div class="box-body"></div>
         </div>
-        <p class="instruccion" style="color: #e91e63; margin-top: 20px;">Tiziana, haz clic para abrir tu regalo</p>
+        <p style="color: #e91e63; margin-top: 20px; font-weight: 600;">Haz clic para abrir tu regalo</p>
     </div>
 
     <section class="seccion">
         <div class="card" id="card1">
             <h1>¡Para ti, Tiziana!</h1>
-            <p>Este no es un mensaje común, es un pedacito de lo que siento por ti.</p>
-            <div class="scroll-down">↓</div>
+            <h2>Mi persona especial ✨</h2>
+            <p>Aunque la vida nos mantenga ocupados, mi cariño por ti siempre encuentra un momento para brillar.</p>
+            <button onclick="revelarMensaje()">Descubre mi mensaje</button>
+            <div id="mensaje-secreto">
+                "Eres una chispa única en mi vida. Gracias por tu luz y por ser simplemente tú. ¡Espero que tengas un hermoso San Valentín!"
+            </div>
+            <div class="scroll-hint">↓</div>
         </div>
     </section>
 
     <section class="seccion">
         <div class="card">
-            <h2 style="color: #d81b60;">¿Sabías qué? ✨</h2>
-            <p>Desde que llegaste a mi vida, todo tiene más color. Cada momento compartido es un tesoro que guardo con llave.</p>
-            <p><span class="highlight">Eres mi persona favorita</span>, incluso en los días más largos.</p>
+            <h2>Un viaje juntos... 🧭</h2>
+            <p>Quería que esta sorpresa fuera tan extensa como mis ganas de verte sonreír. Cada paso que damos es mi parte favorita del día.</p>
         </div>
     </section>
 
     <section class="seccion">
         <div class="card">
-            <h2 style="color: #d81b60;">Más que palabras...</h2>
-            <p>A veces no encuentro la forma de decirte lo especial que eres, pero espero que este pequeño detalle te saque una sonrisa.</p>
-            <p>¡Gracias por ser simplemente tú! ❤️</p>
-        </div>
-    </section>
-
-    <section class="seccion">
-        <div class="card">
-            <h2 style="color: #e91e63;">El Mensaje Final 💌</h2>
-            <p style="font-style: italic;">"Eres una chispa única en mi vida. Gracias por tu luz y por estar conmigo. ¡Feliz San Valentín!"</p>
-            <button onclick="lanzarMasCorazones()" style="background: #ff4d6d; color: white; border: none; padding: 15px 30px; border-radius: 50px; cursor: pointer; font-weight: 600;">¿Quieres más corazones?</button>
+            <h2>Gracias por todo ❤️</h2>
+            <p>No importa cuánto bajemos en esta página, lo importante es que siempre estemos en la misma sintonía.</p>
+            <p><b>Te quiero mucho, Tiziana.</b></p>
         </div>
     </section>
 
@@ -180,53 +183,53 @@
             if (clics >= 3) {
                 box.classList.add('box-open');
                 setTimeout(() => {
-                    document.getElementById('pantalla-inicio').style.opacity = '0';
+                    const pi = document.getElementById('pantalla-inicio');
+                    pi.style.opacity = '0';
                     setTimeout(() => {
-                        document.getElementById('pantalla-inicio').style.display = 'none';
-                        document.body.style.overflowY = 'auto'; // Habilitar el scroll
-                        revelarSecciones(); // Activar la primera tarjeta
+                        pi.style.display = 'none';
+                        document.body.style.overflowY = 'auto'; // Habilitar scroll
+                        checkCards(); // Mostrar la primera carta
                     }, 1000);
                 }, 600);
             }
         }
 
-        // Función para detectar el scroll y aparecer las tarjetas
-        function revelarSecciones() {
-            const cards = document.querySelectorAll('.card');
-            cards.forEach(card => {
-                const cardTop = card.getBoundingClientRect().top;
-                if (cardTop < window.innerHeight - 100) {
-                    card.classList.add('visible');
-                }
-            });
+        function revelarMensaje() {
+            document.getElementById('mensaje-secreto').style.display = 'block';
+            for (let i = 0; i < 40; i++) {
+                setTimeout(crearCorazon, i * 100); 
+            }
         }
-
-        window.addEventListener('scroll', revelarSecciones);
 
         function crearCorazon() {
             const heart = document.createElement('div');
             heart.classList.add('heart');
             document.body.appendChild(heart);
-            const size = Math.random() * 30 + 20; 
+            const size = Math.random() * 25 + 25; 
             heart.style.width = size + 'px';
             heart.style.height = size + 'px';
             heart.style.left = Math.random() * 100 + 'vw';
-            const duration = Math.random() * 3 + 5;
+            const duration = Math.random() * 4 + 6;
             heart.style.animation = `floatHeart ${duration}s ease-in-out forwards`;
             setTimeout(() => heart.remove(), duration * 1000);
         }
 
-        function lanzarMasCorazones() {
-            for(let i=0; i<30; i++) setTimeout(crearCorazon, i*100);
-        }
-
-        // Lluvia constante (Fijamos la posición en pantalla)
+        // Lluvia constante (5 cada 2 seg)
         setInterval(() => {
             for(let i = 0; i < 5; i++) setTimeout(crearCorazon, i * 300);
         }, 2000);
 
-        // Bloquear scroll al inicio
-        document.body.style.overflowY = 'hidden';
+        // Control de aparición de cartas al scroll
+        function checkCards() {
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                const trigger = window.innerHeight * 0.8;
+                const cardTop = card.getBoundingClientRect().top;
+                if (cardTop < trigger) card.classList.add('visible');
+            });
+        }
+
+        window.addEventListener('scroll', checkCards);
     </script>
 </body>
 </html>
