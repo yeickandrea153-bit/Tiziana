@@ -53,8 +53,11 @@
         .seccion-carta {
             display: none;
             position: absolute;
-            width: 90%;
-            max-width: 400px;
+            width: 100%;
+            height: 100%;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             z-index: 10;
         }
 
@@ -62,110 +65,87 @@
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
             border-radius: 25px;
-            padding: 30px;
+            padding: 25px;
             box-shadow: 0 15px 40px rgba(255, 192, 203, 0.6);
             text-align: center;
             border: 3px solid #ffb6c1;
-            animation: aparecer 0.8s ease-out forwards;
-            position: relative;
+            animation: subirFade 0.8s ease-out forwards;
+            max-width: 350px;
+            width: 85%;
         }
 
-        /* --- [ESTILOS PARA LA FOTO DE LA FLOR Y NOTAS] --- */
-        .marco-foto {
+        /* --- [3. ELEMENTO FOTO EXTERNO (POLAROID)] --- */
+        .foto-externa {
             background: white;
-            padding: 10px 10px 30px 10px; /* Espacio abajo tipo Polaroid */
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            transform: rotate(-2deg);
-            margin: 20px auto;
-            width: 70%;
+            padding: 12px 12px 45px 12px;
+            box-shadow: 0 10px 35px rgba(0,0,0,0.15);
+            transform: rotate(-3deg);
+            width: 220px;
             position: relative;
+            z-index: 20;
+            animation: caerFoto 1s ease-out forwards;
+            margin-bottom: 15px;
         }
         
-        .marco-foto img {
+        .foto-externa img {
             width: 100%;
             height: auto;
             display: block;
             border: 1px solid #eee;
+            filter: contrast(1.05);
         }
 
-        /* Las notitas adhesivas */
         .nota {
             position: absolute;
-            width: 80px;
-            padding: 10px;
-            background: #fff9c4; /* Amarillo post-it */
+            width: 85px;
+            padding: 8px;
             font-family: 'Dancing Script', cursive;
-            font-size: 1rem;
+            font-size: 1.1rem;
             color: #555;
-            box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
-            z-index: 20;
+            box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+            text-align: center;
         }
-        
-        /* Nota izquierda arriba */
-        .nota-1 {
-            top: -15px;
-            left: -20px;
-            transform: rotate(-10deg);
-            background: #ffecb3;
-        }
+        .nota-1 { top: -10px; left: -30px; transform: rotate(-12deg); background: #ffffff; border: 1px solid #ffe0e6; }
+        .nota-2 { bottom: 10px; right: -35px; transform: rotate(8deg); background: #ffecb3; }
 
-        /* Nota derecha abajo */
-        .nota-2 {
-            bottom: -10px;
-            right: -20px;
-            transform: rotate(10deg);
-            background: #ffcdd2; /* Rosita */
-        }
+        @keyframes subirFade { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes caerFoto { from { opacity: 0; transform: translateY(-50px) rotate(5deg); } to { opacity: 1; transform: translateY(0) rotate(-3deg); } }
 
-        @keyframes aparecer {
-            from { opacity: 0; transform: scale(0.8); }
-            to { opacity: 1; transform: scale(1); }
-        }
-
-        h1 { color: #e91e63; font-family: 'Dancing Script', cursive; font-size: 2.5rem; margin-bottom: 10px; }
-        h2 { color: #d81b60; font-size: 1.5rem; margin-top: 0; }
-        p { color: #6a052e; font-size: 1.1rem; line-height: 1.6; }
+        h1 { color: #e91e63; font-family: 'Dancing Script', cursive; font-size: 2.5rem; margin: 0; }
+        h2 { color: #d81b60; font-size: 1.4rem; margin-top: 0; }
+        p { color: #6a052e; font-size: 1rem; line-height: 1.6; }
 
         button {
             background: linear-gradient(45deg, #ff6b8f, #ff91a4);
             color: white; border: none; padding: 12px 30px;
             border-radius: 50px; font-size: 1rem; font-weight: 600;
-            cursor: pointer; margin-top: 15px; box-shadow: 0 4px 15px rgba(255, 107, 143, 0.4);
+            cursor: pointer; box-shadow: 0 4px 15px rgba(255, 107, 143, 0.4);
         }
 
         #mensaje-secreto {
-            display: none; margin-top: 20px; font-size: 1.1rem;
-            color: #b71c1c; font-weight: 600; padding: 15px;
-            border-top: 1px dashed #ffb6c1;
+            display: none; margin-top: 15px; font-size: 1rem; color: #b71c1c; font-weight: 600; padding: 10px; border-top: 1px dashed #ffb6c1;
         }
 
-        /* --- [3. CORAZONES MEJORADOS] --- */
-        .heart {
-            position: absolute; background: #ffc0cb; opacity: 0; pointer-events: none; z-index: 5;
+        /* --- [4. CORAZONES Y PÉTALOS] --- */
+        .heart, .petal {
+            position: absolute; opacity: 0; pointer-events: none; z-index: 5;
         }
-        .heart:before, .heart:after {
-            content: ''; position: absolute; width: 100%; height: 100%;
-            border-radius: 50%; background: #ffc0cb;
-        }
+        .heart { background: #ffc0cb; }
+        .heart:before, .heart:after { content: ''; position: absolute; width: 100%; height: 100%; border-radius: 50%; background: #ffc0cb; }
         .heart:before { top: -50%; left: 0; }
         .heart:after { left: 50%; top: 0; }
 
-        /* Animación más suave y alta */
-        @keyframes floatHeart {
-            0% { 
-                transform: translateY(110vh) scale(0.8) rotate(-45deg); 
-                opacity: 0; 
-            }
-            15% { opacity: 0.9; }
-            50% { 
-                /* Movimiento lateral suave */
-                transform: translateY(40vh) scale(1.1) rotate(-25deg) translateX(40px); 
-            }
-            100% { 
-                /* Suben hasta desaparecer por arriba */
-                transform: translateY(-50vh) scale(0.8) rotate(-65deg) translateX(-40px); 
-                opacity: 0; 
-            }
+        .petal {
+            background: #ffffff;
+            border-radius: 150% 0 150% 0;
+            width: 15px; height: 15px;
+            box-shadow: 0 0 5px rgba(255,255,255,0.8);
+        }
+
+        @keyframes floatHigh {
+            0% { transform: translateY(110vh) scale(0.5) rotate(0deg); opacity: 0; }
+            15% { opacity: 0.8; }
+            100% { transform: translateY(-50vh) scale(1) rotate(360deg); opacity: 0; }
         }
     </style>
 </head>
@@ -177,45 +157,40 @@
             <div class="box-bow"></div>
             <div class="box-body"></div>
         </div>
-        <p style="color: #e91e63; margin-top: 20px; font-weight: 600;">Tiziana, tienes un regalo...</p>
+        <p style="color: #e91e63; margin-top: 20px; font-weight: 600;">Para Tiziana...</p>
     </div>
 
     <div class="seccion-carta" id="paso1">
         <div class="card">
-            <h1>¡Para ti, Tiziana!</h1>
-            <h2>Mi persona especial ✨</h2>
-            <p>Aunque la vida nos mantenga ocupados, mi cariño por ti siempre encuentra un momento para brillar.</p>
-            <button id="btn-revelar" onclick="revelarMensaje()">Descubre mi mensaje</button>
+            <h1>¡Hola, Tiziana!</h1>
+            <h2>Algo especial para ti ✨</h2>
+            <p>He preparado este detalle porque hay cosas que las palabras a veces no alcanzan a decir.</p>
+            <button id="btn-revelar" onclick="revelarMensaje()">Abrir carta</button>
             <div id="mensaje-secreto">
-                "Eres una chispa única en mi vida. Gracias por tu luz y por ser simplemente tú. ¡Espero que tengas un hermoso San Valentín!"
+                "Eres la persona que ilumina mis días. ¡Feliz San Valentín!"
             </div>
-            <button class="btn-siguiente" style="display:none; background:white; color:#ff4d6d; border:2px solid #ff4d6d" id="btn-sig1" onclick="cambiarPaso(1, 2)">Siguiente detalle ➡️</button>
+            <button class="btn-siguiente" style="display:none; background:white; color:#ff4d6d; border:2px solid #ff4d6d" id="btn-sig1" onclick="cambiarPaso(1, 2)">Siguiente ➡️</button>
         </div>
     </div>
 
     <div class="seccion-carta" id="paso2">
+        <div class="foto-externa">
+            <div class="nota nota-1">Luz y paz</div>
+            <img src="https://images.unsplash.com/photo-1508610048659-a06b669e3321?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Flor Blanca">
+            <div class="nota nota-2">Para Tiziana</div>
+        </div>
         <div class="card">
-            <h2>Esta flor es para ti 🌸</h2>
-            
-            <div class="marco-foto">
-                <div class="nota nota-1">Tan linda como tú</div>
-                
-                <img src="https://images.unsplash.com/photo-1490750967868-58cb75063ed4?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80" alt="Flor Especial">
-                
-                <div class="nota nota-2">Con amor</div>
-            </div>
-
-            <p>Porque me recuerdas a la belleza simple y natural de las cosas buenas de la vida.</p>
-            <button onclick="cambiarPaso(2, 3)">Último mensajito...</button>
+            <h2>Blanca, como tu luz 🌸</h2>
+            <p>Elegí esta flor blanca para ti porque representa la pureza y la calma que traes a mi vida. Es un símbolo de lo especial que eres.</p>
+            <button onclick="cambiarPaso(2, 3)">Finalmente...</button>
         </div>
     </div>
 
     <div class="seccion-carta" id="paso3">
         <div class="card">
-            <h1>Gracias por todo ❤️</h1>
-            <p>Espero que este pequeño detalle digital te haya sacado una sonrisa real.</p>
-            <p style="font-size: 1.2rem; margin-top:20px;"><b>¡Te quiero mucho!</b></p>
-            <button onclick="lluviaFinal()">¡Muchos corazones!</button>
+            <h1>Te quiero ❤️</h1>
+            <p>Gracias por ser parte de mi historia. Espero que este pequeño detalle te haga sonreír hoy y siempre.</p>
+            <button onclick="lluviaFinal()">¡Lluvia de amor!</button>
         </div>
     </div>
 
@@ -223,70 +198,60 @@
         let clicsRegalo = 0;
         let heartsActive = false;
 
-        function crearCorazon() {
-            const heart = document.createElement('div');
-            heart.classList.add('heart');
-            document.body.appendChild(heart);
-            const size = Math.random() * 30 + 20; // Un poco más grandes
-            heart.style.width = size + 'px';
-            heart.style.height = size + 'px';
-            heart.style.left = Math.random() * 100 + 'vw';
-            
-            // Duración más larga para que suban más alto y suave
-            const duration = Math.random() * 5 + 7; 
-            heart.style.animation = `floatHeart ${duration}s ease-in-out infinite`;
-            
-            setTimeout(() => { heart.remove(); }, duration * 1000);
+        function crearElemento(clase) {
+            const el = document.createElement('div');
+            el.className = clase;
+            document.body.appendChild(el);
+            const size = Math.random() * 20 + 20;
+            el.style.width = size + 'px';
+            el.style.height = size + 'px';
+            el.style.left = Math.random() * 100 + 'vw';
+            const duration = Math.random() * 5 + 7;
+            el.style.animation = `floatHigh ${duration}s ease-in-out infinite`;
+            setTimeout(() => el.remove(), duration * 1000);
         }
 
         function abrirRegalo() {
             const box = document.querySelector('.box-container');
             clicsRegalo++;
             box.classList.remove('sacudir');
-            void box.offsetWidth; 
-            box.classList.add('sacudir');
+            void box.offsetWidth; box.classList.add('sacudir');
             box.style.transform = `scale(${1 + (clicsRegalo * 0.2)})`;
-
             if (clicsRegalo >= 3) {
                 box.classList.add('box-open');
                 setTimeout(() => {
                     document.getElementById('pantalla-inicio').style.opacity = '0';
                     setTimeout(() => {
                         document.getElementById('pantalla-inicio').style.display = 'none';
-                        document.getElementById('paso1').style.display = 'block';
-                        iniciarLluviaCorazones();
+                        document.getElementById('paso1').style.display = 'flex';
+                        iniciarEfectos();
                     }, 1000);
                 }, 600);
             }
         }
 
-        function iniciarLluviaCorazones() {
+        function iniciarEfectos() {
             if(heartsActive) return;
             heartsActive = true;
-            for (let i = 0; i < 15; i++) {
-                setTimeout(crearCorazon, i * 200);
-            }
             setInterval(() => {
-                for(let i = 0; i < 5; i++) {
-                    setTimeout(crearCorazon, i * 300);
-                }
-            }, 2000);
+                crearElemento('heart');
+                if(Math.random() > 0.5) crearElemento('petal');
+            }, 600);
         }
 
         function revelarMensaje() {
             document.getElementById('mensaje-secreto').style.display = 'block';
             document.getElementById('btn-revelar').style.display = 'none';
             document.getElementById('btn-sig1').style.display = 'inline-block';
-            for(let i=0; i<30; i++) setTimeout(crearCorazon, i*100);
         }
 
         function cambiarPaso(actual, siguiente) {
             document.getElementById(`paso${actual}`).style.display = 'none';
-            document.getElementById(`paso${siguiente}`).style.display = 'block';
+            document.getElementById(`paso${siguiente}`).style.display = 'flex';
         }
 
         function lluviaFinal() {
-            for(let i=0; i<40; i++) setTimeout(crearCorazon, i*100);
+            for(let i=0; i<50; i++) setTimeout(() => crearElemento(Math.random() > 0.5 ? 'heart' : 'petal'), i*100);
         }
     </script>
 </body>
