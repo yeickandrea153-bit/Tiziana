@@ -3,12 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Para Tiziana, con Amor ❤️</title>
+    <title>Un regalo para Tiziana ❤️</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     
     <style>
-        /* --- [BLOQUE 1: FONDO Y CENTRADO] --- */
+        /* --- [BLOQUE 1: PANTALLA DE INICIO (CUBIERTA)] --- */
+        #pantalla-inicio {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-color: #ffe0e6;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 100; /* Por encima de todo */
+            transition: opacity 1s ease, visibility 1s;
+        }
+
+        .corazon-principal {
+            font-size: 100px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            animation: latidoInicial 1.2s infinite;
+            user-select: none;
+        }
+
+        .instruccion {
+            margin-top: 20px;
+            color: #e91e63;
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        @keyframes latidoInicial {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        /* --- [BLOQUE 2: FONDO Y CENTRADO DE LA WEB PRINCIPAL] --- */
         body {
             background: linear-gradient(135deg, #ffe0e6 0%, #fff0f5 100%);
             display: flex;
@@ -19,12 +54,11 @@
             padding: 20px;
             box-sizing: border-box;
             font-family: 'Poppins', sans-serif;
-            /* El overflow hidden evita que salgan barras de scroll */
             overflow: hidden; 
             position: relative;
         }
 
-        /* --- [BLOQUE 2: TARJETA] --- */
+        /* --- [BLOQUE 3: LA TARJETA (TU CÓDIGO ORIGINAL)] --- */
         .card {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
@@ -32,102 +66,68 @@
             padding: 30px;
             box-shadow: 0 15px 40px rgba(255, 192, 203, 0.6);
             text-align: center;
-            z-index: 10; /* La carta siempre al frente */
+            z-index: 10;
             max-width: 400px;
             width: 100%;
             border: 3px solid #ffb6c1;
-            animation: bounceIn 1s ease-out;
-            margin: auto; 
+            display: none; /* Se oculta al principio */
+            margin: auto;
         }
 
-        /* --- [BLOQUE 3: TEXTOS] --- */
-        h1 {
-            color: #e91e63;
-            font-family: 'Dancing Script', cursive;
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-        }
+        /* --- [BLOQUE 4: TEXTOS Y BOTONES] --- */
+        h1 { color: #e91e63; font-family: 'Dancing Script', cursive; font-size: 2.5rem; margin-bottom: 10px; }
         h2 { color: #d81b60; font-size: 1.3rem; margin-top: 0; }
         p { color: #6a052e; font-size: 1rem; line-height: 1.5; }
 
-        /* --- [BLOQUE 4: BOTÓN] --- */
         button {
             background: linear-gradient(45deg, #ff6b8f, #ff91a4);
-            color: white;
-            border: none;
-            padding: 12px 30px;
-            border-radius: 50px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 8px 20px rgba(255, 107, 143, 0.4);
+            color: white; border: none; padding: 12px 30px;
+            border-radius: 50px; font-size: 1.1rem; font-weight: 600;
+            cursor: pointer; box-shadow: 0 8px 20px rgba(255, 107, 143, 0.4);
         }
 
-        /* --- [BLOQUE 5: MENSAJE OCULTO] --- */
         #mensaje-secreto {
-            display: none;
-            margin-top: 20px;
-            font-size: 1.1rem;
-            color: #b71c1c;
-            font-weight: 600;
-            animation: fadeIn 1.5s ease-out;
-            padding: 15px;
+            display: none; margin-top: 20px; font-size: 1.1rem;
+            color: #b71c1c; font-weight: 600; padding: 15px;
             border-top: 1px dashed #ffb6c1;
         }
 
-        /* --- [BLOQUE 6: CORAZONES] --- */
+        /* --- [BLOQUE 5: CORAZONES FLOTANTES] --- */
         .heart {
             position: absolute;
             background: #ffc0cb;
             opacity: 0;
             pointer-events: none;
-            z-index: 1; /* Pasan por detrás de la carta */
+            z-index: 1;
         }
         .heart:before, .heart:after {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            background: #ffc0cb;
+            content: ''; position: absolute; width: 100%; height: 100%;
+            border-radius: 50%; background: #ffc0cb;
         }
         .heart:before { top: -50%; left: 0; }
         .heart:after { left: 50%; top: 0; }
 
-        /* --- [BLOQUE 7: ANIMACIÓN CORREGIDA] --- */
         @keyframes floatHeart {
-            0% {
-                /* Empiezan un poco más abajo del borde inferior */
-                transform: translateY(120vh) rotate(-45deg) translateX(0);
-                opacity: 0;
-            }
-            10% { opacity: 0.8; }
-            /* A mitad de pantalla hacen el movimiento vivo */
-            50% {
-                transform: translateY(50vh) rotate(-35deg) translateX(30px);
-                opacity: 0.8;
-            }
-            100% {
-                /* SUBEN HASTA SALIR POR EL TECHO (-30vh asegura que crucen todo) */
-                transform: translateY(-30vh) rotate(-55deg) translateX(-30px);
-                opacity: 0;
-            }
+            0% { transform: translateY(120vh) rotate(-45deg) translateX(0); opacity: 0; }
+            10% { opacity: 0.7; }
+            50% { transform: translateY(50vh) rotate(-35deg) translateX(30px); opacity: 0.8; }
+            100% { transform: translateY(-30vh) rotate(-55deg) translateX(-30px); opacity: 0; }
         }
 
-        @keyframes bounceIn {
-            0% { transform: scale(0.8); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        @keyframes aparecerCard {
+            from { opacity: 0; transform: scale(0.5); }
+            to { opacity: 1; transform: scale(1); }
         }
     </style>
 </head>
 <body>
 
-    <div class="card">
+    <div id="pantalla-inicio">
+        <div class="corazon-principal" onclick="abrirRegalo()">❤️</div>
+        <p class="instruccion">Toca el corazón para abrir tu regalo</p>
+    </div>
+
+    <div class="card" id="mi-tarjeta">
         <h1>¡Para ti, Tiziana!</h1>
         <h2>Mi persona especial ✨</h2>
         <p>Aunque la vida nos mantenga ocupados, mi cariño por ti siempre encuentra un momento para brillar.</p>
@@ -140,6 +140,29 @@
     </div>
 
     <script>
+        let clics = 0;
+        const corazon = document.querySelector('.corazon-principal');
+
+        function abrirRegalo() {
+            clics++;
+            
+            // El corazón crece un poco más en cada clic
+            let escala = 1 + (clics * 0.2);
+            corazon.style.transform = `scale(${escala})`;
+
+            if (clics >= 3) {
+                // Desvanecer pantalla de inicio
+                const pantalla = document.getElementById('pantalla-inicio');
+                pantalla.style.opacity = '0';
+                pantalla.style.visibility = 'hidden';
+
+                // Mostrar la tarjeta con animación
+                const tarjeta = document.getElementById('mi-tarjeta');
+                tarjeta.style.display = 'block';
+                tarjeta.style.animation = 'aparecerCard 1s forwards';
+            }
+        }
+
         function revelarMensaje() {
             document.getElementById('mensaje-secreto').style.display = 'block';
             for (let i = 0; i < 40; i++) {
@@ -155,19 +178,15 @@
             const size = Math.random() * 25 + 25; 
             heart.style.width = size + 'px';
             heart.style.height = size + 'px';
-            
-            // Posición aleatoria
             heart.style.left = Math.random() * 100 + 'vw';
             
-            // Tiempo de subida suave
             const duration = Math.random() * 4 + 6;
             heart.style.animation = `floatHeart ${duration}s ease-in-out infinite`;
             
-            // Eliminar elemento después de la animación
             setTimeout(() => { heart.remove(); }, duration * 1000);
         }
 
-        // 4 corazones automáticos cada 2 segundos
+        // 5 corazones automáticos cada 2 segundos
         setInterval(() => {
             for(let i = 0; i < 5; i++) {
                 setTimeout(crearCorazon, i * 300);
