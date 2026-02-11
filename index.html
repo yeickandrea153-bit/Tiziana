@@ -3,146 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Para Tiziana ❤️</title>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&family=Caveat:wght@700&display=swap" rel="stylesheet">
+    <title>Para Alguien Especial</title>
     <style>
-        * { box-sizing: border-box; }
-        body {
-            margin: 0; padding: 0;
-            background: #fff0f5;
-            font-family: 'Poppins', sans-serif;
-            overflow: hidden; height: 100vh; width: 100vw;
-            display: flex; justify-content: center; align-items: center;
-        }
-
-        /* FONDO DE CORAZONES */
-        .floating-heart {
-            position: absolute; color: #ffb6c1; opacity: 0.5;
-            pointer-events: none; animation: float 8s linear infinite; z-index: 1;
-        }
-        @keyframes float {
-            0% { transform: translateY(110vh) rotate(0deg); }
-            100% { transform: translateY(-10vh) rotate(360deg); }
-        }
-
-        /* CONTENEDOR COLLAGE (Se oculta al inicio) */
-        .collage-container {
-            position: relative;
-            width: 100%; height: 100%;
-            display: none; /* Se activa al abrir */
-            z-index: 10;
-            padding: 20px;
-        }
-
-        /* ESTILO POLAROID */
-        .photo {
-            position: absolute;
-            background: white;
-            padding: 10px 10px 30px 10px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
-            width: 140px;
-            border-radius: 2px;
-            transition: transform 0.3s;
-        }
-        .photo img { width: 100%; height: 120px; object-fit: cover; }
-        .photo:hover { transform: scale(1.1) rotate(0deg) !important; z-index: 100; }
-
-        /* ESTILO POST-IT */
-        .post-it {
-            position: absolute;
-            background: #fff3a0;
-            padding: 15px;
-            width: 130px;
-            box-shadow: 5px 5px 10px rgba(0,0,0,0.1);
-            font-family: 'Caveat', cursive;
-            font-size: 1.2rem;
-            color: #444;
-            transform: rotate(-5deg);
-        }
-
-        /* TARJETA CENTRAL */
-        .main-card {
-            position: absolute;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            background: rgba(255, 255, 255, 0.95);
-            padding: 25px;
-            border-radius: 20px;
-            border: 2px solid #ff6b8f;
-            width: 85%; max-width: 320px;
-            text-align: center;
-            z-index: 50;
-            box-shadow: 0 15px 40px rgba(255, 107, 143, 0.3);
-        }
-
-        /* REGALO */
-        #regalo { text-align: center; cursor: pointer; z-index: 100; transition: 0.3s; }
-        #regalo:hover { transform: scale(1.1); }
-        .gift-box { width: 100px; height: 100px; background: #ff6b8f; margin: 0 auto; border-radius: 10px; position: relative; }
-        .lid { width: 110px; height: 25px; background: #d81b60; position: absolute; top: -10px; left: -5px; border-radius: 5px; }
-
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        body { background-color: #ffebee; font-family: 'Arial', sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; overflow: hidden; }
+        .card { background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); text-align: center; z-index: 10; width: 80%; max-width: 400px; }
+        h1 { color: #e91e63; font-size: 1.5rem; }
+        button { background: #e91e63; color: white; border: none; padding: 10px 20px; border-radius: 50px; cursor: pointer; font-size: 1rem; transition: 0.3s; }
+        button:hover { background: #c2185b; transform: scale(1.1); }
+        #mensaje-oculto { display: none; margin-top: 20px; color: #555; line-height: 1.5; font-style: italic; }
+        .corazon { position: absolute; color: #ff80ab; animation: caer linear infinite; }
+        @keyframes caer { to { transform: translateY(100vh) rotate(360deg); } }
     </style>
 </head>
 <body>
 
-    <audio id="musica" loop>
-        <source src="TU_LINK_DE_DRIVE_AQUI" type="audio/mpeg">
-    </audio>
-
-    <div id="regalo" onclick="abrir()">
-        <div class="gift-box"><div class="lid"></div></div>
-        <p style="color: #d81b60; font-weight: bold; margin-top: 10px;">Para Tiziana ✨</p>
-    </div>
-
-    <div class="collage-container" id="collage">
-        
-        <div class="photo" style="top: 10%; left: 5%; transform: rotate(-10deg);">
-            <img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?q=80&w=200&auto=format" alt="corazon">
-            <p style="margin: 10px 0 0 0; font-family: 'Caveat'; font-size: 1rem; text-align:center;">Nosotros ✨</p>
-        </div>
-
-        <div class="photo" style="bottom: 15%; right: 5%; transform: rotate(8deg);">
-            <img src="https://images.unsplash.com/photo-1516589174184-c68526614fd5?q=80&w=200&auto=format" alt="flores">
-            <p style="margin: 10px 0 0 0; font-family: 'Caveat'; font-size: 1rem; text-align:center;">Para siempre ❤️</p>
-        </div>
-
-        <div class="post-it" style="top: 15%; right: 10%; background: #ffcfdf;">
-            Eres mi persona favorita en el mundo.
-        </div>
-
-        <div class="post-it" style="bottom: 20%; left: 10%; background: #e0f7fa; transform: rotate(5deg);">
-            ¡No olvides sonreír hoy! 😊
-        </div>
-
-        <div class="main-card">
-            <h1 style="font-family: 'Dancing Script'; color: #d81b60; margin: 0;">Tiziana</h1>
-            <p>Este pequeño espacio es para recordarte lo especial que eres para mí.</p>
-            <p style="font-size: 1.5rem;">💖✨🌹</p>
+    <div class="card">
+        <h1>¡Hola! Tengo algo para ti...</h1>
+        <p>No podíamos vernos hoy, pero quería que supieras esto:</p>
+        <button onclick="mostrarMensaje()">Hacer clic aquí</button>
+        <div id="mensaje-oculto">
+            "Eres esa persona que, incluso a la distancia, logra hacerme sonreír. ¡Feliz San Valentín! 🌹"
         </div>
     </div>
 
     <script>
-        // Lluvia de corazones constante
-        setInterval(() => {
-            const h = document.createElement('div');
-            h.className = 'floating-heart';
-            h.innerHTML = '❤️';
-            h.style.left = Math.random() * 100 + 'vw';
-            h.style.fontSize = (Math.random() * 20 + 15) + 'px';
-            h.style.animationDuration = (Math.random() * 5 + 5) + 's';
-            document.body.appendChild(h);
-            setTimeout(() => h.remove(), 8000);
-        }, 600);
+        function mostrarMensaje() {
+            document.getElementById('mensaje-oculto').style.display = 'block';
+            for (let i = 0; i < 30; i++) { crearCorazon(); }
+        }
 
-        function abrir() {
-            document.getElementById('regalo').style.display = 'none';
-            const collage = document.getElementById('collage');
-            collage.style.display = 'block';
-            collage.style.animation = 'fadeIn 1.5s forwards';
-            
-            const audio = document.getElementById('musica');
-            audio.play().catch(e => console.log("Audio listo"));
+        function crearCorazon() {
+            const corazon = document.createElement('div');
+            corazon.classList.add('corazon');
+            corazon.innerHTML = '❤️';
+            corazon.style.left = Math.random() * 100 + 'vw';
+            corazon.style.animationDuration = Math.random() * 3 + 2 + 's';
+            corazon.style.fontSize = Math.random() * 20 + 10 + 'px';
+            document.body.appendChild(corazon);
         }
     </script>
 </body>
