@@ -21,16 +21,22 @@
             position: relative;
         }
 
-        /* --- [ELEMENTOS DE DECORACIÓN EXTRA] --- */
+        /* --- [DESTELLOS] --- */
         .sparkle {
             position: absolute;
-            width: 5px; height: 5px;
-            background: white;
+            width: 8px; 
+            height: 8px;
+            background: #fff;
             border-radius: 50%;
-            box-shadow: 0 0 10px white;
-            animation: pulse 2s infinite;
+            box-shadow: 0 0 15px 2px rgba(255, 255, 255, 1), 0 0 5px rgba(255, 200, 0, 0.8);
+            animation: twinkle 1.5s infinite ease-in-out;
+            z-index: 10;
         }
-        @keyframes pulse { 0%, 100% { opacity: 0.3; transform: scale(1); } 50% { opacity: 1; transform: scale(1.5); } }
+
+        @keyframes twinkle {
+            0%, 100% { transform: scale(0.5); opacity: 0.3; }
+            50% { transform: scale(1.2); opacity: 1; box-shadow: 0 0 20px 5px rgba(255, 255, 255, 1); }
+        }
 
         .divider {
             display: flex;
@@ -113,7 +119,6 @@
             margin-bottom: 20px;
             border: 1px solid #eee;
         }
-        
         .foto-externa img { width: 100%; height: auto; display: block; }
 
         .nota {
@@ -133,9 +138,9 @@
         @keyframes subirFade { from { opacity: 0; transform: translateY(40px) scale(0.9); } to { opacity: 1; transform: translateY(0) scale(1); } }
         @keyframes caerFoto { from { opacity: 0; transform: translateY(-70px) rotate(5deg); } to { opacity: 1; transform: translateY(0) rotate(-3deg); } }
 
-        h1 { color: #d81b60; font-family: 'Dancing Script', cursive; font-size: 2.5rem; margin: 0; }
+        h1 { color: #d81b60; font-family: 'Dancing Script', cursive; font-size: 2.3rem; margin: 0; }
         h2 { color: #ad1457; font-size: 1.1rem; margin: 5px 0; font-weight: 600; }
-        p { color: #4a0016; font-size: 0.95rem; line-height: 1.6; margin-bottom: 15px; }
+        p { color: #4a0016; font-size: 0.95rem; line-height: 1.5; margin-bottom: 12px; }
 
         button {
             background: linear-gradient(45deg, #ff3366, #ff6b8f);
@@ -145,7 +150,7 @@
             transition: all 0.3s ease;
             text-transform: uppercase;
             position: relative;
-            z-index: 5;
+            z-index: 15;
         }
         button:hover { transform: translateY(-3px); }
 
@@ -176,32 +181,30 @@
 
     <div class="seccion-carta" id="paso1" style="justify-content: center;">
         <div class="card">
-            <div class="sparkle" style="top: 10px; left: 10px;"></div>
-            <div class="sparkle" style="bottom: 10px; right: 10px;"></div>
+            <div class="sparkle" style="top: -5px; left: -5px; animation-delay: 0s;"></div>
+            <div class="sparkle" style="top: -5px; right: -5px; animation-delay: 0.5s;"></div>
+            <div class="sparkle" style="bottom: -5px; left: -5px; animation-delay: 1s;"></div>
+            <div class="sparkle" style="bottom: -5px; right: -5px; animation-delay: 0.2s;"></div>
             
-            <h1>Hola, Tiziana...</h1>
+            <h1>HOLAAA, TIZIANA.</h1>
+            <p>Buenos días, tardes o noches 🌤</p>
             
-            <div class="divider">
-                <div></div>
-                <span>❤️</span>
-                <div></div>
-            </div>
+            <div class="divider"><div></div><span>❤️</span><div></div></div>
 
-            <h2>Tenía algo guardado para ti</h2>
-            <p>A veces el corazón encuentra formas curiosas de expresarse cuando las palabras se quedan cortas.</p>
+            <p>Hoy es un día especial, y lo sabes.</p>
+            <p>Hemos pasado buenos momentos juntos, y este es un presente en este día, que expresa mi gratitud y mis sentimientos por ti.</p>
             
-            <button id="btn-revelar" onclick="revelarMensaje()">Toca aquí ✨</button>
+            <button id="btn-revelar" onclick="revelarMensaje()">Tocar ✨</button>
             
-            <div id="mensaje-secreto" style="display:none; margin: 20px 0; font-style: italic; color: #c2185b; border-left: 4px solid #ff3366; background: #fffafb; padding: 20px; border-radius: 15px; font-family: 'Dancing Script', cursive; font-size: 1.4rem; line-height: 1.2; position: relative;">
+            <div id="mensaje-secreto" style="display:none; margin: 20px 0; font-style: italic; color: #c2185b; border-left: 4px solid #ff3366; background: #fffafb; padding: 20px; border-radius: 15px; font-family: 'Dancing Script', cursive; font-size: 1.4rem; line-height: 1.2;">
                 "Eres esa luz que no buscaba, pero que ahora no querría perder por nada del mundo."
-                <span style="position: absolute; bottom: 5px; right: 10px; font-size: 0.8rem; opacity: 0.5;">✨</span>
             </div>
 
-            <p id="frase-espera" style="display:none; font-size: 0.85rem; color: #ad1457; margin-top: 15px;">
-                Quería decirte algo más... algo sobre el color blanco y lo que me recuerda a ti.
-            </p>
-
-            <button class="btn-siguiente" style="display:none; background:white; color:#ff3366; border:2.3px solid #ff3366; margin-top: 15px;" id="btn-sig1" onclick="cambiarPaso(1, 2)">Ver qué es ➡️</button>
+            <div id="texto-final" style="display:none; margin-top: 15px;">
+                <p>Hay más cosas que quiero decirte…</p>
+                <p>¿Te acuerdas de las flores que te pregunté?</p>
+                <button class="btn-siguiente" style="background:white; color:#ff3366; border:2.3px solid #ff3366; margin-top: 10px;" onclick="cambiarPaso(1, 2)">Ven, acompáñame ➡️</button>
+            </div>
         </div>
     </div>
 
@@ -280,9 +283,8 @@
 
         function revelarMensaje() {
             document.getElementById('mensaje-secreto').style.display = 'block';
-            document.getElementById('frase-espera').style.display = 'block';
+            document.getElementById('texto-final').style.display = 'block';
             document.getElementById('btn-revelar').style.display = 'none';
-            document.getElementById('btn-sig1').style.display = 'inline-block';
         }
 
         function cambiarPaso(actual, siguiente) {
