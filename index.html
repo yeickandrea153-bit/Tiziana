@@ -104,7 +104,33 @@
             flex-shrink: 0;
             position: relative;
         }
-
+        /* Icono de Reloj de Arena Minimalista */
+        .reloj-minimalista {
+            width: 24px;
+            height: 32px;
+            border: 2px solid #ff3366;
+            border-radius: 2px;
+            position: relative;
+            margin: 0 auto;
+            background: transparent;
+            clip-path: polygon(0% 0%, 100% 0%, 10% 50%, 100% 100%, 0% 100%, 90% 50%);
+        }
+        
+        .reloj-minimalista::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 4px;
+            width: 12px;
+            height: 10px;
+            background: #ffccd5;
+            animation: arenaFluyendo 3s infinite alternate ease-in-out;
+        }
+        
+        @keyframes arenaFluyendo {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(14px); }
+        }
         /* --- [3. FOTO POLAROID] --- */
         .foto-externa {
             background: white;
@@ -229,8 +255,14 @@
     </div>
     <div class="seccion-carta" id="paso3">
         <div class="card" style="max-width: 450px;">
-            <h1>Nuestra Historia ✨</h1>
-            <div class="divider"><div></div><span>⏳</span><div></div></div>
+            <h1>La Historia</h1>
+            <div class="divider">
+                            <div></div>
+                            <div style="margin: 0 15px;">
+                                <div class="reloj-minimalista"></div>
+                            </div>
+                            <div></div>
+                        </div>
             
             <div style="text-align: left; font-size: 0.9rem;">
                 <div style="margin-bottom: 20px; position: relative; padding-left: 25px; border-left: 2px dashed #ff3366;">
