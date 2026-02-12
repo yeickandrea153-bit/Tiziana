@@ -21,6 +21,26 @@
             position: relative;
         }
 
+        /* --- [ELEMENTOS DE DECORACIÓN EXTRA] --- */
+        .sparkle {
+            position: absolute;
+            width: 5px; height: 5px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 0 10px white;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse { 0%, 100% { opacity: 0.3; transform: scale(1); } 50% { opacity: 1; transform: scale(1.5); } }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 15px 0;
+        }
+        .divider div { height: 1px; background: #ffccd5; flex-grow: 1; }
+        .divider span { margin: 0 10px; color: #ff3366; font-size: 1.2rem; }
+
         /* --- [1. LA CAJA DE REGALO] --- */
         #pantalla-inicio {
             position: fixed;
@@ -56,11 +76,11 @@
             width: 100%;
             height: 100%;
             flex-direction: column;
-            justify-content: flex-start; /* Cambio de center a flex-start para mejor scroll */
+            justify-content: flex-start;
             align-items: center;
             z-index: 10;
             padding: 20px 0;
-            overflow-y: auto; /* Permite scroll en toda la sección */
+            overflow-y: auto;
         }
 
         .card {
@@ -75,10 +95,11 @@
             max-width: 360px;
             width: 85%;
             margin-bottom: 30px;
-            flex-shrink: 0; /* Evita que la carta se aplaste */
+            flex-shrink: 0;
+            position: relative;
         }
 
-        /* --- [3. FOTO POLAROID AJUSTADA] --- */
+        /* --- [3. FOTO POLAROID] --- */
         .foto-externa {
             background: white;
             padding: 12px 12px 40px 12px;
@@ -88,18 +109,12 @@
             position: relative;
             z-index: 20;
             animation: caerFoto 1.2s ease-out forwards;
-            margin-top: 10px; /* Margen para que no toque el borde superior */
+            margin-top: 10px;
             margin-bottom: 20px;
             border: 1px solid #eee;
-            flex-shrink: 0;
         }
         
-        .foto-externa img {
-            width: 100%;
-            height: auto;
-            display: block;
-            border: 1px solid #f9f9f9;
-        }
+        .foto-externa img { width: 100%; height: auto; display: block; }
 
         .nota {
             position: absolute;
@@ -118,8 +133,8 @@
         @keyframes subirFade { from { opacity: 0; transform: translateY(40px) scale(0.9); } to { opacity: 1; transform: translateY(0) scale(1); } }
         @keyframes caerFoto { from { opacity: 0; transform: translateY(-70px) rotate(5deg); } to { opacity: 1; transform: translateY(0) rotate(-3deg); } }
 
-        h1 { color: #d81b60; font-family: 'Dancing Script', cursive; font-size: 2.5rem; margin: 0 0 10px 0; }
-        h2 { color: #ad1457; font-size: 1.2rem; margin-top: 0; font-weight: 600; }
+        h1 { color: #d81b60; font-family: 'Dancing Script', cursive; font-size: 2.5rem; margin: 0; }
+        h2 { color: #ad1457; font-size: 1.1rem; margin: 5px 0; font-weight: 600; }
         p { color: #4a0016; font-size: 0.95rem; line-height: 1.6; margin-bottom: 15px; }
 
         button {
@@ -129,10 +144,11 @@
             cursor: pointer; box-shadow: 0 6px 20px rgba(255, 51, 102, 0.3);
             transition: all 0.3s ease;
             text-transform: uppercase;
+            position: relative;
+            z-index: 5;
         }
         button:hover { transform: translateY(-3px); }
 
-        /* Estilo corazones/pétalos */
         .heart, .petal { position: absolute; opacity: 0; pointer-events: none; z-index: 5; }
         .heart { background: #ff0040; width: 15px; height: 15px; }
         .heart:before, .heart:after { content: ''; position: absolute; width: 100%; height: 100%; border-radius: 50%; background: #ff0040; }
@@ -160,14 +176,32 @@
 
     <div class="seccion-carta" id="paso1" style="justify-content: center;">
         <div class="card">
-            <h1>¡Hola, Tiziana!</h1>
-            <h2>Algo especial para ti ✨</h2>
-            <p>He preparado este detalle porque hay cosas que las palabras a veces no alcanzan a decir.</p>
-            <button id="btn-revelar" onclick="revelarMensaje()">Abrir carta</button>
-            <div id="mensaje-secreto" style="display:none; margin: 15px 0; font-style: italic; color: #c2185b; border-left: 4px solid #ff3366; background: #fff0f3; padding: 10px; border-radius: 10px;">
-                "Eres la persona que ilumina mis días. ¡Feliz San Valentín!"
+            <div class="sparkle" style="top: 10px; left: 10px;"></div>
+            <div class="sparkle" style="bottom: 10px; right: 10px;"></div>
+            
+            <h1>Hola, Tiziana...</h1>
+            
+            <div class="divider">
+                <div></div>
+                <span>❤️</span>
+                <div></div>
             </div>
-            <button class="btn-siguiente" style="display:none; background:white; color:#ff3366; border:2.3px solid #ff3366; margin-top: 10px;" id="btn-sig1" onclick="cambiarPaso(1, 2)">Siguiente ➡️</button>
+
+            <h2>Tenía algo guardado para ti</h2>
+            <p>A veces el corazón encuentra formas curiosas de expresarse cuando las palabras se quedan cortas.</p>
+            
+            <button id="btn-revelar" onclick="revelarMensaje()">Toca aquí ✨</button>
+            
+            <div id="mensaje-secreto" style="display:none; margin: 20px 0; font-style: italic; color: #c2185b; border-left: 4px solid #ff3366; background: #fffafb; padding: 20px; border-radius: 15px; font-family: 'Dancing Script', cursive; font-size: 1.4rem; line-height: 1.2; position: relative;">
+                "Eres esa luz que no buscaba, pero que ahora no querría perder por nada del mundo."
+                <span style="position: absolute; bottom: 5px; right: 10px; font-size: 0.8rem; opacity: 0.5;">✨</span>
+            </div>
+
+            <p id="frase-espera" style="display:none; font-size: 0.85rem; color: #ad1457; margin-top: 15px;">
+                Quería decirte algo más... algo sobre el color blanco y lo que me recuerda a ti.
+            </p>
+
+            <button class="btn-siguiente" style="display:none; background:white; color:#ff3366; border:2.3px solid #ff3366; margin-top: 15px;" id="btn-sig1" onclick="cambiarPaso(1, 2)">Ver qué es ➡️</button>
         </div>
     </div>
 
@@ -182,10 +216,10 @@
             <div style="text-align: left; font-size: 0.95rem; color: #4a0016;">
                 <p>Tiziana, quiero dedicarte esto, aunque no creo poder darte unas flores; de verdad me hubiera encantado.</p>
                 <p>Y el no poder hacerlo me hace sentir mal, puesto que tú te mereces lo mejor de lo mejor. En sí no es la flor como tal, sino el blanco. Por alguna extraña razón, el blanco me recuerda a ti.</p>
-                <p>Cada vez que vea una flor blanca, siempre estarás ahí. Quizá por la pureza que vi en ti, por tu amabilidad y tu forma de ser, por tu luz. Me salvaste cuando naufragaba sin rumbo. En medio de la oscuridad apareciste tú en mi vida, tan brillante y radiante que solo podía seguirte, solo podía mirarte, solo podía sentirte a ti. Y poco a poco recuperé aquello que perdí: las ganas de vivir.</p>
+                <p>Cada vez que vea una flor blanca, siempre estarás ahí. Quizá por la pureza que vi en ti, por tu amabilidad y tu forma de ser, por tu luz. Me salvaste cuando naufragaba sin rumbo. En medio de la oscuridad apareciste tú en mi vida, tan brillante y radiante que solo podía seguirte...</p>
                 <p>Eres fuerte y madura. Quizá no siempre es lo que aparentas, pero me enseñaste cosas de ti, cosas que me hicieron quererte mucho más.</p>
                 <p>Es verdad que no pareces ser mucho de palabras o de expresar sentimientos, pero de lo que estoy seguro es de que sí sientes, y del mismo modo todos necesitamos cariño y amor en nuestras vidas. Te admiro, te quiero, te adoro.</p>
-                <p>Tu belleza es más de lo que unos simples ojos pueden apreciar. La gardenia es una flor que necesita mucho cuidado, y quizá no sea la que más te represente, pero es una flor que no se ve en todos lados. Es especial: una flor que no florece para cualquiera, y cuando lo hace… se nota.</p>
+                <p>La gardenia es una flor que necesita mucho cuidado, y quizá no sea la que más te represente, pero es una flor que no se ve en todos lados. Es especial: una flor que no florece para cualquiera, y cuando lo hace… se nota.</p>
             </div>
             <button onclick="cambiarPaso(2, 3)" style="margin-top: 20px;">¿SEGUIMOS??</button>
         </div>
@@ -246,6 +280,7 @@
 
         function revelarMensaje() {
             document.getElementById('mensaje-secreto').style.display = 'block';
+            document.getElementById('frase-espera').style.display = 'block';
             document.getElementById('btn-revelar').style.display = 'none';
             document.getElementById('btn-sig1').style.display = 'inline-block';
         }
@@ -253,12 +288,10 @@
         function cambiarPaso(actual, siguiente) {
             document.getElementById(`paso${actual}`).style.display = 'none';
             document.getElementById(`paso${siguiente}`).style.display = 'flex';
-            // Scroll al inicio cuando cambia de paso
-            document.getElementById(`paso${siguiente}`).scrollTop = 0;
         }
 
         function lluviaFinal() {
-            for(let i=0; i<50; i++) setTimeout(() => crearElemento(Math.random() > 0.5 ? 'heart' : 'petal'), i*60);
+            for(let i=0; i<60; i++) setTimeout(() => crearElemento(Math.random() > 0.5 ? 'heart' : 'petal'), i*70);
         }
     </script>
 </body>
