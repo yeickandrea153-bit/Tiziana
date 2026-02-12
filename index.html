@@ -61,12 +61,11 @@
             z-index: 10;
         }
 
-        /* DISEÑO DE CARTA MEJORADO */
         .card {
             background: rgba(255, 255, 255, 0.98);
             backdrop-filter: blur(10px);
             border-radius: 30px;
-            padding: 35px 25px;
+            padding: 30px 25px;
             box-shadow: 0 20px 50px rgba(255, 51, 102, 0.25);
             text-align: center;
             border: 2px solid #ffccd5;
@@ -76,17 +75,17 @@
             position: relative;
         }
 
-        /* --- [3. ELEMENTO FOTO EXTERNO (POLAROID)] --- */
+        /* --- [3. FOTO POLAROID AGRANDADA] --- */
         .foto-externa {
             background: white;
-            padding: 12px 12px 45px 12px;
+            padding: 12px 12px 50px 12px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.15);
             transform: rotate(-3deg);
-            width: 230px;
+            width: 260px; /* Agrandado */
             position: relative;
             z-index: 20;
             animation: caerFoto 1s ease-out forwards;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             border: 1px solid #eee;
         }
         
@@ -114,23 +113,19 @@
         @keyframes subirFade { from { opacity: 0; transform: translateY(40px) scale(0.9); } to { opacity: 1; transform: translateY(0) scale(1); } }
         @keyframes caerFoto { from { opacity: 0; transform: translateY(-70px) rotate(5deg); } to { opacity: 1; transform: translateY(0) rotate(-3deg); } }
 
-        /* ESTILOS DE TEXTO MEJORADOS */
-        h1 { color: #d81b60; font-family: 'Dancing Script', cursive; font-size: 2.8rem; margin: 0 0 10px 0; text-shadow: 1px 1px 2px rgba(0,0,0,0.05); }
-        h2 { color: #ad1457; font-size: 1.3rem; margin-top: 0; font-weight: 600; letter-spacing: 0.5px; }
-        p { color: #4a0016; font-size: 1.05rem; line-height: 1.6; font-weight: 500; margin-bottom: 20px; }
+        h1 { color: #d81b60; font-family: 'Dancing Script', cursive; font-size: 2.8rem; margin: 0 0 10px 0; }
+        h2 { color: #ad1457; font-size: 1.3rem; margin-top: 0; font-weight: 600; }
+        p { color: #4a0016; font-size: 0.95rem; line-height: 1.6; margin-bottom: 15px; }
 
-        /* DISEÑO DE BOTÓN MEJORADO */
         button {
             background: linear-gradient(45deg, #ff3366, #ff6b8f);
-            color: white; border: none; padding: 14px 35px;
-            border-radius: 50px; font-size: 1rem; font-weight: 600;
+            color: white; border: none; padding: 12px 30px;
+            border-radius: 50px; font-size: 0.9rem; font-weight: 600;
             cursor: pointer; box-shadow: 0 6px 20px rgba(255, 51, 102, 0.3);
             transition: all 0.3s ease;
             text-transform: uppercase;
-            letter-spacing: 1px;
         }
-        button:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(255, 51, 102, 0.4); }
-        button:active { transform: translateY(1px); }
+        button:hover { transform: translateY(-3px); }
 
         #mensaje-secreto {
             display: none;
@@ -141,20 +136,16 @@
             border-left: 4px solid #ff3366;
             font-style: italic;
             color: #c2185b;
-            font-weight: 600;
             animation: subirFade 0.5s ease;
         }
 
-        /* --- [4. CORAZONES Y PÉTALOS] --- */
         .heart, .petal { position: absolute; opacity: 0; pointer-events: none; z-index: 5; }
-        .heart { background: #ff0040; box-shadow: 0 0 10px rgba(255, 0, 64, 0.3); }
+        .heart { background: #ff0040; width: 15px; height: 15px; }
         .heart:before, .heart:after { content: ''; position: absolute; width: 100%; height: 100%; border-radius: 50%; background: #ff0040; }
         .heart:before { top: -50%; left: 0; }
         .heart:after { left: 50%; top: 0; }
-        .petal {
-            background: #ffffff; border-radius: 150% 0 150% 0; width: 18px; height: 18px;
-            box-shadow: 0 0 12px rgba(255,255,255,1); border: 1px solid #ffccd5;
-        }
+        .petal { background: #ffffff; border-radius: 150% 0 150% 0; width: 15px; height: 15px; border: 1px solid #ffccd5; }
+
         @keyframes floatHigh {
             0% { transform: translateY(110vh) scale(0.6) rotate(0deg); opacity: 0; }
             20% { opacity: 1; }
@@ -188,14 +179,21 @@
 
     <div class="seccion-carta" id="paso2">
         <div class="foto-externa">
-            <div class="nota nota-1">Luz y paz</div>
+            <div class="nota nota-1">Gardenia</div>
             <img src="gardenia.jpg" alt="Gardenia Blanca">
             <div class="nota nota-2">Para Tiziana</div>
         </div>
-        <div class="card">
-            <h2>Blanca, como tu luz 🌸</h2>
-            <p>Elegí esta flor blanca para ti porque representa la pureza y la calma que traes a mi vida. Es un símbolo de lo especial que eres.</p>
-            <button onclick="cambiarPaso(2, 3)">Finalmente...</button>
+        <div class="card" style="max-width: 400px; max-height: 70vh; overflow-y: auto;">
+            <h2 style="font-family: 'Dancing Script', cursive; font-size: 1.8rem;">Una flor blanca, como tu luz.</h2>
+            <div style="text-align: left; font-size: 0.9rem; color: #4a0016;">
+                <p>Tiziana, quiero dedicarte esto, aunque no creo poder darte unas flores; de verdad me hubiera encantado.</p>
+                <p>Y el no poder hacerlo me hace sentir mal, puesto que tú te mereces lo mejor de lo mejor. En sí no es la flor como tal, sino el blanco. Por alguna extraña razón, el blanco me recuerda a ti.</p>
+                <p>Cada vez que vea una flor blanca, siempre estarás ahí. Quizá por la pureza que vi en ti, por tu amabilidad y tu forma de ser, por tu luz. Me salvaste cuando naufragaba sin rumbo. En medio de la oscuridad apareciste tú en mi vida, tan brillante y radiante que solo podía seguirte, solo podía mirarte, solo podía sentirte a ti. Y poco a poco recuperé aquello que perdí: las ganas de vivir.</p>
+                <p>Eres fuerte y madura. Quizá no siempre es lo que aparentas, pero me enseñaste cosas de ti, cosas que me hicieron quererte mucho más.</p>
+                <p>Es verdad que no pareces ser mucho de palabras o de expresar sentimientos, pero de lo que estoy seguro es de que sí sientes, y del mismo modo todos necesitamos cariño y amor en nuestras vidas. Te admiro, te quiero, te adoro.</p>
+                <p>Tu belleza es más de lo que unos simples ojos pueden apreciar. La gardenia es una flor que necesita mucho cuidado, y quizá no sea la que más te represente, pero es una flor que no se ve en todos lados. Es especial: una flor que no florece para cualquiera, y cuando lo hace… se nota.</p>
+            </div>
+            <button onclick="cambiarPaso(2, 3)">¿SEGUIMOS??</button>
         </div>
     </div>
 
@@ -215,12 +213,12 @@
             const el = document.createElement('div');
             el.className = clase;
             document.body.appendChild(el);
-            const size = Math.random() * 20 + 25;
+            const size = Math.random() * 15 + 15;
             el.style.width = size + 'px';
             el.style.height = size + 'px';
             el.style.left = Math.random() * 100 + 'vw';
-            const duration = Math.random() * 4 + 6;
-            el.style.animation = `floatHigh ${duration}s ease-in-out infinite`;
+            const duration = Math.random() * 3 + 4;
+            el.style.animation = `floatHigh ${duration}s linear infinite`;
             setTimeout(() => el.remove(), duration * 1000);
         }
 
@@ -248,15 +246,14 @@
             heartsActive = true;
             setInterval(() => {
                 crearElemento('heart');
-                setTimeout(() => crearElemento('petal'), 150);
-            }, 350);
+                setTimeout(() => crearElemento('petal'), 200);
+            }, 400);
         }
 
         function revelarMensaje() {
             document.getElementById('mensaje-secreto').style.display = 'block';
             document.getElementById('btn-revelar').style.display = 'none';
             document.getElementById('btn-sig1').style.display = 'inline-block';
-            for(let i=0; i<40; i++) setTimeout(() => crearElemento(Math.random() > 0.4 ? 'heart' : 'petal'), i*80);
         }
 
         function cambiarPaso(actual, siguiente) {
@@ -265,7 +262,7 @@
         }
 
         function lluviaFinal() {
-            for(let i=0; i<60; i++) setTimeout(() => crearElemento(Math.random() > 0.5 ? 'heart' : 'petal'), i*70);
+            for(let i=0; i<50; i++) setTimeout(() => crearElemento(Math.random() > 0.5 ? 'heart' : 'petal'), i*60);
         }
     </script>
 </body>
