@@ -2,30 +2,26 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Para Tiziana ❤️</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     
     <style>
         /* --- [ESTRUCTURA BASE] --- */
-        :root {
-            --primary: #ff3366;
-            --bg-gradient: linear-gradient(135deg, #ffe0e6 0%, #fff0f5 100%);
-        }
-
         body {
-            background: var(--bg-gradient);
+            background: linear-gradient(135deg, #ffe0e6 0%, #fff0f5 100%);
             margin: 0;
-            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
             font-family: 'Poppins', sans-serif;
-            overflow: hidden; /* Evita scroll en el body principal, lo manejamos por secciones */
+            overflow: hidden;
             position: relative;
-            height: 100dvh; /* Altura dinámica para móviles */
-            width: 100vw;
         }
 
-        /* --- [DESTELLOS DE FONDO] --- */
+        /* --- [DESTELLOS] --- */
         .sparkle {
             position: absolute;
             width: 8px; 
@@ -35,7 +31,6 @@
             box-shadow: 0 0 15px 2px rgba(255, 255, 255, 1), 0 0 5px rgba(255, 200, 0, 0.8);
             animation: twinkle 1.5s infinite ease-in-out;
             z-index: 10;
-            pointer-events: none;
         }
 
         @keyframes twinkle {
@@ -48,10 +43,9 @@
             align-items: center;
             justify-content: center;
             margin: 15px 0;
-            width: 100%;
         }
         .divider div { height: 1px; background: #ffccd5; flex-grow: 1; }
-        .divider span { margin: 0 10px; color: var(--primary); font-size: 1.2rem; }
+        .divider span { margin: 0 10px; color: #ff3366; font-size: 1.2rem; }
 
         /* --- [1. LA CAJA DE REGALO] --- */
         #pantalla-inicio {
@@ -64,170 +58,114 @@
             justify-content: center;
             align-items: center;
             z-index: 2000;
-            transition: opacity 0.8s ease;
+            transition: opacity 1s ease;
         }
-        
-        .box-container { 
-            position: relative; 
-            width: 120px; 
-            height: 120px; 
-            cursor: pointer; 
-            transition: transform 0.2s; 
-            margin-bottom: 20px;
-            -webkit-tap-highlight-color: transparent; /* Quita el azul al tocar en Android */
-        }
-        
-        .box-body { position: absolute; bottom: 0; width: 100%; height: 80%; background-color: var(--primary); border-radius: 0 0 12px 12px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
-        .box-lid { position: absolute; top: 0; width: 110%; height: 25%; background-color: #e60039; left: -5%; border-radius: 6px; z-index: 2; transition: transform 0.5s ease-in; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .box-container { position: relative; width: 100px; height: 100px; cursor: pointer; transition: transform 0.3s; }
+        .box-body { position: absolute; bottom: 0; width: 100%; height: 80%; background-color: #ff3366; border-radius: 0 0 10px 10px; }
+        .box-lid { position: absolute; top: 0; width: 110%; height: 25%; background-color: #e60039; left: -5%; border-radius: 5px; z-index: 2; transition: 0.5s; }
         .box-bow { position: absolute; top: -20%; left: 50%; transform: translateX(-50%); width: 40px; height: 20px; background-color: #fff; border-radius: 20px; z-index: 3; }
-        .box-bow::before { content: ''; position: absolute; left: 50%; transform: translateX(-50%); width: 8px; height: 130px; background-color: #fff; opacity: 0.9; }
+        .box-bow::before { content: ''; position: absolute; left: 50%; transform: translateX(-50%); width: 10px; height: 120px; background-color: #fff; }
 
         @keyframes shakeBox {
-            0%, 100% { transform: rotate(0deg) scale(1); }
-            25% { transform: rotate(6deg) scale(1.05); }
-            50% { transform: rotate(-6deg) scale(1.05); }
-            75% { transform: rotate(6deg) scale(1.05); }
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(8deg); }
+            50% { transform: rotate(-8deg); }
+            75% { transform: rotate(8deg); }
         }
         .sacudir { animation: shakeBox 0.4s ease-in-out; }
-        
-        .box-open .box-lid { transform: translateY(-120px) rotate(20deg); opacity: 0; }
-        
-        .hint-text {
-            color: #d81b60; 
-            font-size: 0.9rem; 
-            opacity: 0.7; 
-            margin-top: 5px; 
-            animation: pulse 2s infinite;
-        }
-        @keyframes pulse { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
+        .box-open .box-lid { transform: translateY(-80px) rotate(15deg); opacity: 0; }
 
-        /* --- [2. ESTRUCTURA DE SECCIONES (IMPORTANTE PARA MOVIL)] --- */
+        /* --- [2. CARTAS Y SECCIONES] --- */
         .seccion-carta {
-            display: none; /* Se activa con JS */
+            display: none;
             position: absolute;
-            top: 0; left: 0;
             width: 100%;
             height: 100%;
-            z-index: 10;
-            overflow-y: auto; /* Permite scroll vertical */
-            overflow-x: hidden;
-            
-            /* Flexbox para centrar contenido, pero permitiendo scroll si es alto */
-            display: flex; 
             flex-direction: column;
+            justify-content: flex-start;
             align-items: center;
-        }
-        
-        /* Hack para centrar verticalmente pero permitir scroll si el contenido es grande */
-        .seccion-carta::before, .seccion-carta::after {
-            content: '';
-            display: block;
-            flex-grow: 1; 
-            height: 20px; /* Margen mínimo arriba y abajo */
-            min-height: 20px;
+            z-index: 10;
+            padding: 20px 0;
+            overflow-y: auto;
         }
 
         .card {
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(255, 255, 255, 0.98);
             backdrop-filter: blur(10px);
-            border-radius: 25px;
-            padding: 30px 20px;
-            box-shadow: 0 15px 40px rgba(255, 51, 102, 0.15);
+            border-radius: 30px;
+            padding: 30px 25px;
+            box-shadow: 0 20px 50px rgba(255, 51, 102, 0.25);
             text-align: center;
             border: 2px solid #ffccd5;
             animation: subirFade 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-            
+            max-width: 360px;
             width: 85%;
-            max-width: 380px;
-            flex-shrink: 0; /* No encoger */
+            margin-bottom: 30px;
+            flex-shrink: 0;
             position: relative;
-            margin: 20px auto; /* Centrado horizontal y margen vertical */
         }
 
-        /* --- [3. ELEMENTOS DECORATIVOS] --- */
-        /* Reloj de Arena */
-        .reloj-minimalista {
-            width: 20px; height: 30px;
-            border: 2px solid var(--primary);
-            border-radius: 3px;
-            position: relative;
-            margin: 0 auto;
-            clip-path: polygon(0% 0%, 100% 0%, 15% 50%, 100% 100%, 0% 100%, 85% 50%);
-        }
-        .reloj-minimalista::after {
-            content: ''; position: absolute; top: 2px; left: 50%; transform: translateX(-50%);
-            width: 8px; height: 8px; background: #ffccd5;
-            animation: arenaFluyendo 3s infinite alternate ease-in-out;
-        }
-        @keyframes arenaFluyendo { 0% { transform: translate(-50%, 0); } 100% { transform: translate(-50%, 16px); } }
-
-        /* Foto Polaroid */
+        /* --- [3. FOTO POLAROID] --- */
         .foto-externa {
             background: white;
-            padding: 10px 10px 35px 10px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            padding: 12px 12px 40px 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
             transform: rotate(-3deg);
-            width: 75%; /* Relativo al ancho del contenedor */
-            max-width: 260px;
+            width: 250px;
             position: relative;
             z-index: 20;
-            animation: caerFoto 1.0s ease-out forwards;
-            margin-bottom: 25px;
-            border: 1px solid #eee;
+            animation: caerFoto 1.2s ease-out forwards;
             margin-top: 10px;
-            flex-shrink: 0;
+            margin-bottom: 20px;
+            border: 1px solid #eee;
         }
-        .foto-externa img { width: 100%; height: auto; display: block; border-radius: 2px; }
+        .foto-externa img { width: 100%; height: auto; display: block; }
 
         .nota {
             position: absolute;
-            padding: 4px 10px;
+            width: 90px;
+            padding: 6px;
             font-family: 'Dancing Script', cursive;
-            font-size: 1.1rem;
+            font-size: 1rem;
             color: #444;
-            box-shadow: 2px 3px 8px rgba(0,0,0,0.1);
+            box-shadow: 2px 5px 10px rgba(0,0,0,0.1);
             text-align: center;
-            white-space: nowrap;
-            z-index: 25;
+            font-weight: bold;
         }
-        .nota-1 { top: -12px; left: -10px; transform: rotate(-8deg); background: #ffffff; border: 1px solid var(--primary); }
-        .nota-2 { bottom: 12px; right: -15px; transform: rotate(5deg); background: #fff9c4; border: 1px solid #fbc02d; }
+        .nota-1 { top: -10px; left: -20px; transform: rotate(-12deg); background: #ffffff; border: 2px solid #ff3366; }
+        .nota-2 { bottom: 10px; right: -25px; transform: rotate(8deg); background: #fff9c4; border: 1px solid #fbc02d; }
 
-        /* --- [TEXTOS Y BOTONES] --- */
-        h1 { color: #d81b60; font-family: 'Dancing Script', cursive; font-size: 2.2rem; margin: 0 0 10px 0; line-height: 1.2; }
-        h2 { color: #ad1457; font-size: 1.1rem; margin: 5px 0 15px 0; font-weight: 600; }
-        p { color: #5a1a2e; font-size: 0.95rem; line-height: 1.6; margin-bottom: 15px; }
+        @keyframes subirFade { from { opacity: 0; transform: translateY(40px) scale(0.9); } to { opacity: 1; transform: translateY(0) scale(1); } }
+        @keyframes caerFoto { from { opacity: 0; transform: translateY(-70px) rotate(5deg); } to { opacity: 1; transform: translateY(0) rotate(-3deg); } }
+
+        h1 { color: #d81b60; font-family: 'Dancing Script', cursive; font-size: 2.3rem; margin: 0; }
+        h2 { color: #ad1457; font-size: 1.1rem; margin: 5px 0; font-weight: 600; }
+        p { color: #4a0016; font-size: 0.95rem; line-height: 1.5; margin-bottom: 12px; }
 
         button {
             background: linear-gradient(45deg, #ff3366, #ff6b8f);
-            color: white; border: none; padding: 14px 32px;
-            border-radius: 50px; font-size: 0.95rem; font-weight: 600;
-            cursor: pointer; box-shadow: 0 8px 20px rgba(255, 51, 102, 0.35);
-            transition: transform 0.2s ease;
+            color: white; border: none; padding: 12px 30px;
+            border-radius: 50px; font-size: 0.9rem; font-weight: 600;
+            cursor: pointer; box-shadow: 0 6px 20px rgba(255, 51, 102, 0.3);
+            transition: all 0.3s ease;
             text-transform: uppercase;
             position: relative;
-            z-index: 30; /* Asegura que esté sobre las partículas */
-            margin-top: 10px;
-            -webkit-tap-highlight-color: transparent;
+            z-index: 15;
         }
-        button:active { transform: scale(0.95); }
+        button:hover { transform: translateY(-3px); }
 
-        /* --- [ANIMACIONES Y EFECTOS] --- */
-        .heart, .petal { position: fixed; opacity: 0; pointer-events: none; z-index: 100; }
+        .heart, .petal { position: absolute; opacity: 0; pointer-events: none; z-index: 5; }
         .heart { background: #ff0040; width: 15px; height: 15px; }
         .heart:before, .heart:after { content: ''; position: absolute; width: 100%; height: 100%; border-radius: 50%; background: #ff0040; }
         .heart:before { top: -50%; left: 0; }
         .heart:after { left: 50%; top: 0; }
-        .petal { background: #ffffff; border-radius: 150% 0 150% 0; width: 12px; height: 12px; border: 1px solid #ffdbe3; }
+        .petal { background: #ffffff; border-radius: 150% 0 150% 0; width: 15px; height: 15px; border: 1px solid #ffccd5; }
 
         @keyframes floatHigh {
             0% { transform: translateY(110vh) scale(0.6) rotate(0deg); opacity: 0; }
-            20% { opacity: 0.8; }
-            100% { transform: translateY(-20vh) scale(1.1) rotate(360deg); opacity: 0; }
+            20% { opacity: 1; }
+            100% { transform: translateY(-50vh) scale(1.2) rotate(450deg); opacity: 0; }
         }
-        
-        @keyframes subirFade { from { opacity: 0; transform: translateY(40px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
-        @keyframes caerFoto { from { opacity: 0; transform: translateY(-50px) rotate(5deg); } to { opacity: 1; transform: translateY(0) rotate(-3deg); } }
     </style>
 </head>
 <body>
@@ -238,33 +176,34 @@
             <div class="box-bow"></div>
             <div class="box-body"></div>
         </div>
-        <p style="color: var(--primary); margin-top: 20px; font-weight: 700; font-size: 1.5rem; font-family: 'Dancing Script', cursive;">Para Tiziana...</p>
-        <p class="hint-text">(Toca la caja varias veces)</p>
+        <p style="color: #ff3366; margin-top: 25px; font-weight: 700; font-size: 1.3rem; font-family: 'Dancing Script', cursive;">Para Tiziana...</p>
     </div>
 
-    <div class="seccion-carta" id="paso1">
+    <div class="seccion-carta" id="paso1" style="justify-content: center;">
         <div class="card">
-            <div class="sparkle" style="top: 10px; left: 10px;"></div>
-            <div class="sparkle" style="top: 10px; right: 10px; animation-delay: 0.5s;"></div>
+            <div class="sparkle" style="top: -5px; left: -5px; animation-delay: 0s;"></div>
+            <div class="sparkle" style="top: -5px; right: -5px; animation-delay: 0.5s;"></div>
+            <div class="sparkle" style="bottom: -5px; left: -5px; animation-delay: 1s;"></div>
+            <div class="sparkle" style="bottom: -5px; right: -5px; animation-delay: 0.2s;"></div>
             
             <h1>HOLAAA, TIZIANA.</h1>
-            <p>Buenos días, tardes o noches.</p>
+            <p>Buenos días, tardes o noches 🌤</p>
             
             <div class="divider"><div></div><span>❤️</span><div></div></div>
 
             <p>Hoy es un día especial, y lo sabes.</p>
             <p>Hemos pasado buenos momentos juntos, y este es un presente en este día, que expresa mi gratitud y mis sentimientos por ti.</p>
             
-            <button id="btn-revelar" onclick="revelarMensaje()">VER (con confianza xd)</button>
+            <button id="btn-revelar" onclick="revelarMensaje()">Tocar ✨</button>
             
-            <div id="mensaje-secreto" style="display:none; margin: 20px 0; font-style: italic; color: #c2185b; border-left: 4px solid var(--primary); background: #fffafb; padding: 15px; border-radius: 10px; font-family: 'Dancing Script', cursive; font-size: 1.3rem; line-height: 1.4;">
+            <div id="mensaje-secreto" style="display:none; margin: 20px 0; font-style: italic; color: #c2185b; border-left: 4px solid #ff3366; background: #fffafb; padding: 20px; border-radius: 15px; font-family: 'Dancing Script', cursive; font-size: 1.4rem; line-height: 1.2;">
                 "Eres esa luz que no buscaba, pero que ahora no querría perder por nada del mundo."
             </div>
 
             <div id="texto-final" style="display:none; margin-top: 15px;">
                 <p>Hay más cosas que quiero decirte…</p>
                 <p>¿Te acuerdas de las flores que te pregunté?</p>
-                <button class="btn-siguiente" style="background:white; color:var(--primary); border:2px solid var(--primary);" onclick="cambiarPaso(1, 2)">Ven, acompáñame ➡️</button>
+                <button class="btn-siguiente" style="background:white; color:#ff3366; border:2.3px solid #ff3366; margin-top: 10px;" onclick="cambiarPaso(1, 2)">Ven, acompáñame ➡️</button>
             </div>
         </div>
     </div>
@@ -272,13 +211,12 @@
     <div class="seccion-carta" id="paso2">
         <div class="foto-externa">
             <div class="nota nota-1">Gardenia</div>
-            <img src="gardenia.jpg" alt="Gardenia Blanca" onerror="this.src='https://images.unsplash.com/photo-1596238699104-585a08320496?q=80&w=600&auto=format&fit=crop';">
+            <img src="gardenia.jpg" alt="Gardenia Blanca">
             <div class="nota nota-2">Para Tiziana</div>
         </div>
-        
-        <div class="card">
-            <h2 style="font-family: 'Dancing Script', cursive; font-size: 1.8rem; margin-bottom: 15px;">Una flor blanca, como tu luz.</h2>
-            <div style="text-align: left; font-size: 0.9rem; color: #5a1a2e;">
+        <div class="card" style="max-width: 420px;">
+            <h2 style="font-family: 'Dancing Script', cursive; font-size: 1.8rem; margin-bottom: 20px;">Una flor blanca, como tu luz.</h2>
+            <div style="text-align: left; font-size: 0.95rem; color: #4a0016;">
                 <p>Tiziana, quiero dedicarte esto, aunque no creo poder darte unas flores; de verdad me hubiera encantado.</p>
                 <p>Y el no poder hacerlo me hace sentir mal, puesto que tú te mereces lo mejor de lo mejor. En sí no es la flor como tal, sino el blanco. Por alguna extraña razón, el blanco me recuerda a ti.</p>
                 <p>Cada vez que vea una flor blanca, siempre estarás ahí. Quizá por la pureza que vi en ti, por tu amabilidad y tu forma de ser, por tu luz. Me salvaste cuando naufragaba sin rumbo. En medio de la oscuridad apareciste tú en mi vida, tan brillante y radiante que solo podía seguirte...</p>
@@ -290,34 +228,28 @@
         </div>
     </div>
 
-    <div class="seccion-carta" id="paso3">
-        <div class="card">
-            <h1>La Historia</h1>
-            <div class="divider">
-                <div></div>
-                <div style="margin: 0 15px;">
-                    <div class="reloj-minimalista"></div>
-                </div>
-                <div></div>
-            </div>
+<div class="seccion-carta" id="paso3">
+        <div class="card" style="max-width: 450px;">
+            <h1>Nuestra Historia ✨</h1>
+            <div class="divider"><div></div><span>⏳</span><div></div></div>
             
-            <div style="text-align: left; font-size: 0.9rem; margin-top: 20px;">
-                <div style="margin-bottom: 25px; position: relative; padding-left: 20px; border-left: 2px dashed var(--primary);">
-                    <div style="position: absolute; left: -9px; top: 0; background: var(--primary); width: 16px; height: 16px; border-radius: 50%; border: 2px solid white;"></div>
-                    <strong style="color: #d81b60; display: block; font-size: 1rem;">El inicio...</strong>
+            <div style="text-align: left; font-size: 0.9rem;">
+                <div style="margin-bottom: 20px; position: relative; padding-left: 25px; border-left: 2px dashed #ff3366;">
+                    <div style="position: absolute; left: -10px; top: 0; background: #ff3366; width: 18px; height: 18px; border-radius: 50%; border: 3px solid white;"></div>
+                    <strong style="color: #d81b60; display: block;">El inicio...</strong>
                     <p style="margin: 5px 0;">Aún recuerdo cuando empezamos a hablar. Sentí una curiosidad inmensa por saber quién era esa chica que brillaba tanto por sí sola.</p>
                 </div>
 
-                <div style="margin-bottom: 20px; position: relative; padding-left: 20px; border-left: 2px dashed var(--primary);">
-                    <div style="position: absolute; left: -9px; top: 0; background: var(--primary); width: 16px; height: 16px; border-radius: 50%; border: 2px solid white;"></div>
-                    <strong style="color: #d81b60; display: block; font-size: 1rem;">Momentos especiales...</strong>
+                <div style="margin-bottom: 20px; position: relative; padding-left: 25px; border-left: 2px dashed #ff3366;">
+                    <div style="position: absolute; left: -10px; top: 0; background: #ff3366; width: 18px; height: 18px; border-radius: 50%; border: 3px solid white;"></div>
+                    <strong style="color: #d81b60; display: block;">Momentos especiales...</strong>
                     <p style="margin: 5px 0;">Cada risa compartida y cada charla profunda me hicieron darme cuenta de que no solo eres alguien especial, sino alguien necesario en mi vida.</p>
                 </div>
                 
-                <p style="text-align: center; font-weight: 600; margin-top: 25px;">¿Te gustaría saber qué es lo que más admiro de ti?</p>
+                <p style="text-align: center; font-weight: 600;">¿Te gustaría saber qué es lo que más admiro de ti?</p>
             </div>
             
-            <button onclick="cambiarPaso(3, 4)">¡Cuéntame! 🌸</button>
+            <button onclick="cambiarPaso(3, 4)" style="margin-top: 10px;">¡Cuéntame! 🌸</button>
         </div>
     </div>
 
@@ -326,11 +258,11 @@
             <h1>Lo que veo en ti 💎</h1>
             <div class="divider"><div></div><span>✨</span><div></div></div>
             
-            <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin: 25px 0;">
-                <span style="background: #ffe0e6; color: #d81b60; padding: 8px 14px; border-radius: 20px; font-weight: 600; font-size: 0.85rem; border: 1px solid #ffccd5;">Tu Fortaleza</span>
-                <span style="background: #fff0f5; color: #d81b60; padding: 8px 14px; border-radius: 20px; font-weight: 600; font-size: 0.85rem; border: 1px solid #ffccd5;">Tu Madurez</span>
-                <span style="background: #ffe0e6; color: #d81b60; padding: 8px 14px; border-radius: 20px; font-weight: 600; font-size: 0.85rem; border: 1px solid #ffccd5;">Tu Brillo Propio</span>
-                <span style="background: #fff0f5; color: #d81b60; padding: 8px 14px; border-radius: 20px; font-weight: 600; font-size: 0.85rem; border: 1px solid #ffccd5;">Tu Forma de Ser</span>
+            <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin: 20px 0;">
+                <span style="background: #ffe0e6; color: #d81b60; padding: 8px 15px; border-radius: 20px; font-weight: 600; font-size: 0.85rem; border: 1px solid #ffccd5;">Tu Fortaleza</span>
+                <span style="background: #fff0f5; color: #d81b60; padding: 8px 15px; border-radius: 20px; font-weight: 600; font-size: 0.85rem; border: 1px solid #ffccd5;">Tu Madurez</span>
+                <span style="background: #ffe0e6; color: #d81b60; padding: 8px 15px; border-radius: 20px; font-weight: 600; font-size: 0.85rem; border: 1px solid #ffccd5;">Tu Brillo Propio</span>
+                <span style="background: #fff0f5; color: #d81b60; padding: 8px 15px; border-radius: 20px; font-weight: 600; font-size: 0.85rem; border: 1px solid #ffccd5;">Tu Forma de Ser</span>
             </div>
 
             <p>Admiro cómo enfrentas la vida, tu capacidad de entender las cosas y esa luz que tienes, que aunque a veces no la notes, ilumina a todos los que estamos cerca.</p>
@@ -351,7 +283,7 @@
         </div>
     </div>
 
-    <div class="seccion-carta" id="paso6">
+    <div class="seccion-carta" id="paso6" style="justify-content: center;">
         <div class="card">
             <h1>Te quiero, Tiziana ❤️</h1>
             <p>Gracias por llegar hasta aquí. Eres y serás siempre especial para mí.</p>
@@ -363,59 +295,34 @@
         let clicsRegalo = 0;
         let heartsActive = false;
 
-        // Función para crear corazones y pétalos
         function crearElemento(clase) {
             const el = document.createElement('div');
             el.className = clase;
             document.body.appendChild(el);
-            
-            const size = Math.random() * 15 + 10; // Tamaño aleatorio
+            const size = Math.random() * 15 + 15;
             el.style.width = size + 'px';
             el.style.height = size + 'px';
-            
-            // Posición aleatoria horizontal
-            el.style.left = Math.random() * 95 + 'vw';
-            
-            const duration = Math.random() * 3 + 4; // Duración entre 4 y 7 seg
-            el.style.animation = `floatHigh ${duration}s linear forwards`; // "forwards" para que no parpadee al final
-            
-            setTimeout(() => {
-                if(document.body.contains(el)) el.remove();
-            }, duration * 1000);
+            el.style.left = Math.random() * 100 + 'vw';
+            const duration = Math.random() * 3 + 4;
+            el.style.animation = `floatHigh ${duration}s linear infinite`;
+            setTimeout(() => el.remove(), duration * 1000);
         }
 
-        // Lógica de la caja de regalo
         function abrirRegalo() {
             const box = document.querySelector('.box-container');
             clicsRegalo++;
-            
-            // Reiniciar animación para que funcione en cada click
             box.classList.remove('sacudir');
-            void box.offsetWidth; // Forzar reflow
-            box.classList.add('sacudir');
-            
-            // Agrandar un poco con cada click
-            box.style.transform = `scale(${1 + (clicsRegalo * 0.1)})`;
-
-            // Vibración en móviles (si el navegador lo soporta)
-            if (navigator.vibrate) navigator.vibrate(50);
-
+            void box.offsetWidth; box.classList.add('sacudir');
+            box.style.transform = `scale(${1 + (clicsRegalo * 0.2)})`;
             if (clicsRegalo >= 3) {
                 box.classList.add('box-open');
-                // Ocultar texto de ayuda
-                document.querySelector('.hint-text').style.opacity = '0';
-                
                 setTimeout(() => {
-                    const pantalla = document.getElementById('pantalla-inicio');
-                    pantalla.style.opacity = '0';
-                    
+                    document.getElementById('pantalla-inicio').style.opacity = '0';
                     setTimeout(() => {
-                        pantalla.style.display = 'none';
-                        // Cambiar display de la sección para que el JS de display funcione
-                        const paso1 = document.getElementById('paso1');
-                        paso1.style.display = 'flex'; // Usamos flex para centrar
+                        document.getElementById('pantalla-inicio').style.display = 'none';
+                        document.getElementById('paso1').style.display = 'flex';
                         iniciarEfectos();
-                    }, 800);
+                    }, 1000);
                 }, 600);
             }
         }
@@ -423,64 +330,25 @@
         function iniciarEfectos() {
             if(heartsActive) return;
             heartsActive = true;
-            // Generar corazones suavemente de fondo
             setInterval(() => {
                 crearElemento('heart');
-                setTimeout(() => crearElemento('petal'), 300);
-            }, 800);
+                setTimeout(() => crearElemento('petal'), 200);
+            }, 400);
         }
 
         function revelarMensaje() {
-            const msg = document.getElementById('mensaje-secreto');
-            const txtFinal = document.getElementById('texto-final');
-            const btn = document.getElementById('btn-revelar');
-            
-            msg.style.display = 'block';
-            msg.style.animation = 'subirFade 0.5s ease';
-            
-            txtFinal.style.display = 'block';
-            txtFinal.style.animation = 'subirFade 0.5s ease 0.3s forwards; opacity: 0'; // Delay visual
-            
-            btn.style.display = 'none';
-            
-            // Auto scroll suave hacia abajo si el mensaje es largo
-            setTimeout(() => {
-                 msg.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }, 100);
+            document.getElementById('mensaje-secreto').style.display = 'block';
+            document.getElementById('texto-final').style.display = 'block';
+            document.getElementById('btn-revelar').style.display = 'none';
         }
 
         function cambiarPaso(actual, siguiente) {
-            const actualDiv = document.getElementById(`paso${actual}`);
-            const siguienteDiv = document.getElementById(`paso${siguiente}`);
-            
-            // Pequeña animación de salida
-            actualDiv.style.opacity = '0';
-            actualDiv.style.transition = 'opacity 0.3s';
-            
-            setTimeout(() => {
-                actualDiv.style.display = 'none';
-                siguienteDiv.style.display = 'flex'; // Usamos flex
-                siguienteDiv.style.opacity = '0';
-                
-                // Animación de entrada
-                setTimeout(() => {
-                    siguienteDiv.style.transition = 'opacity 0.5s';
-                    siguienteDiv.style.opacity = '1';
-                }, 50);
-                
-                // Scroll arriba al cambiar de paso
-                siguienteDiv.scrollTop = 0;
-            }, 300);
+            document.getElementById(`paso${actual}`).style.display = 'none';
+            document.getElementById(`paso${siguiente}`).style.display = 'flex';
         }
 
         function lluviaFinal() {
-            // Explosión de corazones
-            for(let i=0; i<50; i++) {
-                setTimeout(() => {
-                    crearElemento(Math.random() > 0.5 ? 'heart' : 'petal');
-                }, i * 50);
-            }
-            if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
+            for(let i=0; i<60; i++) setTimeout(() => crearElemento(Math.random() > 0.5 ? 'heart' : 'petal'), i*70);
         }
     </script>
 </body>
