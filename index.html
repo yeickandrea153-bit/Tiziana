@@ -21,6 +21,47 @@
             position: relative;
         }
 
+        /* --- [CORRECCIÓN: CENTRADO DE TODAS LAS CARTAS] --- */
+        .seccion-carta {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh; /* Ocupa el alto total de la pantalla */
+            flex-direction: column;
+            justify-content: center; /* Centrado vertical absoluto */
+            align-items: center;     /* Centrado horizontal absoluto */
+            z-index: 10;
+            padding: 20px 0;
+            overflow-y: auto;
+        }
+
+        /* --- [RELOJ MINIMALISTA CSS] --- */
+        .reloj-minimalista {
+            width: 20px;
+            height: 28px;
+            border: 2px solid #ff3366;
+            border-radius: 2px;
+            position: relative;
+            margin: 0 auto;
+            clip-path: polygon(0% 0%, 100% 0%, 10% 50%, 100% 100%, 0% 100%, 90% 50%);
+        }
+        .reloj-minimalista::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 3px;
+            width: 10px;
+            height: 8px;
+            background: #ffccd5;
+            animation: arenaFluyendo 3s infinite alternate ease-in-out;
+        }
+        @keyframes arenaFluyendo {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(12px); }
+        }
+
         /* --- [DESTELLOS] --- */
         .sparkle {
             position: absolute;
@@ -74,20 +115,6 @@
         }
         .sacudir { animation: shakeBox 0.4s ease-in-out; }
         .box-open .box-lid { transform: translateY(-80px) rotate(15deg); opacity: 0; }
-
-        /* --- [2. CARTAS Y SECCIONES] --- */
-        .seccion-carta {
-            display: none;
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            flex-direction: column;
-            justify-content: flex-start;
-            align-items: center;
-            z-index: 10;
-            padding: 20px 0;
-            overflow-y: auto;
-        }
 
         .card {
             background: rgba(255, 255, 255, 0.98);
@@ -179,7 +206,7 @@
         <p style="color: #ff3366; margin-top: 25px; font-weight: 700; font-size: 1.3rem; font-family: 'Dancing Script', cursive;">Para Tiziana...</p>
     </div>
 
-    <div class="seccion-carta" id="paso1" style="justify-content: center;">
+    <div class="seccion-carta" id="paso1">
         <div class="card">
             <div class="sparkle" style="top: -5px; left: -5px; animation-delay: 0s;"></div>
             <div class="sparkle" style="top: -5px; right: -5px; animation-delay: 0.5s;"></div>
@@ -187,7 +214,7 @@
             <div class="sparkle" style="bottom: -5px; right: -5px; animation-delay: 0.2s;"></div>
             
             <h1>HOLAAA, TIZIANA.</h1>
-            <p>Buenos días, tardes o noches </p>
+            <p>Buenos días, tardes o noches 🌤</p>
             
             <div class="divider"><div></div><span>❤️</span><div></div></div>
 
@@ -228,7 +255,7 @@
         </div>
     </div>
 
-<div class="seccion-carta" id="paso3">
+    <div class="seccion-carta" id="paso3">
         <div class="card" style="max-width: 450px;">
             <h1>La historia</h1>
             <div class="divider">
@@ -256,7 +283,7 @@
     <div class="seccion-carta" id="paso4">
         <div class="card">
             <h1>Lo que veo en ti 💎</h1>
-            <div class="divider"><div></div><span></span><div></div></div>
+            <div class="divider"><div></div><span>✨</span><div></div></div>
             <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin: 20px 0;">
                 <span style="background: #ffe0e6; color: #d81b60; padding: 8px 15px; border-radius: 20px; font-weight: 600; font-size: 0.85rem; border: 1px solid #ffccd5;">Tu Fortaleza</span>
                 <span style="background: #fff0f5; color: #d81b60; padding: 8px 15px; border-radius: 20px; font-weight: 600; font-size: 0.85rem; border: 1px solid #ffccd5;">Tu Madurez</span>
@@ -270,8 +297,8 @@
 
     <div class="seccion-carta" id="paso5">
         <div class="card">
-            <h1>Solo un deseo... </h1>
-            <div class="divider"><div></div><span></span><div></div></div>
+            <h1>Solo un deseo... 💫</h1>
+            <div class="divider"><div></div><span>🌟</span><div></div></div>
             <p>Mi único deseo es que nunca olvides lo valiosa que eres. Que sigas siendo esa mujer increíble que me enseñó a ver el "blanco" en medio de la oscuridad.</p>
             <p>Gracias por dejarme entrar en tu mundo y por permitirme quererte a mi manera.</p>
             <button onclick="cambiarPaso(5, 6)">Y finalmente... ❤️</button>
