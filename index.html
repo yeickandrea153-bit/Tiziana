@@ -19,9 +19,10 @@
             font-family: 'Poppins', sans-serif;
             overflow: hidden;
             position: relative;
-            transition: background 1s ease; /* Transición suave de fondo */
+            transition: background 2.5s ease-in-out; /* Transición LENTA del fondo */
         }
 
+        /* --- [SECCIONES] --- */
         .seccion-carta {
             display: none;
             position: absolute;
@@ -33,6 +34,7 @@
             -webkit-overflow-scrolling: touch;
             padding-top: 20px;
             padding-bottom: 80px;
+            transition: opacity 1.5s ease; /* Transición suave para desaparecer */
         }
 
         .card {
@@ -49,17 +51,10 @@
             position: relative;
         }
 
-        /* --- [TIPOGRAFÍA Y ELEMENTOS] --- */
+        /* --- [TIPOGRAFÍA] --- */
         h1 { color: #d81b60; font-family: 'Dancing Script', cursive; font-size: 2.2rem; margin: 0; line-height: 1.2; }
         h2 { color: #ad1457; font-size: 1.5rem; margin: 10px 0; font-family: 'Dancing Script', cursive; }
-        
-        p { 
-            color: #4a0016; 
-            font-size: 0.9rem; 
-            line-height: 1.6; 
-            margin-bottom: 12px; 
-            text-align: left;
-        }
+        p { color: #4a0016; font-size: 0.9rem; line-height: 1.6; margin-bottom: 12px; text-align: left; }
 
         .divider { display: flex; align-items: center; justify-content: center; margin: 15px 0; width: 100%; }
         .divider div { height: 1px; background: #ffccd5; flex-grow: 1; }
@@ -75,7 +70,7 @@
         }
         button:active { transform: scale(0.95); }
 
-        /* --- [ESTILOS: CUADROS Y FOTOS] --- */
+        /* --- [ELEMENTOS VISUALES] --- */
         .grid-cualidades { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-bottom: 20px; }
         .cualidad-box { background: #fff0f5; border: 1px solid #ff80ab; color: #c2185b; padding: 8px 15px; border-radius: 12px; font-size: 0.85rem; font-weight: 700; font-family: 'Poppins', sans-serif; }
         .marco-foto { width: 100%; height: auto; border-radius: 15px; border: 4px solid #fff; box-shadow: 0 5px 15px rgba(0,0,0,0.15); margin: 15px 0; display: block; background-color: #eee; }
@@ -115,54 +110,64 @@
         .heart:after { left: 50%; top: 0; }
         .petal { background: rgba(255, 255, 255, 0.95); width: 18px; height: 18px; border-radius: 150% 0 150% 0; border: 1px solid #fff0f5; transform: rotate(-30deg); }
 
-        /* --- [ESTILOS NUEVOS: SECCIÓN FINAL (CIELO)] --- */
+        /* --- [ESTILOS NUEVOS: CIELO FINAL] --- */
         #paso7 {
-            background: linear-gradient(to bottom, #020111 0%, #191621 100%);
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             display: none; /* Oculto inicialmente */
             justify-content: center;
             align-items: center;
             text-align: center;
             overflow: hidden;
+            z-index: 100;
         }
 
         .nombre-final {
             font-family: 'Dancing Script', cursive;
-            font-size: 4.5rem;
+            font-size: 4rem;
             color: #fff;
-            text-shadow: 0 0 10px #fff, 0 0 20px #ff00de, 0 0 30px #ff00de;
-            animation: latido 3s infinite ease-in-out;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.8), 0 0 30px rgba(255, 0, 150, 0.6);
+            animation: flotarNombre 4s ease-in-out infinite;
             z-index: 50;
             position: relative;
         }
 
-        @keyframes latido {
-            0%, 100% { transform: scale(1); opacity: 0.9; }
-            50% { transform: scale(1.1); opacity: 1; text-shadow: 0 0 20px #fff, 0 0 30px #ff3366, 0 0 40px #ff3366; }
+        @keyframes flotarNombre {
+            0%, 100% { transform: translateY(0) scale(1); text-shadow: 0 0 15px rgba(255, 255, 255, 0.8), 0 0 30px rgba(255, 0, 150, 0.6); }
+            50% { transform: translateY(-10px) scale(1.05); text-shadow: 0 0 25px rgba(255, 255, 255, 1), 0 0 50px rgba(255, 0, 150, 0.9); }
         }
 
+        /* Estrellas estáticas */
         .estrella {
-            position: absolute;
-            width: 2px;
-            height: 2px;
-            background: white;
+            position: absolute; background: white; border-radius: 50%;
+            opacity: 0.8; animation: parpadeo 3s infinite ease-in-out;
+        }
+        /* Estrellas que viajan (fondo en movimiento) */
+        .estrella-viajera {
+            position: absolute; background: rgba(255,255,255,0.6); border-radius: 50%;
+            width: 2px; height: 2px;
+            animation: viajeEstelar 10s linear infinite;
+        }
+        /* Estrellas fugaces */
+        .estrella-fugaz {
+            position: absolute; top: 50%; left: 50%;
+            width: 4px; height: 4px; background: #fff;
             border-radius: 50%;
-            animation: parpadeo 2s infinite ease-in-out;
+            box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.1), 0 0 0 8px rgba(255, 255, 255, 0.1), 0 0 20px rgba(255, 255, 255, 1);
+            animation: fugaz 3s linear infinite;
+            opacity: 0;
+        }
+        .estrella-fugaz::before {
+            content: ''; position: absolute; top: 50%; transform: translateY(-50%);
+            width: 300px; height: 1px;
+            background: linear-gradient(90deg, #fff, transparent);
         }
 
-        @keyframes parpadeo {
-            0%, 100% { opacity: 0.2; transform: scale(0.5); }
-            50% { opacity: 1; transform: scale(1.2); }
-        }
-
-        .btn-final {
-            position: absolute;
-            bottom: 50px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            color: #fff;
-            font-size: 0.8rem;
-            width: auto;
-            padding: 10px 20px;
+        @keyframes parpadeo { 0%, 100% { opacity: 0.3; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1.2); } }
+        @keyframes viajeEstelar { from { transform: translateY(0); } to { transform: translateY(-100vh); } }
+        @keyframes fugaz {
+            0% { transform: rotate(315deg) translateX(0); opacity: 1; }
+            70% { opacity: 1; }
+            100% { transform: rotate(315deg) translateX(-1000px); opacity: 0; }
         }
     </style>
 </head>
@@ -296,7 +301,6 @@
 
     <div class="seccion-carta" id="paso7">
         <div class="nombre-final">Tiziana</div>
-        <button class="btn-final" onclick="location.reload()">Ver de nuevo ↺</button>
     </div>
 
     <script>
@@ -348,46 +352,65 @@
         function cambiarPaso(act, sig) {
             const current = document.getElementById(`paso${act}`);
             current.style.opacity = '0';
-            current.style.transition = 'opacity 0.3s';
+            current.style.transition = 'opacity 0.5s';
             setTimeout(() => {
                 current.style.display = 'none';
                 const next = document.getElementById(`paso${sig}`);
                 next.style.display = 'flex';
                 next.scrollTop = 0;
-            }, 300);
+            }, 500);
         }
 
-        // FUNCIONES PARA EL FINAL
         function irAlCieloFinal() {
-            // Ocultar paso 6
-            const paso6 = document.getElementById('paso6');
-            paso6.style.opacity = '0';
-            paso6.style.transition = 'opacity 1s';
+            const current = document.getElementById('paso6');
+            current.style.opacity = '0';
+            current.style.transition = 'opacity 1.5s';
+            
+            // Cambiar fondo del body a noche
+            document.body.style.background = 'linear-gradient(to bottom, #020111 0%, #191621 100%)';
             
             setTimeout(() => {
-                paso6.style.display = 'none';
-                
-                // Mostrar paso 7
-                const paso7 = document.getElementById('paso7');
-                paso7.style.display = 'flex';
-                
-                // Generar estrellas
-                crearCielo();
-            }, 1000);
+                current.style.display = 'none';
+                const next = document.getElementById('paso7');
+                next.style.display = 'flex';
+                crearCieloAnimado();
+            }, 1500);
         }
 
-        function crearCielo() {
-            const contenedor = document.getElementById('paso7');
-            for(let i = 0; i < 100; i++) {
-                const star = document.createElement('div');
+        function crearCieloAnimado() {
+            const container = document.getElementById('paso7');
+            
+            // 1. Estrellas estáticas y parpadeantes
+            for (let i = 0; i < 50; i++) {
+                let star = document.createElement('div');
                 star.className = 'estrella';
-                // Posición aleatoria
                 star.style.left = Math.random() * 100 + '%';
                 star.style.top = Math.random() * 100 + '%';
-                // Retraso de animación aleatorio
+                star.style.width = Math.random() * 3 + 'px';
+                star.style.height = star.style.width;
                 star.style.animationDelay = Math.random() * 2 + 's';
-                contenedor.appendChild(star);
+                container.appendChild(star);
             }
+
+            // 2. Estrellas viajeras (movimiento hacia arriba)
+            for (let i = 0; i < 20; i++) {
+                let star = document.createElement('div');
+                star.className = 'estrella-viajera';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = '100%';
+                star.style.animationDuration = (Math.random() * 5 + 5) + 's';
+                container.appendChild(star);
+            }
+
+            // 3. Estrella fugaz ocasional
+            setInterval(() => {
+                let shootingStar = document.createElement('div');
+                shootingStar.className = 'estrella-fugaz';
+                shootingStar.style.top = Math.random() * 50 + '%';
+                shootingStar.style.left = Math.random() * 50 + 50 + '%';
+                container.appendChild(shootingStar);
+                setTimeout(() => shootingStar.remove(), 3000);
+            }, 4000);
         }
     </script>
 </body>
