@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Para Tiziana ❤️</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     
     <style>
-        /* --- [ESTRUCTURA BASE] --- */
+        /* --- [ESTILOS GENERALES] --- */
         body {
             background: linear-gradient(135deg, #ffe0e6 0%, #fff0f5 100%);
             margin: 0;
@@ -31,98 +31,139 @@
             overflow-y: auto;
             -webkit-overflow-scrolling: touch;
             padding-top: 20px;
+            padding-bottom: 80px; /* Espacio extra abajo */
         }
-
-        .seccion-carta::before { content: ""; display: block; min-height: 20px; }
-        .seccion-carta::after { content: ""; display: block; min-height: 80px; }
 
         .card {
             background: rgba(255, 255, 255, 0.98);
             border-radius: 30px;
-            padding: 30px 25px;
-            box-shadow: 0 20px 50px rgba(255, 51, 102, 0.25);
+            padding: 25px 20px;
+            box-shadow: 0 20px 50px rgba(255, 51, 102, 0.2);
             text-align: center;
             border: 2px solid #ffccd5;
-            animation: subirFade 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            animation: subirFade 0.8s ease-out forwards;
             max-width: 380px;
-            width: 85%;
+            width: 88%;
             margin: 10px auto 30px auto;
-            flex-shrink: 0;
             position: relative;
         }
 
-        /* --- [COMPONENTES VISUALES] --- */
-        .divider { display: flex; align-items: center; justify-content: center; margin: 15px 0; width: 100%; }
-        .divider div { height: 1.5px; background: #ffccd5; flex-grow: 1; border-radius: 2px; }
-        .divider span { margin: 0 10px; color: #ff3366; font-size: 1.2rem; }
+        /* --- [TIPOGRAFÍA Y ELEMENTOS] --- */
+        h1 { color: #d81b60; font-family: 'Dancing Script', cursive; font-size: 2.2rem; margin: 0; line-height: 1.2; }
+        h2 { color: #ad1457; font-size: 1.5rem; margin: 10px 0; font-family: 'Dancing Script', cursive; }
+        
+        p { 
+            color: #4a0016; 
+            font-size: 0.9rem; 
+            line-height: 1.6; 
+            margin-bottom: 12px; 
+            text-align: left; /* Alineación natural para lectura */
+        }
 
-        h1 { color: #d81b60; font-family: 'Dancing Script', cursive; font-size: 2.3rem; margin: 0; }
-        h2 { color: #ad1457; font-size: 1.6rem; margin: 15px 0 10px 0; font-family: 'Dancing Script', cursive; }
-        p { color: #4a0016; font-size: 0.95rem; line-height: 1.6; margin-bottom: 12px; }
+        .divider { display: flex; align-items: center; justify-content: center; margin: 15px 0; width: 100%; }
+        .divider div { height: 1px; background: #ffccd5; flex-grow: 1; }
+        .divider span { margin: 0 10px; color: #ff3366; font-size: 1.2rem; }
 
         button {
             background: linear-gradient(45deg, #ff3366, #ff6b8f);
-            color: white; border: none; padding: 12px 30px;
-            border-radius: 50px; font-size: 0.95rem; font-weight: 600;
-            cursor: pointer; box-shadow: 0 6px 20px rgba(255, 51, 102, 0.3);
-            text-transform: uppercase; margin-top: 15px;
+            color: white; border: none; padding: 12px 25px;
+            border-radius: 50px; font-size: 0.9rem; font-weight: 600;
+            cursor: pointer; box-shadow: 0 5px 15px rgba(255, 51, 102, 0.3);
+            text-transform: uppercase; margin-top: 20px; width: 100%;
             transition: transform 0.2s;
         }
+        button:active { transform: scale(0.95); }
 
-        /* --- [ETIQUETAS Y CUADROS DE IMAGEN] --- */
-        .tag-container {
-            display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin: 20px 0;
+        /* --- [NUEVOS ESTILOS: CUADROS DE CUALIDADES] --- */
+        .grid-cualidades {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
         }
-        .tag {
-            background: #fff0f5; color: #d81b60; padding: 6px 14px;
-            border-radius: 12px; font-weight: 600; font-size: 0.85rem;
-            border: 1px solid #ffccd5; box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        .cualidad-box {
+            background: #fff0f5;
+            border: 1px solid #ff80ab;
+            color: #c2185b;
+            padding: 8px 15px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            font-family: 'Poppins', sans-serif;
         }
-        .placeholder-img {
-            width: 100%; height: auto; border-radius: 15px;
-            margin: 15px 0; border: 3px solid #fff;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            background: #f9f9f9; display: block;
+
+        /* --- [NUEVOS ESTILOS: IMÁGENES DENTRO DE CARDS] --- */
+        .marco-foto {
+            width: 100%;
+            height: auto;
+            border-radius: 15px;
+            border: 4px solid #fff;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+            margin: 15px 0;
+            display: block;
+            background-color: #eee; /* Color de fondo mientras carga */
+        }
+
+        /* --- [HISTORIA - ESTILOS ESPECÍFICOS] --- */
+        .item-historia {
+            position: relative;
+            padding-left: 15px;
+            border-left: 2px solid #ffccd5;
+            margin-bottom: 25px;
+        }
+        .punto-historia {
+            position: absolute; left: -6px; top: 0;
+            width: 10px; height: 10px; background: #fff;
+            border: 2px solid #ff3366; border-radius: 50%;
+        }
+        .titulo-historia {
+            color: #d81b60; font-weight: 700; display: block; margin-bottom: 5px;
         }
 
         /* --- [CAJA DE REGALO] --- */
         #pantalla-inicio {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-color: #ffe0e6; display: flex; flex-direction: column;
-            justify-content: center; align-items: center; z-index: 2000;
+            background-color: #ffe0e6;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            z-index: 2000;
         }
         .box-container { position: relative; width: 100px; height: 100px; cursor: pointer; }
         .box-body { position: absolute; bottom: 0; width: 100%; height: 80%; background-color: #ff3366; border-radius: 0 0 10px 10px; }
-        .box-lid { position: absolute; top: 0; width: 110%; height: 25%; background-color: #e60039; left: -5%; border-radius: 5px; z-index: 2; }
+        .box-lid { position: absolute; top: 0; width: 110%; height: 25%; background-color: #e60039; left: -5%; border-radius: 5px; z-index: 2; transition: 0.5s; }
         .box-bow { position: absolute; top: -20%; left: 50%; transform: translateX(-50%); width: 40px; height: 20px; background-color: #fff; border-radius: 20px; z-index: 3; }
-        .box-bow::before { content: ''; position: absolute; left: 50%; transform: translateX(-50%); width: 10px; height: 120px; background-color: #fff; top: 0; }
+        .box-bow::before { content: ''; position: absolute; left: 50%; transform: translateX(-50%); width: 10px; height: 120px; background-color: #fff; top: 0; z-index: 1; }
 
         @keyframes shakeBox { 0%, 100% { transform: rotate(0deg); } 25% { transform: rotate(8deg); } 50% { transform: rotate(-8deg); } 75% { transform: rotate(8deg); } }
         .sacudir { animation: shakeBox 0.4s ease-in-out; }
         .box-open .box-lid, .box-open .box-bow { transform: translateY(-100px) rotate(10deg); opacity: 0; transition: 0.5s; }
 
-        /* --- [FOTO POLAROID] --- */
+        /* --- [FOTO POLAROID EXTERNA] --- */
         .foto-externa {
-            background: white; padding: 15px 15px 50px 15px;
+            background: white; padding: 12px 12px 40px 12px;
             box-shadow: 0 15px 35px rgba(0,0,0,0.2); transform: rotate(-3deg);
-            width: 260px; max-width: 80vw; position: relative; z-index: 20;
-            animation: caerFoto 1.2s ease-out forwards; margin: 20px auto; border: 1px solid #eee;
+            width: 250px; max-width: 80vw; margin: 10px auto;
+            position: relative; z-index: 20; border: 1px solid #eee;
+            animation: caerFoto 1s ease-out forwards;
         }
         .foto-externa img { width: 100%; height: auto; display: block; }
-        .nota { position: absolute; padding: 5px 10px; font-family: 'Dancing Script', cursive; font-size: 1.1rem; color: #444; font-weight: bold; }
-        .nota-1 { top: -10px; left: -10px; transform: rotate(-10deg); background: #fff; border: 1px solid #ff3366; }
-        .nota-2 { bottom: 15px; right: -15px; transform: rotate(5deg); background: #fff9c4; border: 1px solid #fbc02d; }
+        .nota { position: absolute; padding: 4px 8px; font-family: 'Dancing Script', cursive; font-size: 1rem; color: #444; background: #fff; box-shadow: 1px 1px 3px rgba(0,0,0,0.2); }
+        .nota-1 { top: -8px; left: -8px; transform: rotate(-8deg); border: 1px solid #ff3366; }
+        .nota-2 { bottom: 10px; right: -10px; transform: rotate(4deg); background: #fff9c4; border: 1px solid #fbc02d; }
 
-        /* --- [ANIMACIONES] --- */
-        @keyframes subirFade { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes caerFoto { from { opacity: 0; transform: translateY(-70px) rotate(5deg); } to { opacity: 1; transform: translateY(0) rotate(-3deg); } }
+        /* --- [EFECTOS] --- */
+        @keyframes subirFade { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes caerFoto { from { opacity: 0; transform: translateY(-50px) rotate(5deg); } to { opacity: 1; transform: translateY(0) rotate(-3deg); } }
+        @keyframes floatHigh { 0% { transform: translateY(100vh) scale(0.5); opacity: 0; } 20% { opacity: 1; } 100% { transform: translateY(-20vh) scale(1.2) rotate(360deg); opacity: 0; } }
+        
         .heart, .petal { position: absolute; opacity: 0; pointer-events: none; z-index: 5; }
         .heart { background: #ff0040; width: 16px; height: 16px; transform: rotate(45deg); }
         .heart:before, .heart:after { content: ''; position: absolute; width: 100%; height: 100%; border-radius: 50%; background: #ff0040; }
         .heart:before { top: -50%; left: 0; }
         .heart:after { left: 50%; top: 0; }
-        .petal { background: rgba(255, 255, 255, 0.95); width: 18px; height: 18px; border-radius: 150% 0 150% 0; border: 1px solid #fff0f5; }
-        @keyframes floatHigh { 0% { transform: translateY(100vh) scale(0.5); opacity: 0; } 20% { opacity: 1; } 100% { transform: translateY(-20vh) scale(1.2) rotate(360deg); opacity: 0; } }
+        .petal { background: rgba(255, 255, 255, 0.95); width: 18px; height: 18px; border-radius: 150% 0 150% 0; border: 1px solid #fff0f5; transform: rotate(-30deg); }
     </style>
 </head>
 <body>
@@ -139,13 +180,17 @@
     <div class="seccion-carta" id="paso1">
         <div class="card">
             <h1>HOLAAA, TIZIANA.</h1>
-            <p>Buenos días, tardes o noches 🌤</p>
+            <p style="text-align: center;">Buenos días, tardes o noches 🌤</p>
             <div class="divider"><div></div><span>❤️</span><div></div></div>
-            <p>Hoy es un día especial, y lo sabes. Hemos pasado buenos momentos juntos, y este es un presente que expresa mi gratitud y mis sentimientos por ti.</p>
+            <p>Hoy es un día especial, y lo sabes.</p>
+            <p>Hemos pasado buenos momentos juntos, y este es un presente en este día, que expresa mi gratitud y mis sentimientos por ti.</p>
+            
             <button id="btn-revelar" onclick="revelarMensaje()">VER (con confianza xd)</button>
-            <div id="mensaje-secreto" style="display:none; margin: 20px 0; font-style: italic; color: #c2185b; border-left: 4px solid #ff3366; background: #fffafb; padding: 20px; border-radius: 15px; font-family: 'Dancing Script', cursive; font-size: 1.3rem;">
+            
+            <div id="mensaje-secreto" style="display:none; margin: 20px 0; font-style: italic; color: #c2185b; border-left: 4px solid #ff3366; background: #fffafb; padding: 15px; border-radius: 10px; font-family: 'Dancing Script', cursive; font-size: 1.2rem;">
                 "Eres esa luz que no buscaba, pero que ahora no querría perder por nada del mundo."
             </div>
+            
             <div id="texto-final" style="display:none; margin-top: 15px;">
                 <p>¿Te acuerdas de las flores que te pregunté?</p>
                 <button onclick="cambiarPaso(1, 2)">Ven, acompáñame ➡️</button>
@@ -159,12 +204,16 @@
             <img src="gardenia.jpg" alt="Gardenia Blanca">
             <div class="nota nota-2">Para Tiziana</div>
         </div>
+        
         <div class="card">
             <h2>Una flor blanca, como tu luz.</h2>
-            <div style="text-align: left; font-size: 0.9rem; color: #4a0016;">
-                <p>Tiziana, quiero dedicarte esto... En sí no es la flor como tal, sino el blanco. Por alguna extraña razón, el blanco me recuerda a ti.</p>
-                <p>Cada vez que vea una flor blanca, siempre estarás ahí. Quizá por la pureza que vi en ti, por tu amabilidad y tu forma de ser, por tu luz. Me salvaste cuando naufragaba sin rumbo. En medio de la oscuridad apareciste tú en mi vida, tan brillante y radiante que solo podía seguirte.</p>
-            </div>
+            <p>Tiziana, quiero dedicarte esto, aunque no creo poder darte unas flores; de verdad me hubiera encantado.</p>
+            <p>Y el no poder hacerlo me hace sentir mal, puesto que tú te mereces lo mejor de lo mejor. En sí no es la flor como tal, sino el blanco. Por alguna extraña razón, el blanco me recuerda a ti.</p>
+            <p>Cada vez que vea una flor blanca, siempre estarás ahí. Quizá por la pureza que vi en ti, por tu amabilidad y tu forma de ser, por tu luz. Me salvaste cuando naufragaba sin rumbo. En medio de la oscuridad apareciste tú en mi vida, tan brillante y radiante que solo podía seguirte, solo podía mirarte, solo podía sentirte a ti. Y poco a poco recuperé aquello que perdí: las ganas de vivir.</p>
+            <p>Eres fuerte y madura. Quizá no siempre es lo que aparentas, pero me enseñaste cosas de ti, cosas que me hicieron quererte mucho más.</p>
+            <p>Es verdad que no pareces ser mucho de palabras o de expresar sentimientos, pero de lo que estoy seguro es de que sí sientes, y del mismo modo todos necesitamos cariño y amor en nuestras vidas. Te admiro, te quiero, te adoro.</p>
+            <p>Tu belleza es más de lo que unos simples ojos pueden apreciar. La gardenia es una flor que necesita mucho cuidado, y quizá no sea la que más te represente, pero es una flor que no se ve en todos lados. Es especial: una flor que no florece para cualquiera, y cuando lo hace… se nota.</p>
+            
             <button onclick="cambiarPaso(2, 3)">¿SEGUIMOS??</button>
         </div>
     </div>
@@ -173,10 +222,31 @@
         <div class="card">
             <h1>La historia</h1>
             <div class="divider"><div></div></div>
-            <div style="text-align: left; font-size: 0.85rem; color: #5a3d42;">
-                <p>Te dije que no sé exactamente cuándo comenzó todo, pero quizá fue en ese preciso instante en el que te vi una tarde en el retiro, justo al atardecer...</p>
-                <p>Puedo decir que me hiciste una mejor persona. Soy torpe, despistado… e incluso ahora, mientras escribo esto… es curioso, ¿no? Este mensaje es como si viajara por el tiempo.</p>
+            
+            <div class="item-historia">
+                <div class="punto-historia"></div>
+                <span class="titulo-historia">EL INICIO</span>
+                <p>Aún recuerdo dónde todo comenzó tan claramente. En ese entonces no tenía ni idea de lo que vendría.</p>
+                <p>Ese día, esa tarde, siempre la recordaré. Te dije que no sé exactamente cuándo comenzó todo, pero quizá fue en ese preciso instante en el que te vi una tarde en el retiro, justo al atardecer, cuando las nubes empezaban a cubrir el cielo. La brisa del viento soplaba con fuerza, mientras las hojas de los árboles chocaban entre sí. Hubo un momento en el que te vi, y en ese instante fue como si el resto hubiera desaparecido, como si tú fueras todo lo que existe en este mundo.</p>
+                <p>Después de eso, cuando regresamos en Navidad, sí te vi cuando nadie más había llegado, pero ya no podía mirarte y me sentía nervioso. Fingí no verte y seguí. No sabía por qué había hecho eso, ni por qué me sentía así.</p>
+                <p>Conforme los días avanzaron, fue peor. El día del aniversario seguía evitándote. En ese entonces estaba en duda: ¿por qué me siento así?, ¿qué me pasa? Hasta que un día, cuando estábamos sentados esperando afuera con Luis, y tú estabas cerca de mí, sentí cómo mi pecho empezó a latir desenfrenadamente. Las ganas de querer verte me invadieron y, por un instante, volteé a verte. Y lo que vi fue más que aquella vez: vi lo más hermoso del universo. Ante mí, la respuesta a todo. Y por ese preciso instante, todo a mi alrededor desapareció. En ese momento descubrí la verdad.</p>
             </div>
+
+            <div class="item-historia">
+                <div class="punto-historia"></div>
+                <span class="titulo-historia">MOMENTOS ESPECIALES</span>
+                <p>Bueno, si de por sí en un minuto pueden pasar muchas cosas, en un año… puff, ni hablemos. Cada ensayo, cada actividad, ir a la parroquia se sintió más como una necesidad por ti. Sé que está mal, deberíamos ir por nuestra fe y devoción, pero en esos momentos solo pensaba en ti.</p>
+                <p>Cuando hablamos por primera vez de forma medio fluida después de un ensayo, un sábado en Semana Santa, aunque no estabas siempre presente, las veces que venías lo hacían valer todo. O cuando te hablé por primera vez por WhatsApp xd… quería hacerlo desde antes, pero nunca había encontrado una excusa perfecta. De verdad quería oírte cantar, solo a ti, y hasta ahora jsjs.</p>
+                <p>A veces, con miedo de fallar, tú siempre sacabas lo mejor de mí, en serio. Aunque no lo sabías, el hecho de estar siempre pensando en ti, en cada momento de mi vida, era como si siempre estuvieras ahí, aunque no fuera así. Para los trabajos del instituto, para mí mismo, para lo que era y lo que quería hacer, cambié mi forma de vivir. Aunque a veces tenía flojera, lo hacía; aunque todo parecía sin salvación, lo hacía. Y bueno, casi todo terminaba bien.</p>
+                <p>Puedo decir que me hiciste una mejor persona, pero sigo cometiendo errores. Soy torpe, despistado… e incluso ahora, mientras escribo esto… es curioso, ¿no? Este mensaje es como si viajara por el tiempo: no lo sabrás hasta que lo leas, en ese día que se convertirá en este día.</p>
+                <p>Pentecostés… la verdad no quería ir, estaba medio malito y tenía trabajos, y aun así una palabra tuya fue suficiente para cambiar mi decisión. Ese día me quedé hasta la noche haciendo mi trabajo… pero lo hice, lo logré. Pude ver que era capaz gracias a ti.</p>
+                <p>Ojalá hubiéramos vivido el Corpus Christi, lo de las alfombras, pero no fue así. El día que vimos la película fue la primera vez que nos vimos después de que me confesara… y aún no sé si fue la mejor manera, tal vez solo fui un cobarde. Aun así fue divertido hablar contigo, aunque igual estaba preocupado por la película.</p>
+                <p>La actuación… de verdad me puse re nervioso, no sabía ni cómo actuar, pero fue bonito y, de cierta manera, es lo más cercano que te vi a ti enojada.</p>
+                <p>Octubre sí fue especial… no solo fue el mes en que se cumplió un año desde que entramos al coro, sino que también era tu cumpleaños y, pues, salió mal xd. Y más aún mis palabras, y más aún mi comportamiento, y más aún que creo que ahí ya sospecharon… todo mal. Me siento responsable.</p>
+                <p>Noviembre estuvo más tranquilo. Diciembre… bueno, esa vez y las otras veces que hablamos, sí me pareció curioso que nos parezcamos en varias cosas.</p>
+                <p>Bueno, ya está siendo muy largo esto…</p>
+            </div>
+
             <button onclick="cambiarPaso(3, 4)">Lo que veo en ti 💎</button>
         </div>
     </div>
@@ -184,37 +254,46 @@
     <div class="seccion-carta" id="paso4">
         <div class="card">
             <h1>Lo que veo en ti</h1>
-            <div class="tag-container">
-                <div class="tag">Fortaleza</div>
-                <div class="tag">Constancia</div>
-                <div class="tag">Sencillez</div>
-                <div class="tag">Dedicación</div>
-                <div class="tag">Genuinidad</div>
-                <div class="tag">Firmeza</div>
+            <div class="divider"><div></div></div>
+
+            <div class="grid-cualidades">
+                <div class="cualidad-box">Fortaleza</div>
+                <div class="cualidad-box">Constancia</div>
+                <div class="cualidad-box">Sencillez</div>
+                <div class="cualidad-box">Dedicación</div>
+                <div class="cualidad-box">Genuinidad</div>
+                <div class="cualidad-box">Firmeza</div>
             </div>
-            <div style="text-align: left; font-size: 0.9rem;">
-                <p><strong>Fortaleza:</strong> Admiro esa fuerza que no hace ruido pero se nota en todo lo que haces, asumiendo responsabilidades que no todos tendrían la valentía de cargar.</p>
-                <p><strong>Constancia:</strong> Porque no abandonas lo que es importante para ti. Entiendes el valor del esfuerzo en casa, en la feria y en tus estudios.</p>
-                <p><strong>Sencillez:</strong> No buscas destacar ni aparentar. Eres auténtica, y eso te da una belleza honesta, tranquila y real.</p>
-                <p><strong>Dedicación:</strong> Se ve en tus ganas de salir adelante, en tus sueños por estudiar y dominar aquello que te apasiona.</p>
-                <p><strong>Genuinidad:</strong> No finges. Eres tú, con tus silencios, tu lado reservado y ese humor que aparece cuando hay confianza.</p>
-                <p><strong>Firmeza:</strong> Esa capacidad de mantenerte fiel a ti misma y sostener tus valores aun cuando otros esperan demasiado de ti.</p>
-            </div>
+
+            <p>Admiro tu <strong>fortaleza</strong>, esa que no hace ruido pero se nota en todo lo que haces. En cómo sigues adelante aun cuando puede que estés cansada o con flojera, en cómo asumes responsabilidades que no todos tendrían la valentía y fortaleza de cargar.</p>
+            
+            <p>Admiro tu <strong>constancia</strong>, porque no abandonas lo que es importante para ti. Estudias, trabajas, ayudas en casa y en la feria, no por obligación, sino porque entiendes el valor del esfuerzo y del compromiso diario, incluso cuando eso significa sacrificar tiempo para ti.</p>
+            
+            <p>Tu <strong>sencillez</strong> es algo que te hace especial. No buscas destacar ni llamar la atención, no necesitas aparentar nada. Eres auténtica en lo que eres y en cómo vives, y eso te da una belleza honesta, tranquila y real.</p>
+            
+            <p>Tu <strong>dedicación</strong> se ve en cada cosa que haces con empeño, en tus ganas de salir adelante, en tus sueños por aprender, por estudiar, por dominar aquello que te apasiona, incluso cuando dudas y quizás cuando sientas miedo al futuro.</p>
+            
+            <p>Tu <strong>genuinidad</strong> es quizás lo que más te distingue. No finges, no te fuerzas a encajar. Eres tú, con tus silencios, con tu lado reservado, con ese humor que aparece cuando hay confianza, y con esa forma tan tuya de sentir y vivir las cosas.</p>
+            
+            <p>Y finalmente, tu <strong>firmeza</strong>: esa capacidad de mantenerte fiel a ti misma, de no dejarte arrastrar por lo superficial, de sostener tus valores aun cuando otros miran, juzgan o esperan demasiado de ti.</p>
+
             <button onclick="cambiarPaso(4, 5)">Mi deseo para ti ✍️</button>
         </div>
     </div>
 
     <div class="seccion-carta" id="paso5">
         <div class="card">
-            <h1>Mi deseo para ti...</h1>
+            <h1>Mi deseo para ti</h1>
             <div class="divider"><div></div></div>
-            <img src="imagen.jpg" alt="Imagen" class="placeholder-img">
-            <div style="text-align: left; font-size: 0.9rem;">
-                <p>Tiziana, deseo que el camino que hoy recorres no pese en tus pasos, que no camines cargando miradas ajenas ni expectativas que no te pertenecen.</p>
-                <p>Que nunca te falten las cosas que te dan vida: la música que te acompaña, el arte que te expresa, y el abrigo de quienes te quieren.</p>
-                <p>La vida no promete ausencia de tristeza, pero sí la posibilidad de aprender a seguir. Tienes sueños guardados y unas alas que recién empiezan a abrirse.</p>
-                <p><strong>Lo más bonito aún no llega. Todavía tienes tanto por vivir.</strong></p>
-            </div>
+
+            <p>Mi deseo para ti Tiziana es que el camino que hoy recorres no pese en tus pasos, que no camines cargando miradas ajenas ni expectativas que no te pertenecen, sino que avances a tu propio ritmo, con la calma de quien sabe de lo que es capaz.</p>
+            <p>Que nunca te falten las cosas que te dan vida: la música que te acompaña, el arte que te expresa, los pequeños momentos que hacen hermoso lo cotidiano y el abrigo de quienes te quieren. Que cada obstáculo sea una lección y no una herida, una prueba que te recuerde tu fuerza y no un motivo para detenerte.</p>
+            
+            <img src="imagen.jpg" alt="Imagen Especial" class="marco-foto">
+
+            <p>La vida no promete ausencia de tristeza, pero sí la posibilidad de aprender a seguir. Y yo sé que tú sabes hacerlo. Tienes sueños guardados, metas esperando, y unas alas que recién empiezan a abrirse.</p>
+            <p style="color: #d81b60; font-weight: 600;">Lo más bonito aún no llega.<br>Todavía tienes tanto por vivir.</p>
+
             <button onclick="cambiarPaso(5, 6)">Y finalmente... ❤️</button>
         </div>
     </div>
@@ -222,13 +301,19 @@
     <div class="seccion-carta" id="paso6">
         <div class="card">
             <h1>Te quiero mucho</h1>
-            <img src="imagen2.jpg" alt="Imagen 2" class="placeholder-img">
-            <div style="text-align: left; font-size: 0.9rem;">
-                <p>Gracias por existir en mi camino, por lo que eres y por todo lo que, sin darte cuenta, dejas en mí. Tal vez nuestros caminos no caminen juntos de la forma que uno imagina, pero me quedo con lo bonito y lo real.</p>
-                <p>Si alguna vez dudas de ti, recuerda que hubo alguien que te miró con admiración y un cariño sincero. Alguien que agradece haber coincido contigo.</p>
-                <p>Cuando mire al cielo, a las estrellas, sé que siempre te recordaré... a través del firmamento.</p>
-                <p><strong>Cuídate mucho.</strong></p>
-            </div>
+            
+            <p>Tiziana, en verdad te quiero mucho y te digo todo esto solo con la necesidad de que sepas lo importante que eres para mí. Gracias por existir en mi camino, por lo que eres y por todo lo que, sin darte cuenta, dejas en mí. Por todos esos momentos que me diste.</p>
+            
+            <img src="imagen2.jpg" alt="Recuerdo Especial" class="marco-foto">
+
+            <p>Tal vez nuestros caminos no caminen juntos de la forma que uno imagina, pero aun así me quedo con lo bonito, con lo real y con lo que vale la pena sentir. Ojalá la vida te regale todo lo que mereces, incluso en los días en que no lo notes.</p>
+            <p>Y si tuviera la oportunidad de vivir todo de nuevo, lo aceptaría sin dudarlo, porque conocerte fue lo más hermoso e inesperado que me pudo pasar.</p>
+            <p>Amar es algo hermoso, y tú, sin proponértelo, llenaste de luz muchos de mis días. Incluso en los momentos difíciles, incluso cuando no todo fue risa, quedarte en mi vida, aunque sea de esta forma, ya es suficiente para mí.</p>
+            <p>Si alguna vez dudas de ti, recuerda que hubo alguien que te miró con admiración, con ternura y con un cariño sincero. Alguien que vio en ti algo especial, algo que no se encuentra fácilmente, y que agradece haber coincidido contigo en este tiempo de la vida.</p>
+            <p style="margin-top: 15px;">Cuídate mucho.</p>
+            <p>Yo me quedo con tu recuerdo, con tu luz y con lo que hiciste florecer en mí.</p>
+            <p style="font-style: italic; color: #ad1457;">Cuando mire al cielo, a las estrellas se que siempre te recordare, cuando la luna me bañe en su luz durante la noche y el sol durante el dia, cuando las galaxias se enciendan, a traves el firmamento.</p>
+
             <button onclick="lluviaFinal()">¡Lluvia de amor!</button>
         </div>
     </div>
@@ -249,8 +334,11 @@
         function abrirRegalo() {
             const box = document.querySelector('.box-container');
             clicsRegalo++;
+            
             box.classList.remove('sacudir');
-            void box.offsetWidth; box.classList.add('sacudir');
+            void box.offsetWidth; 
+            box.classList.add('sacudir');
+            
             if (clicsRegalo >= 3) {
                 box.classList.add('box-open');
                 setTimeout(() => {
@@ -270,7 +358,7 @@
             setInterval(() => {
                 crearElemento('heart');
                 setTimeout(() => crearElemento('petal'), 300);
-            }, 500);
+            }, 600); // Lanza elementos cada 600ms
         }
 
         function revelarMensaje() {
@@ -280,14 +368,23 @@
         }
 
         function cambiarPaso(act, sig) {
-            document.getElementById(`paso${act}`).style.display = 'none';
-            const sigDiv = document.getElementById(`paso${sig}`);
-            sigDiv.style.display = 'flex';
-            sigDiv.scrollTop = 0;
+            // Ocultar actual
+            const current = document.getElementById(`paso${act}`);
+            current.style.opacity = '0';
+            current.style.transition = 'opacity 0.3s';
+            
+            setTimeout(() => {
+                current.style.display = 'none';
+                const next = document.getElementById(`paso${sig}`);
+                next.style.display = 'flex';
+                // Reset scroll
+                next.scrollTop = 0;
+            }, 300);
         }
 
         function lluviaFinal() {
             for(let i=0; i<60; i++) setTimeout(() => crearElemento('heart'), i*80);
+            for(let i=0; i<30; i++) setTimeout(() => crearElemento('petal'), i*100);
         }
     </script>
 </body>
