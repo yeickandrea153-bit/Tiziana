@@ -19,7 +19,7 @@
             font-family: 'Poppins', sans-serif;
             overflow: hidden;
             position: relative;
-            transition: background 2.5s ease-in-out; /* Transición LENTA del fondo */
+            transition: background 2s ease-in-out;
         }
 
         /* --- [SECCIONES] --- */
@@ -34,7 +34,7 @@
             -webkit-overflow-scrolling: touch;
             padding-top: 20px;
             padding-bottom: 80px;
-            transition: opacity 1.5s ease; /* Transición suave para desaparecer */
+            transition: opacity 1.5s ease;
         }
 
         .card {
@@ -110,68 +110,68 @@
         .heart:after { left: 50%; top: 0; }
         .petal { background: rgba(255, 255, 255, 0.95); width: 18px; height: 18px; border-radius: 150% 0 150% 0; border: 1px solid #fff0f5; transform: rotate(-30deg); }
 
-        /* --- [ESTILOS NUEVOS: CIELO FINAL] --- */
+        /* --- [ESTILOS NUEVOS: CIELO VISUALMENTE MEJORADO] --- */
         #paso7 {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            display: none; /* Oculto inicialmente */
+            display: none;
             justify-content: center;
             align-items: center;
             text-align: center;
             overflow: hidden;
             z-index: 100;
+            /* Fondo profundo tipo galaxia */
+            background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+        }
+
+        /* Capa de nebulosa suave */
+        .nebulosa {
+            position: absolute;
+            width: 100%; height: 100%;
+            background: radial-gradient(circle at 50% 50%, rgba(255, 0, 150, 0.15), transparent 60%);
+            animation: pulsarNebulosa 8s infinite alternate;
+            z-index: 1;
+            pointer-events: none;
         }
 
         .nombre-final {
             font-family: 'Dancing Script', cursive;
-            font-size: 4rem;
+            font-size: 4.5rem;
             color: #fff;
-            text-shadow: 0 0 15px rgba(255, 255, 255, 0.8), 0 0 30px rgba(255, 0, 150, 0.6);
-            animation: flotarNombre 4s ease-in-out infinite;
+            /* Resplandor más celestial */
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.9), 0 0 40px rgba(255, 105, 180, 0.8), 0 0 70px rgba(255, 105, 180, 0.6);
+            animation: flotarNombre 5s ease-in-out infinite;
             z-index: 50;
             position: relative;
         }
 
         @keyframes flotarNombre {
-            0%, 100% { transform: translateY(0) scale(1); text-shadow: 0 0 15px rgba(255, 255, 255, 0.8), 0 0 30px rgba(255, 0, 150, 0.6); }
-            50% { transform: translateY(-10px) scale(1.05); text-shadow: 0 0 25px rgba(255, 255, 255, 1), 0 0 50px rgba(255, 0, 150, 0.9); }
+            0%, 100% { transform: translateY(0) scale(1); opacity: 0.95; }
+            50% { transform: translateY(-15px) scale(1.05); opacity: 1; }
+        }
+        @keyframes pulsarNebulosa {
+            0% { opacity: 0.5; transform: scale(1); }
+            100% { opacity: 0.8; transform: scale(1.1); }
         }
 
-        /* Estrellas estáticas */
-        .estrella {
-            position: absolute; background: white; border-radius: 50%;
-            opacity: 0.8; animation: parpadeo 3s infinite ease-in-out;
-        }
-        /* Estrellas que viajan (fondo en movimiento) */
-        .estrella-viajera {
-            position: absolute; background: rgba(255,255,255,0.6); border-radius: 50%;
-            width: 2px; height: 2px;
-            animation: viajeEstelar 10s linear infinite;
-        }
-        /* Estrellas fugaces */
+        .estrella { position: absolute; background: white; border-radius: 50%; animation: parpadeo linear infinite; }
+        .estrella-viajera { position: absolute; background: linear-gradient(to top, rgba(255,255,255,0), rgba(255,255,255,0.8)); width: 1px; height: 100px; animation: lluviaEstelar linear infinite; }
         .estrella-fugaz {
-            position: absolute; top: 50%; left: 50%;
-            width: 4px; height: 4px; background: #fff;
-            border-radius: 50%;
+            position: absolute; top: 50%; left: 50%; width: 4px; height: 4px; background: #fff; border-radius: 50%;
             box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.1), 0 0 0 8px rgba(255, 255, 255, 0.1), 0 0 20px rgba(255, 255, 255, 1);
-            animation: fugaz 3s linear infinite;
-            opacity: 0;
+            animation: fugaz 3s linear infinite; opacity: 0; z-index: 2;
         }
-        .estrella-fugaz::before {
-            content: ''; position: absolute; top: 50%; transform: translateY(-50%);
-            width: 300px; height: 1px;
-            background: linear-gradient(90deg, #fff, transparent);
-        }
+        .estrella-fugaz::before { content: ''; position: absolute; top: 50%; transform: translateY(-50%); width: 300px; height: 1px; background: linear-gradient(90deg, #fff, transparent); }
 
-        @keyframes parpadeo { 0%, 100% { opacity: 0.3; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1.2); } }
-        @keyframes viajeEstelar { from { transform: translateY(0); } to { transform: translateY(-100vh); } }
-        @keyframes fugaz {
-            0% { transform: rotate(315deg) translateX(0); opacity: 1; }
-            70% { opacity: 1; }
-            100% { transform: rotate(315deg) translateX(-1000px); opacity: 0; }
-        }
+        @keyframes parpadeo { 0%, 100% { opacity: 0.2; transform: scale(0.5); } 50% { opacity: 1; transform: scale(1); box-shadow: 0 0 4px #fff; } }
+        @keyframes lluviaEstelar { 0% { transform: translateY(0); opacity: 0; } 50% { opacity: 0.5; } 100% { transform: translateY(-120vh); opacity: 0; } }
+        @keyframes fugaz { 0% { transform: rotate(315deg) translateX(0); opacity: 1; } 70% { opacity: 1; } 100% { transform: rotate(315deg) translateX(-1000px); opacity: 0; } }
     </style>
 </head>
 <body>
+
+    <audio id="musica-fondo" loop>
+        <source src="audio.mp3" type="audio/mpeg">
+    </audio>
 
     <div id="pantalla-inicio">
         <div class="box-container" onclick="abrirRegalo()">
@@ -300,12 +300,14 @@
     </div>
 
     <div class="seccion-carta" id="paso7">
+        <div class="nebulosa"></div>
         <div class="nombre-final">Tiziana</div>
     </div>
 
     <script>
         let clicsRegalo = 0;
         let heartsActive = false;
+        let heartInterval; // Variable para controlar los corazones
 
         function crearElemento(clase) {
             const el = document.createElement('div');
@@ -321,8 +323,14 @@
             clicsRegalo++;
             box.classList.remove('sacudir');
             void box.offsetWidth; box.classList.add('sacudir');
+            
             if (clicsRegalo >= 3) {
                 box.classList.add('box-open');
+                
+                // REPRODUCIR AUDIO
+                const audio = document.getElementById('musica-fondo');
+                audio.play().catch(e => console.log("Audio requiere interacción previa"));
+
                 setTimeout(() => {
                     document.getElementById('pantalla-inicio').style.opacity = '0';
                     setTimeout(() => {
@@ -337,7 +345,8 @@
         function iniciarEfectos() {
             if(heartsActive) return;
             heartsActive = true;
-            setInterval(() => {
+            // Guardamos el intervalo para poder detenerlo despues
+            heartInterval = setInterval(() => {
                 crearElemento('heart');
                 setTimeout(() => crearElemento('petal'), 300);
             }, 600);
@@ -364,41 +373,60 @@
         function irAlCieloFinal() {
             const current = document.getElementById('paso6');
             current.style.opacity = '0';
-            current.style.transition = 'opacity 1.5s';
+            current.style.transition = 'opacity 2s'; // Transición más lenta
             
-            // Cambiar fondo del body a noche
-            document.body.style.background = 'linear-gradient(to bottom, #020111 0%, #191621 100%)';
+            // DETENER CORAZONES Y BORRARLOS
+            clearInterval(heartInterval);
+            const corazones = document.querySelectorAll('.heart, .petal');
+            corazones.forEach(el => el.remove());
+            
+            // Cambiar fondo del body a noche profunda
+            document.body.style.background = '#090a0f';
             
             setTimeout(() => {
                 current.style.display = 'none';
                 const next = document.getElementById('paso7');
                 next.style.display = 'flex';
+                // Hacer visible suavemente
+                next.style.opacity = '0';
+                setTimeout(() => next.style.opacity = '1', 50);
+                next.style.transition = 'opacity 2s';
+                
                 crearCieloAnimado();
-            }, 1500);
+            }, 1800);
         }
 
         function crearCieloAnimado() {
             const container = document.getElementById('paso7');
             
-            // 1. Estrellas estáticas y parpadeantes
-            for (let i = 0; i < 50; i++) {
+            // 1. Estrellas estáticas (diferentes tamaños y brillos)
+            for (let i = 0; i < 80; i++) {
                 let star = document.createElement('div');
                 star.className = 'estrella';
                 star.style.left = Math.random() * 100 + '%';
                 star.style.top = Math.random() * 100 + '%';
-                star.style.width = Math.random() * 3 + 'px';
-                star.style.height = star.style.width;
+                
+                // Variar tamaño
+                const size = Math.random() * 2 + 1;
+                star.style.width = size + 'px';
+                star.style.height = size + 'px';
+                
+                // Variar animación
+                star.style.animationDuration = (Math.random() * 2 + 1) + 's';
                 star.style.animationDelay = Math.random() * 2 + 's';
+                
                 container.appendChild(star);
             }
 
-            // 2. Estrellas viajeras (movimiento hacia arriba)
-            for (let i = 0; i < 20; i++) {
+            // 2. Estrellas viajeras (efecto lluvia lenta)
+            for (let i = 0; i < 15; i++) {
                 let star = document.createElement('div');
                 star.className = 'estrella-viajera';
                 star.style.left = Math.random() * 100 + '%';
                 star.style.top = '100%';
-                star.style.animationDuration = (Math.random() * 5 + 5) + 's';
+                star.style.height = (Math.random() * 50 + 50) + 'px';
+                star.style.opacity = Math.random() * 0.5 + 0.2;
+                star.style.animationDuration = (Math.random() * 10 + 10) + 's';
                 container.appendChild(star);
             }
 
@@ -406,11 +434,11 @@
             setInterval(() => {
                 let shootingStar = document.createElement('div');
                 shootingStar.className = 'estrella-fugaz';
-                shootingStar.style.top = Math.random() * 50 + '%';
-                shootingStar.style.left = Math.random() * 50 + 50 + '%';
+                shootingStar.style.top = Math.random() * 60 + '%';
+                shootingStar.style.left = Math.random() * 40 + 60 + '%';
                 container.appendChild(shootingStar);
                 setTimeout(() => shootingStar.remove(), 3000);
-            }, 4000);
+            }, 3500);
         }
     </script>
 </body>
